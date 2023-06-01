@@ -1,6 +1,7 @@
 package dev.kingrabbit.fruitfulutilities.mixin;
 
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
+import dev.kingrabbit.fruitfulutilities.config.categories.GeneralCategory;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.ScoreboardObjectiveUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.ScoreboardPlayerUpdateS2CPacket;
@@ -15,7 +16,13 @@ public class ClientPlayNetworkHandlerMixin {
     @Inject(method = "onScoreboardObjectiveUpdate", at = @At("HEAD"))
     public void onScoreboardObjectiveUpdate(ScoreboardObjectiveUpdateS2CPacket packet, CallbackInfo ci) {
         String scoreboardObjective = packet.getDisplayName().getString();
-        if (!scoreboardObjective.isBlank()) FruitfulUtilities.getInstance().inMelonKing = scoreboardObjective.equals("< Melon King >");
+        GeneralCategory generalCategory = FruitfulUtilities.getInstance().configManager.getCategory(GeneralCategory.class);
+        if (!(generalCategory.gameDetection && generalCategory.enabled)) {
+            FruitfulUtilities.getInstance().inMelonKing = generalCategory.enabled;
+            return;
+        }
+        if (!scoreboardObjective.isBlank())
+            FruitfulUtilities.getInstance().inMelonKing = scoreboardObjective.equals("< Melon King >");
     }
 
     @Inject(method = "onScoreboardPlayerUpdate", at = @At("HEAD"))
