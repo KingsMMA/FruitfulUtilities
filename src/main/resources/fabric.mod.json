@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "fruitfulutilities",
+  "version": "${version}",
+  "name": "Fruitfulutilities",
+  "description": "Mod for melon king",
+  "authors": [
+    "KingsDev"
+  ],
+  "contact": {
+    "website": "https://kingrabbit.dev/"
+  },
+  "license": "MIT",
+  "icon": "assets/fruitfulutilities/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.kingrabbit.fruitfulutilities.FruitfulUtilities"
+    ]
+  },
+  "mixins": [
+    "fruitfulutilities.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "fabric": "*",
+    "minecraft": "1.19.4"
+  }
+}
