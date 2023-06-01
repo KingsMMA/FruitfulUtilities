@@ -24,7 +24,7 @@ public abstract class PlayerListHudMixin {
 
     @Inject(method = "collectPlayerEntries", at = @At("RETURN"), cancellable = true)
     public void collectPlayerEntries(CallbackInfoReturnable<List<PlayerListEntry>> cir) {
-        if (FruitfulUtilities.getInstance().inMelonKing && ((TabCategory) FruitfulUtilities.getInstance().configManager.categoryIds.get("tab")).enabled) {
+        if (FruitfulUtilities.getInstance().inMelonKing && FruitfulUtilities.getInstance().configManager.getCategory(TabCategory.class).enabled) {
             List<AbstractClientPlayerEntity> players = MinecraftClient.getInstance().world.getPlayers();
             List<PlayerListEntry> returnValue = new ArrayList<>();
             for (PlayerListEntry entry : cir.getReturnValue()) {

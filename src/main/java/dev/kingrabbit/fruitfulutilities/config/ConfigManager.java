@@ -12,10 +12,12 @@ public class ConfigManager {
 
     public final LinkedHashMap<ConfigCategory, CategoryInfo> categoryList;
     public final Map<String, ConfigCategory> categoryIds;
+    public final Map<Class<? extends ConfigCategory>, ConfigCategory> categoryMap;
 
     public ConfigManager() {
         categoryList = new LinkedHashMap<>();
         categoryIds = new HashMap<>();
+        categoryMap = new HashMap<>();
 
         for (Class<? extends ConfigCategory> categoryClass : new Class[]{GeneralCategory.class, TabCategory.class}) {
             try {
@@ -23,12 +25,17 @@ public class ConfigManager {
                 CategoryInfo annotation = categoryClass.getAnnotation(CategoryInfo.class);
                 categoryList.put(category, annotation);
                 categoryIds.put(annotation.id(), category);
+                categoryMap.put(category.getClass(), category);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                      NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
         }
 
+    }
+
+    public <T extends ConfigCategory> T getCategory(Class<T> category) {
+        return category.cast(categoryMap.get(category));
     }
 
 }
