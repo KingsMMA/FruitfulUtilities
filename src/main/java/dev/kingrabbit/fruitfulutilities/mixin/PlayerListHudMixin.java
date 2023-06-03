@@ -29,12 +29,16 @@ public abstract class PlayerListHudMixin {
             List<PlayerListEntry> returnValue = new ArrayList<>();
             for (PlayerListEntry entry : cir.getReturnValue()) {
                 String name = getPlayerName(entry).getString().replaceAll("§.", "");
-                players.forEach(abstractClientPlayerEntity -> {
-                    if (abstractClientPlayerEntity.getUuid().equals(entry.getProfile().getId())) {
-                        entry.setDisplayName(Text.of("§a" + name));
+                for (AbstractClientPlayerEntity abstractClientPlayerEntity : players) {
+                    if (abstractClientPlayerEntity.getName().getString().equals(FruitfulUtilities.getInstance().monarchNametag)) {
+                        entry.nam;
                         returnValue.add(entry);
                     }
-                });
+                    if (abstractClientPlayerEntity.getUuid().equals(entry.getProfile().getId())) {
+//                        entry.setDisplayName(Text.of("§a" + name));
+                        if (!returnValue.contains(entry)) returnValue.add(entry);
+                    }
+                }
             }
             cir.setReturnValue(returnValue);
         } else {
@@ -49,5 +53,6 @@ public abstract class PlayerListHudMixin {
             cir.setReturnValue(returnValue);
         }
     }
+
 
 }
