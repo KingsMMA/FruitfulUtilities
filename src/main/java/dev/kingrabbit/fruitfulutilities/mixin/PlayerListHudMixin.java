@@ -31,7 +31,7 @@ public abstract class PlayerListHudMixin {
                 String name = getPlayerName(entry).getString().replaceAll("§.", "");
                 for (AbstractClientPlayerEntity abstractClientPlayerEntity : players) {
                     if (abstractClientPlayerEntity.getName().getString().equals(FruitfulUtilities.getInstance().monarchNametag)) {
-                        entry.nam;
+                        entry.setDisplayName(Text.of("§6" + name));
                         returnValue.add(entry);
                     }
                     if (abstractClientPlayerEntity.getUuid().equals(entry.getProfile().getId())) {
@@ -45,9 +45,10 @@ public abstract class PlayerListHudMixin {
             List<PlayerListEntry> returnValue = new ArrayList<>();
             for (PlayerListEntry entry : cir.getReturnValue()) {
                 String name = getPlayerName(entry).getString();
-                if (name.startsWith("§a"))
+                if (name.startsWith("§a")) {
                     name = name.substring(2);
-                entry.setDisplayName(Text.of(name));
+                    entry.setDisplayName(Text.of(name));
+                }
                 returnValue.add(entry);
             }
             cir.setReturnValue(returnValue);

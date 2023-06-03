@@ -8,7 +8,7 @@ import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 public class TabCategory extends ConfigCategory {
 
     @ConfigBoolean(id = "enabled", display = "Enable Category", description = "Enables the Better Player List category, improving the look and feel of the player list.")
-    public boolean enabled = true;
+    public boolean enabled = false;
 
     @ConfigBoolean(id = "monarch_gold", display = "Display Monarch as Gold", description = "Display the Monarch's name as gold.")
     public boolean monarchGold = true;

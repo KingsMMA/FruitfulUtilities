@@ -1,7 +1,9 @@
 package dev.kingrabbit.fruitfulutilities.mixin;
 
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
+import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.config.categories.GeneralCategory;
+import dev.kingrabbit.fruitfulutilities.config.categories.MessageHiderCategory;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
@@ -27,13 +29,23 @@ public class ClientPlayNetworkHandlerMixin {
             FruitfulUtilities.getInstance().inMelonKing = scoreboardObjective.equals("< Melon King >");
     }
 
-    @Inject(method = "onGameMessage", at = @At("HEAD"))
+    @Inject(method = "onGameMessage", at = @At("HEAD"), cancellable = true)
     public void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
+        ConfigManager configManager = FruitfulUtilities.getInstance().configManager;
         String message = packet.content().getString();
         if (message.matches("^> [a-zA-Z_0-9]{1,16} is the new (king|queen|monarch)!$")) {
             String monarch = message.split(" ")[1];
             System.out.println("New monarch detected: " + monarch);
             FruitfulUtilities.getInstance().monarchNametag = monarch;
+        }
+
+        MessageHiderCategory category = configManager.getCategory(MessageHiderCategory.class);
+        if (category.enabled) {
+            if (category.noSuperMelons && message.equals("> You don't have any Super Enchanted Melons. Get them by cooking four Enchanted Melon Slices, which are gotten by cooking four Melon Slices.")) {
+                ci.cancel();
+            } else if (category.increasedSecurity && (message.matches("^> Suspicious activity detected from [a-zA-Z_0-9]{1,16}. They have grenades and/or flashbangs!$") || message.matches("^> Suspicious activity detected from [a-zA-Z_0-9]{1,16}. They are entering the black market!$"))) {
+                ci.cancel();
+            }
         }
     }
 

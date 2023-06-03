@@ -1,7 +1,6 @@
 package dev.kingrabbit.fruitfulutilities.config;
 
-import dev.kingrabbit.fruitfulutilities.config.categories.GeneralCategory;
-import dev.kingrabbit.fruitfulutilities.config.categories.TabCategory;
+import dev.kingrabbit.fruitfulutilities.config.categories.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -19,7 +18,10 @@ public class ConfigManager {
         categoryIds = new HashMap<>();
         categoryMap = new HashMap<>();
 
-        for (Class<? extends ConfigCategory> categoryClass : new Class[]{GeneralCategory.class, TabCategory.class}) {
+        for (Class<? extends ConfigCategory> categoryClass : new Class[] {
+                GeneralCategory.class, MessageHiderCategory.class, TabCategory.class
+        }) {
+
             try {
                 ConfigCategory category = categoryClass.getDeclaredConstructor().newInstance();
                 CategoryInfo annotation = categoryClass.getAnnotation(CategoryInfo.class);
