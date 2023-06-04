@@ -13,7 +13,7 @@ public class MessageHiderCategory extends ConfigCategory {
     @ConfigBoolean(id = "no_super_melons", display = "Disable No Super Melons message", description = "Disables the \"You don't have any Super Enchanted Melons.\" message from the Merchant.")
     public boolean noSuperMelons = true;
 
-    @ConfigBoolean(id = "no_increased_security", display = "Disable Increase Security messages", description = "Disables the \"You don't have any Super Enchanted Melons.\" message from the Merchant.")
+    @ConfigBoolean(id = "no_suspicious_activity", display = "Disable Suspicious Activity messages", description = "Disables the suspicious activity message from the Increase Security upgrade.")
     public boolean increasedSecurity = true;
 
 }
