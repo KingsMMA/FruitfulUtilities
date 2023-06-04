@@ -5,10 +5,8 @@ import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.config.categories.GeneralCategory;
 import dev.kingrabbit.fruitfulutilities.config.categories.MessageHiderCategory;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.ScoreboardObjectiveUpdateS2CPacket;
-import net.minecraft.network.packet.s2c.play.ScoreboardPlayerUpdateS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -44,6 +42,8 @@ public class ClientPlayNetworkHandlerMixin {
             if (category.noSuperMelons && message.equals("> You don't have any Super Enchanted Melons. Get them by cooking four Enchanted Melon Slices, which are gotten by cooking four Melon Slices.")) {
                 ci.cancel();
             } else if (category.increasedSecurity && (message.matches("^> Suspicious activity detected from [a-zA-Z_0-9]{1,16}. They have grenades and/or flashbangs!$") || message.matches("^> Suspicious activity detected from [a-zA-Z_0-9]{1,16}. They are entering the black market!$"))) {
+                ci.cancel();
+            } else if (category.monarchUnderAttack && message.matches("^> The (king|queen|monarch) is under attack!$")) {
                 ci.cancel();
             }
         }
