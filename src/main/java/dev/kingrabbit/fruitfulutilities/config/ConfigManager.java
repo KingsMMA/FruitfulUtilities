@@ -19,7 +19,7 @@ public class ConfigManager {
         categoryMap = new HashMap<>();
 
         for (Class<? extends ConfigCategory> categoryClass : new Class[] {
-                GeneralCategory.class, MessageHiderCategory.class, TabCategory.class
+                GeneralCategory.class, SearchingTrackerCategory.class, MessageHiderCategory.class, TabCategory.class
         }) {
 
             try {
