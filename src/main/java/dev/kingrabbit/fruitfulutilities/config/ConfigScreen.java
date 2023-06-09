@@ -39,7 +39,7 @@ public class ConfigScreen extends Screen {
     public static String selected_element = "";
 
     public ConfigScreen() {
-        super(Text.of("test"));
+        super(Text.empty());
     }
 
     @Override
