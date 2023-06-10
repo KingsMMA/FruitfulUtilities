@@ -1,5 +1,6 @@
 package dev.kingrabbit.fruitfulutilities.config;
 
+import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.config.categories.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +20,7 @@ public class ConfigManager {
         categoryMap = new HashMap<>();
 
         for (Class<? extends ConfigCategory> categoryClass : new Class[] {
-                GeneralCategory.class, SearchingTrackerCategory.class, MessageHiderCategory.class, TabCategory.class
+                GeneralCategory.class, CodeHiderCategory.class, SearchingTrackerCategory.class, MessageHiderCategory.class, TabCategory.class
         }) {
 
             try {
@@ -38,6 +39,13 @@ public class ConfigManager {
 
     public <T extends ConfigCategory> T getCategory(Class<T> category) {
         return category.cast(categoryMap.get(category));
+    }
+
+    public boolean enabled() {
+        GeneralCategory generalCategory = getCategory(GeneralCategory.class);
+        if (!generalCategory.enabled) return false;
+        if (generalCategory.gameDetection) return FruitfulUtilities.getInstance().inMelonKing;
+        return true;
     }
 
 }

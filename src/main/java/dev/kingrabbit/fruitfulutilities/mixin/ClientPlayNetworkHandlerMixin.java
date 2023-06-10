@@ -44,6 +44,8 @@ public class ClientPlayNetworkHandlerMixin {
             FruitfulUtilities.getInstance().monarchNametag = monarch;
         }
 
+        if (!configManager.enabled()) return;
+
         MessageHiderCategory category = configManager.getCategory(MessageHiderCategory.class);
         if (category.enabled) {
             if (category.noSuperMelons && message.equals("> You don't have any Super Enchanted Melons. Get them by cooking four Enchanted Melon Slices, which are gotten by cooking four Melon Slices.")) {
@@ -58,6 +60,9 @@ public class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "onPlaySound", at = @At("HEAD"))
     public void onPlaySound(PlaySoundS2CPacket packet, CallbackInfo ci) {
+        ConfigManager configManager = FruitfulUtilities.getInstance().configManager;
+        if (!configManager.enabled()) return;
+
         if (packet.getCategory().equals(SoundCategory.MASTER) && packet.getPitch() == 2 && packet.getVolume() == 2) {
             Optional<RegistryKey<SoundEvent>> key = packet.getSound().getKey();
             boolean present = key.isPresent();

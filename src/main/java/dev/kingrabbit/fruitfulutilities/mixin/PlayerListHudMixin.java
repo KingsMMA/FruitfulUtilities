@@ -1,6 +1,7 @@
 package dev.kingrabbit.fruitfulutilities.mixin;
 
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
+import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.config.categories.TabCategory;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.PlayerListHud;
@@ -24,6 +25,9 @@ public abstract class PlayerListHudMixin {
 
     @Inject(method = "collectPlayerEntries", at = @At("RETURN"), cancellable = true)
     public void collectPlayerEntries(CallbackInfoReturnable<List<PlayerListEntry>> cir) {
+        ConfigManager configManager = FruitfulUtilities.getInstance().configManager;
+        if (!configManager.enabled()) return;
+
         if (FruitfulUtilities.getInstance().inMelonKing && FruitfulUtilities.getInstance().configManager.getCategory(TabCategory.class).enabled) {
             List<AbstractClientPlayerEntity> players = MinecraftClient.getInstance().world.getPlayers();
             List<PlayerListEntry> returnValue = new ArrayList<>();

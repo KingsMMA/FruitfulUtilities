@@ -1,6 +1,7 @@
 package dev.kingrabbit.fruitfulutilities.mixin;
 
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
+import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.config.categories.SearchingTrackerCategory;
 import dev.kingrabbit.fruitfulutilities.listener.TickListener;
 import net.minecraft.entity.player.PlayerInventory;
@@ -15,7 +16,10 @@ public class PlayerInventoryMixin {
 
     @Inject(method = "setStack", at = @At("HEAD"))
     public void setStack(int slot, ItemStack stack, CallbackInfo ci) {
-        SearchingTrackerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(SearchingTrackerCategory.class);
+        ConfigManager configManager = FruitfulUtilities.getInstance().configManager;
+        if (!configManager.enabled()) return;
+
+        SearchingTrackerCategory category = configManager.getCategory(SearchingTrackerCategory.class);
         if (!category.enabled) return;
         String itemName = stack.getItem().getName().getString();
         if (itemName.equals("Melon Slice") || itemName.equals("Air")) return;

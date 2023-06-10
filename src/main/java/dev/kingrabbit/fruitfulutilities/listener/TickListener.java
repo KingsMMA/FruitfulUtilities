@@ -2,6 +2,7 @@ package dev.kingrabbit.fruitfulutilities.listener;
 
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.Keybinds;
+import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.config.ConfigScreen;
 import dev.kingrabbit.fruitfulutilities.config.categories.*;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -21,14 +22,22 @@ public class TickListener implements ClientTickEvents.EndTick {
 
     @Override
     public void onEndTick(MinecraftClient client) {
+        FruitfulUtilities fruitfulUtilities = FruitfulUtilities.getInstance();
+
+        Keybinds keybinds = fruitfulUtilities.keybinds;
+        if (keybinds.openConfig.wasPressed()) {
+            client.setScreen(new ConfigScreen());
+        }
+
+        ConfigManager configManager = fruitfulUtilities.configManager;
+        if (!configManager.enabled()) return;
+
         tick += 1;
         if (tick >= 12_000) {
             tick = 0;
             searchingUntil = 0;
             clicked.clear();
         }
-
-        FruitfulUtilities fruitfulUtilities = FruitfulUtilities.getInstance();
 
         SearchingTrackerCategory searchingCategory = fruitfulUtilities.configManager.getCategory(SearchingTrackerCategory.class);
         if (searchingCategory.enabled) {
@@ -42,11 +51,6 @@ public class TickListener implements ClientTickEvents.EndTick {
                 }
                 searchingDrops.clear();
             }
-        }
-
-        Keybinds keybinds = fruitfulUtilities.keybinds;
-        if (keybinds.openConfig.wasPressed()) {
-            client.setScreen(new ConfigScreen());
         }
     }
 
