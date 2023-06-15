@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigDropdown;
+import dev.kingrabbit.fruitfulutilities.util.SoundUtils;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -47,6 +48,13 @@ public class ConfigScreen extends Screen {
         super.init();
 
         selected_element = "";
+    }
+
+    @Override
+    public void close() {
+        FruitfulUtilities.getInstance().configManager.save();
+
+        super.close();
     }
 
     @Override
@@ -212,7 +220,7 @@ public class ConfigScreen extends Screen {
                         selected_section = categoryInfo.id();
                         selected_element = "";
 
-                        clickSound();
+                        SoundUtils.clickSound();
                     }
                 }
 
@@ -227,7 +235,7 @@ public class ConfigScreen extends Screen {
                                     propertyY + 10 <= mouseY && mouseY <= propertyY + 10 + 24) {
                                 try {
                                     field.set(configCategory, !(boolean) field.get(configCategory));
-                                    clickSound();
+                                    SoundUtils.clickSound();
                                 } catch (IllegalAccessException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -236,7 +244,7 @@ public class ConfigScreen extends Screen {
                             ConfigDropdown configDropdown = field.getAnnotation(ConfigDropdown.class);
                             if (x2 - 64 <= mouseX && mouseX <= x2 - 16 &&
                                     propertyY + 13 <= mouseY && mouseY <= propertyY + 31) {
-                                clickSound();
+                                SoundUtils.clickSound();
 
                                 if (selected_element.equals(configDropdown.id())) {
                                     selected_element = "";
@@ -254,7 +262,7 @@ public class ConfigScreen extends Screen {
                                             try {
                                                 field.set(configCategory, i);
                                                 selected_element = "";
-                                                clickSound();
+                                                SoundUtils.clickSound();
                                                 return;
                                             } catch (IllegalAccessException e) {
                                                 throw new RuntimeException(e);
@@ -276,10 +284,6 @@ public class ConfigScreen extends Screen {
         }
 
         return super.mouseClicked(mouseX, mouseY, button);
-    }
-
-    public void clickSound() {
-        client.player.playSound(SoundEvents.UI_BUTTON_CLICK.value(), SoundCategory.MASTER, 0.4f, 1.0f);
     }
 
 }

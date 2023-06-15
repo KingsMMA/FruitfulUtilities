@@ -1,9 +1,13 @@
 package dev.kingrabbit.fruitfulutilities;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
-import dev.kingrabbit.fruitfulutilities.config.ConfigScreen;
 import dev.kingrabbit.fruitfulutilities.listener.TickListener;
+import dev.kingrabbit.fruitfulutilities.listener.WorldRenderListener;
+import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
+import me.x150.renderer.event.RenderEvents;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -11,11 +15,14 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.text.Text;
 
 @Environment(EnvType.CLIENT)
 public class FruitfulUtilities implements ClientModInitializer {
+
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
 
     private static FruitfulUtilities instance;
     public boolean inMelonKing = false;
@@ -33,21 +40,26 @@ public class FruitfulUtilities implements ClientModInitializer {
         configManager = new ConfigManager();
         keybinds = new Keybinds();
 
+        PathManager.loadPaths();
+
         ClientTickEvents.END_CLIENT_TICK.register(new TickListener());
+        WorldRenderEvents.END.register(new WorldRenderListener());
+        RenderEvents.WORLD.register(new WorldRenderListener());
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             LiteralCommandNode<FabricClientCommandSource> commandNode = dispatcher.register(
-                    ClientCommandManager.literal("fu")
+                    ClientCommandManager.literal("reload_paths")
                             .executes(context -> {
-                                context.getSource().sendFeedback(Text.of("Test"));
-                                MinecraftClient.getInstance().setScreen(new ConfigScreen());
-                                context.getSource().sendFeedback(Text.of("Test2"));
+                                context.getSource().sendFeedback(Text.of("Reloading paths..."));
+                                PathManager.loadPaths();
                                 return 1;
                             }));
-            dispatcher.register(ClientCommandManager.literal("fruitfulutilities").redirect(commandNode));
-            dispatcher.register(ClientCommandManager.literal("fruitfulutils").redirect(commandNode));
-            dispatcher.register(ClientCommandManager.literal("fruit").redirect(commandNode));
         });
+    }
+
+    public void restartRun() {
+        PathManager.purchased.clear();
+        PathManager.tracking.clear();
     }
 
 }
