@@ -405,6 +405,11 @@ public class PathScreen extends Screen {
                     if (!section.equals(_section)) {
                         section = _section;
                         SoundUtils.clickSound();
+
+                        if (xOffset() == -19284) {
+                            xOffset(width / 5f - 64 + 32 * 1.5f);
+                            yOffset(-64);
+                        }
                     }
                     return super.mouseClicked(mouseX, mouseY, button);
                 }
