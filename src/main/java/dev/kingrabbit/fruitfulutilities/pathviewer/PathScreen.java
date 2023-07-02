@@ -143,6 +143,55 @@ public class PathScreen extends Screen {
             renderUpgrade(matrices, urban.getAsJsonObject("science_start"), 3, 2, mouseX, mouseY);
             renderUpgrade(matrices, urban.getAsJsonObject("democracy_start"), 3, 3, mouseX, mouseY);
             renderUpgrade(matrices, urban.getAsJsonObject("true_urban_start"), 3, 4, mouseX, mouseY);
+        } else if (section.equals("true_urban")) {
+            JsonObject trueUrban = PathManager.paths.get("true_urban");
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("a_dollar_a_dime"), 1, 1, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("doubled_city_funding"), 2, 1, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("guaranteed_returns"), 3, 1, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("better_farmers"), 4, 1, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("incredibly_fast_growth"), 1, 2, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("blast_protection"), 2, 2, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("overclock_teleporter"), 3, 2, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("strict_trade_laws"), 4, 2, mouseX, mouseY);
+
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("bigger_bunker"), 1, 4, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("load_cannons"), 2, 3, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("floating_islands"), 2, 5, mouseX, mouseY);
+            connectUpgrades(1, 4, 2, 3);
+            connectUpgrades(1, 4, 2, 5);
+
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("faster_selling"), 3, 3, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("morale_boost"), 3, 4, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("farming_island"), 3, 5, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("lower_shipping_taxes"), 3, 6, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("even_better_harvesting"), 3, 7, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("island_skylights"), 2, 7, mouseX, mouseY);
+            connectUpgrades(2, 5, 3, 3);
+            connectUpgrades(2, 5, 3, 4);
+            connectUpgrades(2, 5, 3, 5);
+            connectUpgrades(2, 5, 3, 6);
+            connectUpgrades(2, 5, 3, 7);
+            connectUpgrades(2, 5, 2, 7);
+
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("quality_control"), 4, 4, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("better_filters"), 4, 3, mouseX, mouseY);
+            connectUpgrades(4, 3, 4, 4);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("defender_island"), 4, 5, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("deluxe_sky_farm"), 4, 6, mouseX, mouseY);
+            connectUpgrades(3, 5, 4, 4);
+            connectUpgrades(3, 5, 4, 5);
+            connectUpgrades(3, 5, 4, 6);
+
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("public_executions"), 5, 3, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("iron_skin"), 5, 4, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("the_grand_finale"), 5, 5, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("projectile_protection"), 5, 6, mouseX, mouseY);
+            renderUpgrade(matrices, trueUrban.getAsJsonObject("pricey_gunpowder"), 5, 7, mouseX, mouseY);
+            connectUpgrades(4, 5, 5, 3);
+            connectUpgrades(4, 5, 5, 4);
+            connectUpgrades(4, 5, 5, 5);
+            connectUpgrades(4, 5, 5, 6);
+            connectUpgrades(4, 5, 5, 7);
         }
 
         matrices.pop();
