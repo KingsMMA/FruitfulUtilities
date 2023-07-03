@@ -131,4 +131,20 @@ public class PathManager {
         };
     }
 
+    public static boolean locked(JsonObject upgrade) {
+        if (!upgrade.has("requires")) return false;
+        JsonArray required = upgrade.getAsJsonArray("requires");
+        if (required.isEmpty()) return false;
+        String path = upgradeToPath.get(upgrade);
+        for (JsonElement _requiredUpgradeId : required) {
+            String requiredUpgradeId = _requiredUpgradeId.getAsString();
+            boolean not = requiredUpgradeId.startsWith("!");
+            if (not) requiredUpgradeId = requiredUpgradeId.substring(1);
+            JsonObject requiredUpgrade = findUpgrade(path, requiredUpgradeId);
+            if (requiredUpgrade == null) continue;
+            boolean unlocked = purchased.contains(requiredUpgrade.get("display").getAsString());
+            if ((not && unlocked) || (!not && !unlocked)) return true;
+        }
+        return false;
+    }
 }
