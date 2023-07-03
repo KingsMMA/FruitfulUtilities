@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PathManager {
 
@@ -83,7 +84,6 @@ public class PathManager {
 
         if (upgrade.has("requires")) {
             String path = upgradeToPath.get(upgrade);
-
             JsonArray requires = upgrade.getAsJsonArray("requires");
             for (JsonElement _requiredId : requires) {
                 String requiredId = _requiredId.getAsString();
@@ -117,6 +117,15 @@ public class PathManager {
         if (paths.get(path).has(upgradeId)) return paths.get(path).getAsJsonObject(upgradeId);
         if (pathParents.containsKey(path)) return findUpgrade(pathParents.get(path), upgradeId);
         return null;
+    }
+
+    public static char[] currencyColours(String currency) {
+        return switch (currency) {
+            case "coins", "gold" -> new char[]{'6', 'e'};
+            case "shards", "cshards" -> new char[]{'3', 'b'};
+            case "favors" -> new char[]{'2', 'a'};
+            default -> new char[]{'8', '7'};
+        };
     }
 
 }

@@ -87,6 +87,11 @@ public class PathScreen extends Screen {
         drawnElements.clear();
         tooltip = null;
 
+        if (xOffset() == -19284) {
+            xOffset(width / 5f - 64 + 32 * 1.5f);
+            yOffset(-64);
+        }
+
         renderBackground(matrices);
 
         // Path Viewer
@@ -125,6 +130,62 @@ public class PathScreen extends Screen {
             renderUpgrade(matrices, beginnings.getAsJsonObject("urban_start"), 3, 5, mouseX, mouseY);
             connectUpgrades(1, 5, 2, 5);
             connectUpgrades(2, 5, 3, 5);
+
+            renderUpgrade(matrices, beginnings.getAsJsonObject("religion_start"), 3, 4, mouseX, mouseY);
+        } else if (section.equals("religion")){
+            JsonObject religion = PathManager.paths.get("religion");
+            renderUpgrade(matrices, religion.getAsJsonObject("special_delivery"), 1, 1, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("for_your_convenience"), 2, 1, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("saving_grace"), 3, 1, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("devotion"), 4, 1, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("bountiful_harvest"), 5, 1, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("plentiful_prizes"), 6, 1, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("forgiving_gods"), 7, 1, mouseX, mouseY);
+
+            renderUpgrade(matrices, religion.getAsJsonObject("harness_the_spirits"), 2, 4, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("faster_cooking"), 2, 2, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("faster_selling"), 1, 2, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("rise_from_ashes"), 1, 3, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("unconfined_existence"), 4, 3, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("better_farmers"), 1, 5, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("strict_trade_laws"), 1, 6, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("better_return_rates"), 2, 6, mouseX, mouseY);
+            connectUpgrades(2, 2, 2, 4);
+            connectUpgrades(1, 2, 2, 4);
+            connectUpgrades(1, 3, 2, 4);
+            connectUpgrades(2, 4, 4, 3);
+            connectUpgrades(1, 5, 2, 4);
+            connectUpgrades(1, 6, 2, 4);
+            connectUpgrades(2, 4, 2, 6);
+
+            renderUpgrade(matrices, religion.getAsJsonObject("packed_presents"), 3, 2, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("generous_gifts"), 3, 3, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("gold_rush"), 3, 4, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("the_graceful_one"), 5, 2, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("servitude"), 5, 4, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("another_dimension"), 5, 3, mouseX, mouseY);
+            connectUpgrades(3, 2, 4, 3);
+            connectUpgrades(3, 3, 4, 3);
+            connectUpgrades(3, 4, 4, 3);
+            connectUpgrades(4, 3, 5, 2);
+            connectUpgrades(4, 3, 5, 3);
+            connectUpgrades(4, 3, 5, 4);
+
+            renderUpgrade(matrices, religion.getAsJsonObject("hive_minded_harbingers"), 6, 2, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("complete_clarity"), 7, 2, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("submission"), 7, 3, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("the_greater_good"), 7, 4, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("holy_protection"), 7, 5, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("divine_intervention"), 7, 6, mouseX, mouseY);
+            renderUpgrade(matrices, religion.getAsJsonObject("by_the_power"), 6, 6, mouseX, mouseY);
+            connectUpgrades(5, 3, 6, 2);
+            connectUpgrades(5, 3, 7, 2);
+            connectUpgrades(5, 3, 7, 3);
+            connectUpgrades(5, 3, 7, 4);
+            connectUpgrades(5, 3, 7, 5);
+            connectUpgrades(5, 3, 7, 6);
+            connectUpgrades(5, 3, 6, 6);
+
         } else if (section.equals("urban")) {
             JsonObject urban = PathManager.paths.get("urban");
             renderUpgrade(matrices, urban.getAsJsonObject("melon_fertilizer"), 1, 1, mouseX, mouseY);
@@ -252,23 +313,13 @@ public class PathScreen extends Screen {
             StringBuilder information = new StringBuilder("Currently tracking the following upgrades:");
             for (JsonObject tracked : PathManager.tracking) {
                 information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
-                HashMap<String, Integer> cost = PathManager.getPrice(tracked);
+                HashMap<String, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
                 if (cost.isEmpty()) information.append("§eUnlocked!");
                 else {
                     for (String currency : cost.keySet()) {
-                        String /*a, */b;
-                        if (currency.equals("coins") || currency.equals("gold")) {
-//                        a = "6";
-                            b = "e";
-                        } else if (currency.contains("shard")) {
-//                        a = "3";
-                            b = "b";
-                        } else {
-//                        a = "8";
-                            b = "7";
-                        }
+                        char[] colours = PathManager.currencyColours(currency);
                         int price = cost.get(currency);
-                        information.append("§").append(b).append(price).append(" ").append(currency).append("§7, ");
+                        information.append("§").append(colours[1]).append(price).append(" ").append(currency).append("§7, ");
                     }
                     information = new StringBuilder(information.substring(0, information.length() - 2));
                 }
@@ -326,8 +377,6 @@ public class PathScreen extends Screen {
         y2 = 32 + y2 * 64;
 
         if (x1 == x2) {
-            // AAAAAAAAAAAAAAA
-            // TODO fix.
             GlStateManager._depthMask(false);
             GlStateManager._disableCull();
             RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
@@ -351,7 +400,9 @@ public class PathScreen extends Screen {
         RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
         Tessellator tessellator = RenderSystem.renderThreadTesselator();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
-        RenderSystem.lineWidth((float) (Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) * 0.1f) * _zoom);
+//        RenderSystem.lineWidth((float) (5 * Math.atan((y2 - y1) / (x2 - x1))));
+        RenderSystem.lineWidth(5 + (float) Math.abs(10 * Math.atan((y2 - y1) / (x2 - x1))));  // A constant width results in steeper angles appearing thinner
+//        RenderSystem.lineWidth(5);
         bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
         bufferBuilder.vertex((x1 + 29 + _xOffset) * _zoom, (y1 + 16 + _yOffset) * _zoom, 0).color(0, 0, 0, 255).normal(1.0f, 0.0f, 0.0f).next();
         bufferBuilder.vertex((x2 + 4 + _xOffset) * _zoom, (y2 + 16 + _yOffset) * _zoom, 0).color(0, 0, 0, 255).normal(1.0f, 0.0f, 0.0f).next();
@@ -391,18 +442,8 @@ public class PathScreen extends Screen {
             newLines.add(Text.literal("§a" + upgrade.get("display").getAsString()).asOrderedText());
             newLines.addAll(lines);
             String currency = upgrade.get("currency").getAsString();
-            String a, b;
-            if (currency.equals("coins") || currency.equals("gold")) {
-                a = "6";
-                b = "e";
-            } else if (currency.contains("shard")) {
-                a = "3";
-                b = "b";
-            } else {
-                a = "8";
-                b = "7";
-            }
-            newLines.add(Text.literal("§" + a + "Price: §" + b + upgrade.get("price").getAsString() + " " + currency).asOrderedText());
+            char[] colours = PathManager.currencyColours(currency);
+            newLines.add(Text.literal("§" + colours[0] + "Price: §" + colours[1] + upgrade.get("price").getAsString() + " " + currency).asOrderedText());
 
             tooltip = newLines;
         }
