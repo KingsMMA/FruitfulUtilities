@@ -64,40 +64,53 @@ public class PathManager {
                 if (upgrade.get("display").getAsString().equals(upgradeName)) {
                     if (upgrade.has("path")) {
                         String newPath = upgrade.get("path").getAsString();
-                        if (!PathScreen.sections.containsKey(newPath)) PathScreen.sections.put(newPath, new float[]{-19284, -64, 1});
+                        if (!PathScreen.sections.containsKey(newPath))
+                            PathScreen.sections.put(newPath, new float[]{-19284, -64, 1});
                     }
                 }
             }
         }
     }
 
-    public static HashMap<String, Integer> getPrice(JsonObject upgrade) {
-        return getPrice(upgrade, new HashMap<>());
+    public static List<JsonObject> requiredToUnlock(JsonObject upgrade) {
+        return requiredToUnlock(upgrade, true);
     }
 
-    public static HashMap<String, Integer> getPrice(JsonObject upgrade, HashMap<String, Integer> currentPrice) {
-        if (purchased.contains(upgrade.get("display").getAsString())) return currentPrice;
-        String currency = upgrade.get("currency").getAsString();
-        int price = upgrade.get("price").getAsInt();
-        if (currentPrice.containsKey(currency)) currentPrice.put(currency, currentPrice.get(currency) + price);
-        else currentPrice.put(currency, price);
+    public static List<JsonObject> requiredToUnlock(JsonObject upgrade, boolean includeUpgrade) {
+        List<JsonObject> allRequired = new ArrayList<>();
+
+        if (includeUpgrade) allRequired.add(upgrade);
+
         if (upgrade.has("requires")) {
             String path = upgradeToPath.get(upgrade);
 
             JsonArray requires = upgrade.getAsJsonArray("requires");
-            if (!requires.isEmpty()) {
-                int i = 0;
-                for (JsonElement _requiredId : requires) {
-                    i += 1;
-                    String requiredId = _requiredId.getAsString();
-                    JsonObject required = findUpgrade(path, requiredId);
-                    if (required != null) {
-                        getPrice(required, currentPrice);
-                    }
+            for (JsonElement _requiredId : requires) {
+                String requiredId = _requiredId.getAsString();
+                JsonObject required = findUpgrade(path, requiredId);
+                if (required != null) {
+                    List<JsonObject> requiredPath = requiredToUnlock(required);
+                    for (JsonObject req : requiredPath)
+                        if (!allRequired.contains(req))
+                            allRequired.add(req);
                 }
             }
         }
-        return currentPrice;
+
+        return allRequired;
+    }
+
+    public static HashMap<String, Integer> cumulativePrice(List<JsonObject> upgrades) {
+        HashMap<String, Integer> totalPrice = new HashMap<>();
+
+        for (JsonObject upgrade : upgrades) {
+            String currency = upgrade.get("currency").getAsString();
+            int price = upgrade.get("price").getAsInt();
+            if (totalPrice.containsKey(currency)) totalPrice.put(currency, totalPrice.get(currency) + price);
+            else totalPrice.put(currency, price);
+        }
+
+        return totalPrice;
     }
 
     public static JsonObject findUpgrade(String path, String upgradeId) {
