@@ -51,7 +51,7 @@ public class FruitfulUtilities implements ClientModInitializer {
             LiteralCommandNode<FabricClientCommandSource> commandNode = dispatcher.register(
                     ClientCommandManager.literal("reload_paths")
                             .executes(context -> {
-                                context.getSource().sendFeedback(Text.of("Reloading paths..."));
+                                context.getSource().sendFeedback(Text.of("§aReloading paths..."));
                                 PathManager.loadPaths();
                                 return 1;
                             }));
