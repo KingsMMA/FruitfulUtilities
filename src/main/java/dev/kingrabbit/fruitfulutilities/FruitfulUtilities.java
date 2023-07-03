@@ -7,6 +7,7 @@ import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.listener.TickListener;
 import dev.kingrabbit.fruitfulutilities.listener.WorldRenderListener;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
+import dev.kingrabbit.fruitfulutilities.pathviewer.PathScreen;
 import me.x150.renderer.event.RenderEvents;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -60,6 +61,10 @@ public class FruitfulUtilities implements ClientModInitializer {
     public void restartRun() {
         PathManager.purchased.clear();
         PathManager.tracking.clear();
+        PathScreen.sections.clear();
+        PathScreen.sections.put("beginnings", new float[]{-19284, -64, 1});
+        PathScreen.selectedElement.clear();
+        PathScreen.section = "beginnings";
     }
 
 }
