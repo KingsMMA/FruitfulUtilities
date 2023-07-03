@@ -3,6 +3,7 @@ package dev.kingrabbit.fruitfulutilities.pathviewer;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.kingrabbit.fruitfulutilities.util.ColorOverlay;
 import dev.kingrabbit.fruitfulutilities.util.Region;
 import dev.kingrabbit.fruitfulutilities.util.SoundUtils;
 import net.minecraft.client.gui.DrawableHelper;
@@ -414,19 +415,28 @@ public class PathScreen extends Screen {
 
         drawnElements.put(new Region((x + _xOffset) * _zoom, (y + _yOffset) * _zoom, (x + 32 + _xOffset) * _zoom, (y + 32 + _yOffset) * _zoom), upgrade);
 
+        boolean major = upgrade.has("path");
         boolean unlocked = PathManager.purchased.contains(upgrade.get("display").getAsString());
         boolean hovered = x + _xOffset <= mouseX / _zoom && mouseX / _zoom <= x + _xOffset + 32 &&
                 y + _yOffset <= mouseY / _zoom && mouseY / _zoom <= y + _yOffset + 32;
+        boolean selected = Objects.equals(selectedElement.get(section), upgrade);
+        boolean locked = PathManager.locked(upgrade);
+        boolean tracked = PathManager.tracking.contains(upgrade);
 
-        RenderSystem.setShaderTexture(0, Objects.equals(upgrade, selectedElement.get(section)) ?
-                (hovered ? HOVERED_SELECTED_PATH_ICON : SELECTED_PATH_ICON) :
-                (
-                        unlocked
-                                ? (hovered ? HOVERED_UNLOCKED_PATH_ICON : UNLOCKED_PATH_ICON)
-                                : (hovered ? HOVERED_PATH_ICON : PATH_ICON)
-                )
-        );
+        Color color = new Color(255, 255, 255);
+        if (unlocked) color = new Color(0, 255, 0);
+        else if (locked) color = new Color(255, 0, 0);
+        if (tracked) color = ColorOverlay.overlayColors(color, new Color(0, 255, 255), 0.25f);
+        if (selected) color = ColorOverlay.overlayColors(color, new Color(255, 255, 150), 0.35f);
+        if (hovered) color = ColorOverlay.overlayColors(color, new Color(150, 150, 150), 0.35f);
+
+        RenderSystem.setShaderTexture(0, major ? MAJOR_PATH_ICON : PATH_ICON);
+        RenderSystem.setShaderColor(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+
         DrawableHelper.drawTexture(matrices, (int) (_xOffset + x), (int) (_yOffset + y), 0, 0, 0, 32, 32, 32, 32);
+
+        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+
         if (hovered) {
             if (mouseX < width / 5 + 6) return;
             List<OrderedText> lines = textRenderer.wrapLines(StringVisitable.plain("§7" + upgrade.get("description").getAsString()), 150);
