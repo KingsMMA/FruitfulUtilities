@@ -91,6 +91,7 @@ public class PathManager {
                 String requiredId = _requiredId.getAsString();
                 JsonObject required = findUpgrade(path, requiredId);
                 if (required != null) {
+                    if (purchased.contains(required.get("display").getAsString())) continue;
                     List<JsonObject> requiredPath = requiredToUnlock(required);
                     for (JsonObject req : requiredPath)
                         if (!allRequired.contains(req))
