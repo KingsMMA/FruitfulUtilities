@@ -80,6 +80,8 @@ public class PathManager {
     public static List<JsonObject> requiredToUnlock(JsonObject upgrade, boolean includeUpgrade) {
         List<JsonObject> allRequired = new ArrayList<>();
 
+        if (purchased.contains(upgrade.get("display").getAsString())) return allRequired;
+
         if (includeUpgrade) allRequired.add(upgrade);
 
         if (upgrade.has("requires")) {
