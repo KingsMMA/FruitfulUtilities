@@ -33,15 +33,7 @@ public class PathScreen extends Screen {
     };
     public static final HashMap<String, ItemGroup> section_icons = new HashMap<>();
     public static final Identifier PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon.png");
-    public static final Identifier HOVERED_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon_hovered.png");
-    public static final Identifier SELECTED_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon_selected.png");
-    public static final Identifier HOVERED_SELECTED_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon_selected_hovered.png");
-    public static final Identifier UNLOCKED_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon_unlocked.png");
-    public static final Identifier HOVERED_UNLOCKED_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon_unlocked_hovered.png");
-    public static final Identifier LOCKED_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon_locked.png");
-    public static final Identifier HOVERED_LOCKED_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon_locked_hovered.png");
-    public static final Identifier BLOCKED_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon_blocked.png");
-    public static final Identifier HOVERED_BLOCKED_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon_blocked_hovered.png");
+    public static final Identifier MAJOR_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/major_path_icon.png");
     public static final int PRIMARY = new Color(70, 70, 70).getRGB();
     public static final int SECONDARY = new Color(50, 50, 50).getRGB();
     public static final int HEADER_COLOUR = new Color(70, 215, 10).getRGB();
