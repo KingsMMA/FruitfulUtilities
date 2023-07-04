@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
+import dev.kingrabbit.fruitfulutilities.hud.HudManager;
+import dev.kingrabbit.fruitfulutilities.hud.HudRenderer;
 import dev.kingrabbit.fruitfulutilities.listener.TickListener;
 import dev.kingrabbit.fruitfulutilities.listener.WorldRenderListener;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
@@ -16,6 +18,7 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.text.Text;
 
@@ -29,6 +32,7 @@ public class FruitfulUtilities implements ClientModInitializer {
     public boolean inMelonKing = false;
     public String monarchNametag = "";
     public ConfigManager configManager;
+    public HudManager hudManager;
     public Keybinds keybinds;
 
     public static FruitfulUtilities getInstance() {
@@ -39,6 +43,7 @@ public class FruitfulUtilities implements ClientModInitializer {
     public void onInitializeClient() {
         instance = this;
         configManager = new ConfigManager();
+        hudManager = new HudManager();
         keybinds = new Keybinds();
 
         PathManager.loadPaths();
