@@ -74,7 +74,7 @@ public class ConfigManager {
                     if (field.isAnnotationPresent(ConfigBoolean.class)) id = field.getAnnotation(ConfigBoolean.class).id();
                     else if (field.isAnnotationPresent(ConfigDropdown.class)) id = field.getAnnotation(ConfigDropdown.class).id();
 
-                    if (!section.equals("404") && section.has(id)) {
+                    if (!id.equals("404") && section.has(id)) {
                         try {
                             field.set(category, FruitfulUtilities.GSON.fromJson(section.get(id), field.getType()));
                         } catch (IllegalAccessException e) {
