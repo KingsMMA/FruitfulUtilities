@@ -21,12 +21,14 @@ body:
   attributes:
     label: Current Behavior
     description: A concise description of what you're experiencing.
+    placeholder: This is currently happening.
   validations:
     required: false
 - type: textarea
   attributes:
     label: Expected Behavior
     description: A concise description of what you expected to happen.
+    placeholder: This should be happening.
   validations:
     required: false
 - type: textarea
