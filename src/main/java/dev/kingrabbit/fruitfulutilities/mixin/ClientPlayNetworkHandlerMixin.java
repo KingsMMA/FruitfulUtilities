@@ -29,19 +29,7 @@ import java.util.regex.Pattern;
 public abstract class ClientPlayNetworkHandlerMixin {
 
     private static final Pattern UPGRADE_PURCHASED_PATTERN = Pattern.compile("^> The (king|queen|monarch|city) has purchased the (.*) (upgrade|renovation)( for [0-9]{1,16} .*)?\\.$");
-
-    @Inject(method = "onScoreboardObjectiveUpdate", at = @At("HEAD"))
-    public void onScoreboardObjectiveUpdate(ScoreboardObjectiveUpdateS2CPacket packet, CallbackInfo ci) {
-        String scoreboardObjective = packet.getDisplayName().getString();
-        GeneralCategory generalCategory = FruitfulUtilities.getInstance().configManager.getCategory(GeneralCategory.class);
-        if (!(generalCategory.gameDetection && generalCategory.enabled)) {
-            FruitfulUtilities.getInstance().inMelonKing = generalCategory.enabled;
-            return;
-        }
-        if (!scoreboardObjective.isBlank())
-            FruitfulUtilities.getInstance().inMelonKing = scoreboardObjective.equals("< Melon King >");
-    }
-
+    
     @Inject(method = "onGameMessage", at = @At("HEAD"), cancellable = true)
     public void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
         ConfigManager configManager = FruitfulUtilities.getInstance().configManager;
