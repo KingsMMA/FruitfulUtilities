@@ -1,6 +1,8 @@
 package dev.kingrabbit.fruitfulutilities.hud.elements;
 
 import com.google.gson.JsonObject;
+import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
+import dev.kingrabbit.fruitfulutilities.config.categories.PathViewerCategory;
 import dev.kingrabbit.fruitfulutilities.hud.ElementInfo;
 import dev.kingrabbit.fruitfulutilities.hud.HudElement;
 import dev.kingrabbit.fruitfulutilities.hud.Serializable;
@@ -11,10 +13,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @ElementInfo(id = "tracked_upgrades")
 public class TrackedUpgradesElement extends HudElement {
@@ -28,6 +27,9 @@ public class TrackedUpgradesElement extends HudElement {
 
     @Override
     public List<Object> render(float tickDelta) {
+        PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
+        if (!category.hud) return Collections.emptyList();
+
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         ArrayList<Object> result = new ArrayList<>();
 

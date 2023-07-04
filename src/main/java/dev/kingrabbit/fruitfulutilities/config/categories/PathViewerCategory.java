@@ -10,4 +10,7 @@ public class PathViewerCategory extends ConfigCategory {
     @ConfigBoolean(id = "cumulative", display = "Cumulative Cost", description = "Includes the cost of all required upgrades to the cost of the selected upgrade.")
     public boolean cumulative = true;
 
+    @ConfigBoolean(id = "hud", display = "Show on HUD", description = "Shows all currently tracked upgrades on the HUD.")
+    public boolean hud = true;
+
 }
