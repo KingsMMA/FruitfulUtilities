@@ -80,7 +80,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
         if (message.equals("» Joined game: < Melon King > (4.0) by DeepSeaBlue.")) {
             FruitfulUtilities.getInstance().restartRun();
         } else if (message.matches("^The (king|queen|monarch) has [1-5][0-9] trophies! \\(Hover to view buffs\\)$")) {
-            PathManager.unlocked("economics_room");
+            PathManager.unlocked("Economics Room");
         }
     }
 
