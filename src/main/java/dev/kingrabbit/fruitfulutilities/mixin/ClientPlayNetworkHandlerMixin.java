@@ -29,16 +29,12 @@ import java.util.regex.Pattern;
 public abstract class ClientPlayNetworkHandlerMixin {
 
     private static final Pattern UPGRADE_PURCHASED_PATTERN = Pattern.compile("^> The (king|queen|monarch|city) has purchased the (.*) (upgrade|renovation)( for [0-9]{1,16} .*)?\\.$");
-    
+
     @Inject(method = "onGameMessage", at = @At("HEAD"), cancellable = true)
     public void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
         ConfigManager configManager = FruitfulUtilities.getInstance().configManager;
         String message = packet.content().getString();
         if (message.matches("^> [a-zA-Z_0-9]{1,16} is the new (king|queen|monarch)!$")) {
-            String monarch = message.split(" ")[1];
-            System.out.println("New monarch detected: " + monarch);
-            FruitfulUtilities.getInstance().monarchNametag = monarch;
-
             FruitfulUtilities.getInstance().restartRun();
             return;
         }

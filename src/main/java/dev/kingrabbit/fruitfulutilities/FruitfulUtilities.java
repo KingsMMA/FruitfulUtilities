@@ -30,7 +30,6 @@ public class FruitfulUtilities implements ClientModInitializer {
 
 
     private static FruitfulUtilities instance;
-    public String monarchNametag = "";
     public ConfigManager configManager;
     public HudManager hudManager;
     public Keybinds keybinds;
