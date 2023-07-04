@@ -1,0 +1,19 @@
+name: ❓ Question
+description: Ask a question about the mod
+title: "[QST] Title"
+labels: [Question]
+body:
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please search to see if an issue already exists for your question.
+    options:
+    - label: I have searched the existing issues
+      required: true
+- type: textarea
+  attributes:
+    label: Question Description
+    description: In as much detail as possible, please describe your question to best allow others to help you.  Please attach any relevant logs or screenshots here.
+    placeholder: What is your requested feature?
+  validations:
+    required: true
