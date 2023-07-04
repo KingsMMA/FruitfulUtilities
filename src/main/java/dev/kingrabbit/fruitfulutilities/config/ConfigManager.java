@@ -56,7 +56,7 @@ public class ConfigManager {
     public boolean enabled() {
         GeneralCategory generalCategory = getCategory(GeneralCategory.class);
         if (!generalCategory.enabled) return false;
-        if (generalCategory.gameDetection) return FruitfulUtilities.getInstance().inMelonKing;
+        if (generalCategory.gameDetection) return MinecraftClient.getInstance().player != null && FruitfulUtilities.inPlot(MinecraftClient.getInstance().player.getBlockPos());
         return true;
     }
 

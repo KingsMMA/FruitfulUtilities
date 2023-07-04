@@ -21,6 +21,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
 
 @Environment(EnvType.CLIENT)
 public class FruitfulUtilities implements ClientModInitializer {
@@ -29,7 +30,6 @@ public class FruitfulUtilities implements ClientModInitializer {
 
 
     private static FruitfulUtilities instance;
-    public boolean inMelonKing = false;
     public String monarchNametag = "";
     public ConfigManager configManager;
     public HudManager hudManager;
@@ -71,6 +71,17 @@ public class FruitfulUtilities implements ClientModInitializer {
         PathScreen.sections.put("beginnings", new float[]{-19284, -64, 1});
         PathScreen.selectedElement.clear();
         PathScreen.section = "beginnings";
+    }
+
+
+
+    public static boolean inPlot(BlockPos pos) {
+        return inPlot(pos.getX(), pos.getZ());
+    }
+
+    public static boolean inPlot(float x, float z) {
+        return -675 >= x && x >= -975 &&
+                -3970 >= z && z >= -4270;
     }
 
 }
