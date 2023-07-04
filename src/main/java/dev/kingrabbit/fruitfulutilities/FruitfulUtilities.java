@@ -60,6 +60,23 @@ public class FruitfulUtilities implements ClientModInitializer {
                                 PathManager.loadPaths();
                                 return 1;
                             }));
+            dispatcher.register(
+                    ClientCommandManager.literal("unlock_path")
+                            .then(ClientCommandManager.argument("path", new PathArgumentType())
+                                    .executes(context -> {
+                                        String path = context.getArgument("path", String.class);
+                                        if (PathScreen.sections.containsKey(path)) context.getSource().sendError(Text.of("§cThe specified path has already been unlocked."));
+                                        else {
+                                            PathScreen.sections.put(path, new float[]{-19284, -64, 1});
+                                            context.getSource().sendFeedback(Text.of("§aUnlocked \"" + path + "\" path."));
+                                        }
+                                        return 1;
+                                    }))
+                            .executes(context -> {
+                                context.getSource().sendError(Text.of("§cPlease provide a path to unlock."));
+                                return 1;
+                            })
+            );
         });
     }
 
@@ -71,8 +88,6 @@ public class FruitfulUtilities implements ClientModInitializer {
         PathScreen.selectedElement.clear();
         PathScreen.section = "beginnings";
     }
-
-
 
     public static boolean inPlot(BlockPos pos) {
         return inPlot(pos.getX(), pos.getZ());
