@@ -6,6 +6,7 @@ import dev.kingrabbit.fruitfulutilities.config.categories.*;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigDropdown;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -28,9 +29,9 @@ public class ConfigManager {
         categoryList = new LinkedHashMap<>();
         categoryIds = new HashMap<>();
         categoryMap = new HashMap<>();
-        
-        for (Class<? extends ConfigCategory> categoryClass : new Class[] {
-                GeneralCategory.class, GUILocationsCategory.class, PathViewerCategory.class, CodeHiderCategory.class, SearchingTrackerCategory.class, MessageHiderCategory.class, TabCategory.class
+
+        for (Class<? extends ConfigCategory> categoryClass : new Class[]{
+                GeneralCategory.class, GUILocationsCategory.class, PathViewerCategory.class, CodeHiderCategory.class, SearchingTrackerCategory.class, MessageHiderCategory.class, TabCategory.class, AuctionTimerCategory.class
         }) {
 
             try {
