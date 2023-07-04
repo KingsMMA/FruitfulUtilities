@@ -1,7 +1,7 @@
-name: 🐞 Bug
-description: File a bug/issue
+name: 🐞 Bug Report
+description: File a bug/issue report
 title: "[BUG] <title>"
-labels: [Bug, Needs Triage]
+labels: [bug]
 body:
 - type: checkboxes
   attributes:
@@ -10,6 +10,13 @@ body:
     options:
     - label: I have searched the existing issues
       required: true
+- type: checkboxes
+  attributes:
+    label: Are you using the latest version of the mod?
+    description: Please check to see if you are using the latest version of the mod.
+    options:
+      - label: I am using the latest version of the mod
+        required: true
 - type: textarea
   attributes:
     label: Current Behavior
@@ -28,24 +35,9 @@ body:
     description: Steps to reproduce the behavior.
     placeholder: |
       1. In this environment...
-      1. With this config...
-      1. Run '...'
-      1. See error...
-  validations:
-    required: false
-- type: textarea
-  attributes:
-    label: Environment
-    description: |
-      examples:
-        - **OS**: Ubuntu 20.04
-        - **Node**: 13.14.0
-        - **npm**: 7.6.3
-    value: |
-        - OS:
-        - Node:
-        - npm:
-    render: markdown
+      2. With this config...
+      3. Run '...'
+      4. See error...
   validations:
     required: false
 - type: textarea
