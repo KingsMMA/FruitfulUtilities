@@ -13,4 +13,7 @@ public class PathViewerCategory extends ConfigCategory {
     @ConfigBoolean(id = "hud", display = "Show on HUD", description = "Shows all currently tracked upgrades on the HUD.")
     public boolean hud = true;
 
+    @ConfigBoolean(id = "hide_if_unlocked", display = "Hide if Unlocked", description = "Hides tracked upgrades if they have already been unlocked.")
+    public boolean hideIfUnlocked = false;
+
 }

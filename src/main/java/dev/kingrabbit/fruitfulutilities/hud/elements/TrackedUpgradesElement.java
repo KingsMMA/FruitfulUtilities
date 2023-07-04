@@ -41,8 +41,11 @@ public class TrackedUpgradesElement extends HudElement {
             for (JsonObject tracked : PathManager.tracking) {
                 StringBuilder information = new StringBuilder("    §7• §a" + tracked.get("display").getAsString() + "§7: ");
                 HashMap<String, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
-                if (cost.isEmpty()) information.append("§eUnlocked!");
-                else {
+                if (cost.isEmpty()) {
+                    if (category.hideIfUnlocked) continue;
+                    else information.append("§eUnlocked!");
+                    result.add(information.toString());
+                } else {
                     for (String currency : cost.keySet()) {
                         char[] colours = PathManager.currencyColours(currency);
                         int price = cost.get(currency);

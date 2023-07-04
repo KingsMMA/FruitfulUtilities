@@ -3,6 +3,8 @@ package dev.kingrabbit.fruitfulutilities.pathviewer;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
+import dev.kingrabbit.fruitfulutilities.config.categories.PathViewerCategory;
 import dev.kingrabbit.fruitfulutilities.util.ColorOverlay;
 import dev.kingrabbit.fruitfulutilities.util.Region;
 import dev.kingrabbit.fruitfulutilities.util.SoundUtils;
@@ -303,12 +305,18 @@ public class PathScreen extends Screen {
                 y += textRenderer.fontHeight + 2;
             }
         } else {
+            PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
+
             StringBuilder information = new StringBuilder("Currently tracking the following upgrades:");
             for (JsonObject tracked : PathManager.tracking) {
-                information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
                 HashMap<String, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
-                if (cost.isEmpty()) information.append("§eUnlocked!");
-                else {
+                if (cost.isEmpty()) {
+                    if (!category.hideIfUnlocked) {
+                        information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
+                        information.append("§eUnlocked!");
+                    }
+                } else {
+                    information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
                     for (String currency : cost.keySet()) {
                         char[] colours = PathManager.currencyColours(currency);
                         int price = cost.get(currency);
