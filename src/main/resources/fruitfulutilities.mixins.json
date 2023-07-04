@@ -3,14 +3,12 @@
   "minVersion": "0.8",
   "package": "dev.kingrabbit.fruitfulutilities.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-    "PlayerInventoryMixin"
-  ],
+  "mixins": [],
   "client": [
     "BlockEntityRenderDispatcherMixin",
     "ChunkRendererRegionMixin",
     "ClientPlayNetworkHandlerMixin",
-    "PlayerListHudMixin"
+    "PlayerInventoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
