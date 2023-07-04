@@ -1,0 +1,30 @@
+name: 💡 Feature Request
+description: Request a feature or suggest a change
+title: "[SUG] Title"
+labels: [Feature Request]
+body:
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please search to see if an issue already exists for the bug you encountered.
+    options:
+    - label: I have searched the existing issues
+      required: true
+- type: dropdown
+  attributes:
+    label: Is this a new feature?
+    description: If implemented, will this change add a new feature to the mod or will it modify an existing one?
+    multiple: false
+    options:
+        - New Feature
+        - Existing Feature
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Feature Description
+    description: In as much detail as possible, please describe your requested feature and how it would positively impact users of the mod.
+    placeholder: What is your requested feature?
+  validations:
+    required: true
+    
