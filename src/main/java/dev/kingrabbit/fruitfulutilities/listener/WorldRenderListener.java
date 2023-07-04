@@ -12,7 +12,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.block.entity.BeaconBlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
@@ -27,7 +26,8 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
         PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
 
         for (JsonObject upgrade : PathManager.tracking) {
-            if (PathManager.purchased.contains(upgrade.get("display").getAsString()) && category.hideIfUnlocked) continue;
+            if (PathManager.purchased.contains(upgrade.get("display").getAsString()) && category.hideIfUnlocked)
+                continue;
 
             String[] location = upgrade.get("location").getAsString().split(",");
             if (location.length != 3)
@@ -42,9 +42,6 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
             int alpha = (int) Math.min(Math.max(Math.pow(2, 0.5 * distance) * 5, 50), 255);
             Renderer3d.renderFilled(matrices, new Color(140, 0, 250, alpha), upgradePos, new Vec3d(1, 1, 1));
             Renderer3d.stopRenderThroughWalls();
-//            if (distance >= 5) {
-//                RenderUtil.renderBeaconBeam(new BlockPos(x, y, z));
-//            }
         }
     }
 
@@ -56,7 +53,8 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
 
         Vec3d playerPos = MinecraftClient.getInstance().player.getPos();
         for (JsonObject upgrade : PathManager.tracking) {
-            if (PathManager.purchased.contains(upgrade.get("display").getAsString()) && category.hideIfUnlocked) continue;
+            if (PathManager.purchased.contains(upgrade.get("display").getAsString()) && category.hideIfUnlocked)
+                continue;
 
             String[] location = upgrade.get("location").getAsString().split(",");
             if (location.length != 3) {
@@ -73,7 +71,7 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
 //                System.out.println(x);
                 context.matrixStack().push();
                 context.matrixStack().translate(x - playerPos.x, y - playerPos.y - 0.7, z - playerPos.z);
-                RenderSystem.setShaderColor(140, 0, 250, alpha);  // TODO alpha
+                RenderSystem.setShaderColor(140, 0, 250, alpha);
                 BeaconBlockEntityRenderer.renderBeam(
                         context.matrixStack(),
                         context.consumers(),
