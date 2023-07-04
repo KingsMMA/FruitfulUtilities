@@ -284,8 +284,8 @@ public class PathScreen extends Screen {
                 if (isUnlocked) PathManager.purchased.remove(display);
                 else PathManager.purchased.add(display);
             }).dimensions(width / 10 + 10, y + 20, width / 10 - 10 - 20, 30).build();
-            addSelectableChild(track);//.render(matrices, mouseX, mouseY, delta);n
-            addSelectableChild(unlock);//.render(matrices, mouseX, mouseY, delta);
+            addSelectableChild(track);
+            addSelectableChild(unlock);
             track.render(matrices, mouseX, mouseY, delta);
             unlock.render(matrices, mouseX, mouseY, delta);
 
