@@ -24,7 +24,7 @@ body:
   attributes:
     label: Feature Description
     description: In as much detail as possible, please describe your requested feature and how it would positively impact users of the mod.
-    placeholder: What is your requested feature?
+    placeholder: What is your question?
   validations:
     required: true
     
