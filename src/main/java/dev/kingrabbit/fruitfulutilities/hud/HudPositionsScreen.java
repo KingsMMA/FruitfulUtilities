@@ -5,6 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 
 import java.lang.reflect.Field;
@@ -34,7 +35,7 @@ public class HudPositionsScreen extends Screen {
         if (button == 0) {
             LinkedHashMap<HudElement, ElementInfo> elements = FruitfulUtilities.getInstance().hudManager.elementList;
             for (HudElement element : elements.keySet()) {
-                List<String> lines = element.render(0);
+                List<Object> lines = element.render(0);
                 if (lines.isEmpty()) continue;
                 Class<? extends HudElement> elementClass = element.getClass();
                 try {
@@ -45,8 +46,8 @@ public class HudPositionsScreen extends Screen {
 
                     TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
                     int maxWidth = 0;
-                    for (String line : lines) {
-                        int lineWidth = textRenderer.getWidth(line);
+                    for (Object line : lines) {
+                        int lineWidth = line instanceof String ? textRenderer.getWidth((String) line) : textRenderer.getWidth((OrderedText) line);
                         if (lineWidth > maxWidth) maxWidth = lineWidth;
                     }
 
