@@ -46,3 +46,7 @@ Thanks to everyone who has contributed to FruitfulUtilities.
 <a href="https://github.com/KingsMMA/FruitfulData/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=KingsMMA/FruitfulData" />
 </a>
+
+# License
+FruitfulUtilities is licensed under GNU Affero General Public License v3.0.  
+For more information, see [here](https://github.com/KingsMMA/FruitfulUtilities/blob/master/LICENSE).
