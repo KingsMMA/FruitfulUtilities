@@ -28,9 +28,9 @@ public class ConfigManager {
         categoryList = new LinkedHashMap<>();
         categoryIds = new HashMap<>();
         categoryMap = new HashMap<>();
-
+        
         for (Class<? extends ConfigCategory> categoryClass : new Class[] {
-                GeneralCategory.class, PathViewerCategory.class, CodeHiderCategory.class, SearchingTrackerCategory.class, MessageHiderCategory.class, TabCategory.class
+                GeneralCategory.class, GUILocationsCategory.class, PathViewerCategory.class, CodeHiderCategory.class, SearchingTrackerCategory.class, MessageHiderCategory.class, TabCategory.class
         }) {
 
             try {
@@ -67,13 +67,14 @@ public class ConfigManager {
             JsonObject data = FruitfulUtilities.GSON.fromJson(reader, JsonObject.class);
             for (String categoryId : data.keySet()) {
                 ConfigCategory category = categoryIds.get(categoryId);
+                if (category == null) continue;
                 JsonObject section = data.getAsJsonObject(categoryId);
                 for (Field field : category.getClass().getFields()) {
                     String id = "404";
                     if (field.isAnnotationPresent(ConfigBoolean.class)) id = field.getAnnotation(ConfigBoolean.class).id();
                     else if (field.isAnnotationPresent(ConfigDropdown.class)) id = field.getAnnotation(ConfigDropdown.class).id();
 
-                    if (section.has(id)) {
+                    if (!section.equals("404") && section.has(id)) {
                         try {
                             field.set(category, FruitfulUtilities.GSON.fromJson(section.get(id), field.getType()));
                         } catch (IllegalAccessException e) {
