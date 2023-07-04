@@ -7,8 +7,12 @@ import dev.kingrabbit.fruitfulutilities.config.categories.GeneralCategory;
 import dev.kingrabbit.fruitfulutilities.config.categories.MessageHiderCategory;
 import dev.kingrabbit.fruitfulutilities.listener.TickListener;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.command.CommandSource;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.network.packet.s2c.play.ScoreboardObjectiveUpdateS2CPacket;
@@ -80,6 +84,21 @@ public abstract class ClientPlayNetworkHandlerMixin {
                 RegistryKey<SoundEvent> soundEventRegistryKey = key.get();
                 if (soundEventRegistryKey.getValue().toString().equals("minecraft:entity.player.levelup")) {
                     if (TickListener.searchingUntil - 5 > TickListener.tick) return;
+
+                    MinecraftClient client = MinecraftClient.getInstance();
+                    if (client.player == null) return;
+                    ItemStack mainHandStack = client.player.getMainHandStack();
+                    if (mainHandStack.hasNbt()) {
+                        NbtCompound nbt = mainHandStack.getNbt();
+                        if (nbt.contains("PublicBukkitValues", NbtElement.COMPOUND_TYPE)) {
+                            NbtCompound publicBukkitValues = nbt.getCompound("PublicBukkitValues");
+                            if (publicBukkitValues.contains("hypercube:searching")) {
+                                double searchingValue = publicBukkitValues.getDouble("hypercube:searching");
+                                if (searchingValue < 1) return;
+                            }
+                        }
+                    }
+
                     TickListener.searchingUntil = TickListener.tick + 20;
                 }
             }
