@@ -43,9 +43,6 @@ public class PathScreen extends Screen {
     private static final Identifier TAB_TEXTURE = new Identifier("fruitfulutilities", "textures/gui/tabs.png");
     public static String section = "beginnings";
     public static HashMap<String, float[]> sections = new HashMap<>();
-    //    public static float xOffset = -19284;
-//    public static float yOffset = -64;  // TODO change to -64
-//    public static float zoom = 1;
     public static HashMap<String, JsonObject> selectedElement = new HashMap<>();
 
     public final HashMap<Region, JsonObject> drawnElements = new HashMap<>();
