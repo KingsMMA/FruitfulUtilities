@@ -36,12 +36,12 @@ public class SearchingTrackerElement extends HudElement {
         List<Integer> keysToRemove = new ArrayList<>();
         for (Integer tick : drops.keySet()) {
             int timeSince = Math.abs(TickListener.tick - tick);
-            if (timeSince >= 60) {
+            if (timeSince >= 100) {
                 keysToRemove.add(tick);
                 continue;
             }
             if (timeSince >= 50)
-                result.add("<opac>" + ((int) ((60 - timeSince) / 10f * 100f)) + "</opac>");
+                result.add("<opac>" + ((int) ((100 - timeSince) / 10f * 100f)) + "</opac>");
             result.add(drops.get(tick));
         }
         for (Integer key : keysToRemove) {
