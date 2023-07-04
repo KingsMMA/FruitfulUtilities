@@ -51,6 +51,7 @@ public class FruitfulUtilities implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(new TickListener());
         WorldRenderEvents.END.register(new WorldRenderListener());
         RenderEvents.WORLD.register(new WorldRenderListener());
+        HudRenderCallback.EVENT.register(new HudRenderer());
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             LiteralCommandNode<FabricClientCommandSource> commandNode = dispatcher.register(
