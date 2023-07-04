@@ -74,7 +74,7 @@ public class ConfigScreen extends Screen {
 
         matrices.push();
         matrices.scale(2f, 2f, 2f);
-        DrawableHelper.drawCenteredTextWithShadow(matrices, client.textRenderer, "FruitUtilities", (width / 2) / 2, (height / 2 - 150 + 24) / 2, 0xFFFFFF);
+        DrawableHelper.drawCenteredTextWithShadow(matrices, client.textRenderer, "FruitfulUtilities", (width / 2) / 2, (height / 2 - 150 + 24) / 2, 0xFFFFFF);
         matrices.pop();
 
         // Categories Bevel
