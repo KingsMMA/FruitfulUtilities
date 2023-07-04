@@ -3,6 +3,7 @@ package dev.kingrabbit.fruitfulutilities.hud;
 import com.google.gson.JsonObject;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.hud.elements.AuctionTimerElement;
+import dev.kingrabbit.fruitfulutilities.hud.elements.SearchingTrackerElement;
 import dev.kingrabbit.fruitfulutilities.hud.elements.TrackedUpgradesElement;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -29,7 +30,7 @@ public class HudManager {
         elementMap = new HashMap<>();
 
         for (Class<? extends HudElement> elementClass : new Class[]{
-                AuctionTimerElement.class, TrackedUpgradesElement.class
+                AuctionTimerElement.class, TrackedUpgradesElement.class, SearchingTrackerElement.class
         }) {
             try {
                 HudElement category = elementClass.getDeclaredConstructor().newInstance();
