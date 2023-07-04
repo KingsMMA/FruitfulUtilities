@@ -16,6 +16,8 @@ public class ChunkRendererRegionMixin {
 
     @Inject(method = "getBlockState", at = @At("HEAD"), cancellable = true)
     public void getBlockState(BlockPos pos, CallbackInfoReturnable<BlockState> cir) {
+        if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
+
         if (!FruitfulUtilities.inPlot(pos) && FruitfulUtilities.inPlot(MinecraftClient.getInstance().player.getBlockPos())) {
             cir.setReturnValue(Blocks.VOID_AIR.getDefaultState());
         }

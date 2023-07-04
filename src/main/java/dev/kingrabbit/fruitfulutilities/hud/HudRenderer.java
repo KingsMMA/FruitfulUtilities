@@ -18,6 +18,8 @@ public class HudRenderer implements HudRenderCallback {
 
     @Override
     public void onHudRender(MatrixStack matrices, float tickDelta) {
+        if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
+
         LinkedHashMap<HudElement, ElementInfo> elements = FruitfulUtilities.getInstance().hudManager.elementList;
         for (HudElement element : elements.keySet()) {
             List<Object> lines = element.render(tickDelta);

@@ -2,6 +2,7 @@ package dev.kingrabbit.fruitfulutilities.listener;
 
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import me.x150.renderer.event.RenderEvents;
 import me.x150.renderer.render.Renderer3d;
@@ -46,6 +47,8 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
 
     @Override
     public void onEnd(WorldRenderContext context) {
+        if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
+
         Vec3d playerPos = MinecraftClient.getInstance().player.getPos();
         for (JsonObject upgrade : PathManager.tracking) {
             if (PathManager.purchased.contains(upgrade.get("display").getAsString())) continue;
