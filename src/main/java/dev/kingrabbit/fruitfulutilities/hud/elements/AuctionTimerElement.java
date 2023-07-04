@@ -1,5 +1,7 @@
 package dev.kingrabbit.fruitfulutilities.hud.elements;
 
+import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
+import dev.kingrabbit.fruitfulutilities.config.categories.AuctionTimerCategory;
 import dev.kingrabbit.fruitfulutilities.hud.ElementInfo;
 import dev.kingrabbit.fruitfulutilities.hud.HudElement;
 import dev.kingrabbit.fruitfulutilities.hud.Serializable;
@@ -20,13 +22,13 @@ public class AuctionTimerElement extends HudElement {
 
     @Override
     public List<Object> render(float tickDelta) {
+        if (!FruitfulUtilities.getInstance().configManager.getCategory(AuctionTimerCategory.class).enabled) return Collections.emptyList();
+
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 
-        // Get the current minute and second
         int currentMinute = calendar.get(Calendar.MINUTE);
         int currentSecond = calendar.get(Calendar.SECOND);
 
-        // Calculate the time remaining until the next 30-minute interval
         int minutesRemaining = 30 - (currentMinute % 30) - 1;
         int secondsRemaining = 60 - currentSecond;
         if (secondsRemaining == 60) {
