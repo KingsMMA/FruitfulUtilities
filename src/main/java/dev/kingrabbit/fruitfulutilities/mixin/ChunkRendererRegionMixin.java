@@ -1,5 +1,6 @@
 package dev.kingrabbit.fruitfulutilities.mixin;
 
+import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
@@ -15,18 +16,9 @@ public class ChunkRendererRegionMixin {
 
     @Inject(method = "getBlockState", at = @At("HEAD"), cancellable = true)
     public void getBlockState(BlockPos pos, CallbackInfoReturnable<BlockState> cir) {
-        if (!inPlot(pos) && inPlot(MinecraftClient.getInstance().player.getBlockPos())) {
+        if (!FruitfulUtilities.inPlot(pos) && FruitfulUtilities.inPlot(MinecraftClient.getInstance().player.getBlockPos())) {
             cir.setReturnValue(Blocks.VOID_AIR.getDefaultState());
         }
-    }
-
-    private boolean inPlot(BlockPos pos) {
-        return inPlot(pos.getX(), pos.getZ());
-    }
-
-    private boolean inPlot(float x, float z) {
-        return -675 >= x && x >= -975 &&
-                -3970 >= z && z >= -4270;
     }
 
 }
