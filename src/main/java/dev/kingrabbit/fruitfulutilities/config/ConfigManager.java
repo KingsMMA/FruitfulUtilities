@@ -25,6 +25,7 @@ public class ConfigManager {
     public final Map<String, ConfigCategory> categoryIds;
     public final Map<Class<? extends ConfigCategory>, ConfigCategory> categoryMap;
 
+    @SuppressWarnings("unchecked")
     public ConfigManager() {
         categoryList = new LinkedHashMap<>();
         categoryIds = new HashMap<>();

@@ -24,6 +24,7 @@ public class HudManager {
     public final Map<String, HudElement> elementIds;
     public final Map<Class<? extends HudElement>, HudElement> elementMap;
 
+    @SuppressWarnings("unchecked")
     public HudManager() {
         elementList = new LinkedHashMap<>();
         elementIds = new HashMap<>();
