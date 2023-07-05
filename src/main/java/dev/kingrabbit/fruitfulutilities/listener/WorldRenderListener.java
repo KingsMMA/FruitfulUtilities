@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 
 public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRenderEvents.End {
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void rendered(MatrixStack matrices) {
         PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
@@ -43,6 +44,7 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void onEnd(WorldRenderContext context) {
         if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
@@ -55,9 +57,8 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
                 continue;
 
             String[] location = upgrade.get("location").getAsString().split(",");
-            if (location.length != 3) {
+            if (location.length != 3)
                 Logger.getGlobal().severe("Unable to parse location of " + upgrade.get("display").getAsString() + " (" + upgrade.get("location").getAsString() + ")");
-            }
             int x = Integer.parseInt(location[0]);
             int y = Integer.parseInt(location[1]);
             int z = Integer.parseInt(location[2]);
