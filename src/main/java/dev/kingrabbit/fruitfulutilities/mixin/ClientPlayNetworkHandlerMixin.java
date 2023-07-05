@@ -86,11 +86,13 @@ public abstract class ClientPlayNetworkHandlerMixin {
                     ItemStack mainHandStack = client.player.getMainHandStack();
                     if (mainHandStack.hasNbt()) {
                         NbtCompound nbt = mainHandStack.getNbt();
-                        if (nbt.contains("PublicBukkitValues", NbtElement.COMPOUND_TYPE)) {
-                            NbtCompound publicBukkitValues = nbt.getCompound("PublicBukkitValues");
-                            if (publicBukkitValues.contains("hypercube:searching")) {
-                                double searchingValue = publicBukkitValues.getDouble("hypercube:searching");
-                                if (searchingValue < 1) return;
+                        if (nbt != null) {
+                            if (nbt.contains("PublicBukkitValues", NbtElement.COMPOUND_TYPE)) {
+                                NbtCompound publicBukkitValues = nbt.getCompound("PublicBukkitValues");
+                                if (publicBukkitValues.contains("hypercube:searching")) {
+                                    double searchingValue = publicBukkitValues.getDouble("hypercube:searching");
+                                    if (searchingValue < 1) return;
+                                }
                             }
                         }
                     }

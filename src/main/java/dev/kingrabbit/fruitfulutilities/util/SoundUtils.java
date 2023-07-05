@@ -7,6 +7,7 @@ import net.minecraft.sound.SoundEvents;
 public final class SoundUtils {
 
     public static void clickSound() {
+        if (MinecraftClient.getInstance().player == null) return;
         MinecraftClient.getInstance().player.playSound(SoundEvents.UI_BUTTON_CLICK.value(), SoundCategory.MASTER, 0.4f, 1.0f);
     }
 

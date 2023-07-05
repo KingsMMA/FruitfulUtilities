@@ -104,6 +104,7 @@ public class HudPositionsScreen extends Screen {
     @Override
     public void close() {
         FruitfulUtilities.getInstance().hudManager.save();
+        if (this.client == null) return;
         this.client.setScreen(parent);
     }
 

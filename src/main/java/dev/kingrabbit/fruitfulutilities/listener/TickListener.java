@@ -48,7 +48,7 @@ public class TickListener implements ClientTickEvents.EndTick {
 
         SearchingTrackerCategory searchingCategory = fruitfulUtilities.configManager.getCategory(SearchingTrackerCategory.class);
         if (searchingCategory.enabled) {
-            if (searchingCategory.mode == 1 && (searchingUntil == 0 || searchingUntil - 10 < tick)) {
+            if (searchingCategory.mode == 1 && (searchingUntil == 0 || searchingUntil - 10 < tick) && client.player != null) {
                 MutableText last = Text.empty();
                 for (Text drop : searchingDrops.values()) {
                     MutableText message = Text.of("§aSearching: ").copy().append(drop);

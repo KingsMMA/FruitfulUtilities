@@ -15,6 +15,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRenderEvents.End {
@@ -22,6 +23,8 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
     @SuppressWarnings("DuplicatedCode")
     @Override
     public void rendered(MatrixStack matrices) {
+        if (MinecraftClient.getInstance().player == null) return;
+
         PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
 
         for (JsonObject upgrade : PathManager.tracking) {
@@ -47,6 +50,7 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
     @SuppressWarnings("DuplicatedCode")
     @Override
     public void onEnd(WorldRenderContext context) {
+        if (MinecraftClient.getInstance().player == null) return;
         if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
 
         PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
@@ -72,7 +76,7 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
                 RenderSystem.setShaderColor(140, 0, 250, alpha);
                 BeaconBlockEntityRenderer.renderBeam(
                         context.matrixStack(),
-                        context.consumers(),
+                        Objects.requireNonNull(context.consumers()),
                         BeaconBlockEntityRenderer.BEAM_TEXTURE,
                         context.tickDelta(),
                         1.0f,

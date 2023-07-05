@@ -18,6 +18,7 @@ public class ChunkRendererRegionMixin {
     @Inject(method = "getBlockState", at = @At("HEAD"), cancellable = true)
     public void getBlockState(BlockPos pos, CallbackInfoReturnable<BlockState> cir) {
         if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
+        if (MinecraftClient.getInstance().player == null) return;
         if (FruitfulUtilities.inPlot(pos) || !FruitfulUtilities.inPlot(MinecraftClient.getInstance().player.getBlockPos())) return;
 
         CodeHiderCategory category = FruitfulUtilities.getInstance().configManager.getCategory(CodeHiderCategory.class);
