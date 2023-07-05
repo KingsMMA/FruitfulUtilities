@@ -74,6 +74,7 @@ public class PathScreen extends Screen {
         }
     }
 
+    @SuppressWarnings("IfCanBeSwitch")
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         clearChildren();

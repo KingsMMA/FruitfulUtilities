@@ -11,8 +11,6 @@ import net.minecraft.client.MinecraftClient;
 public class GUILocationsCategory extends ConfigCategory {
 
     @ConfigButton(display = "Edit GUI Locations", description = "Edit the location of all GUI elements.", buttonText = "Edit")
-    public Runnable editGuiLocations = () -> {
-        MinecraftClient.getInstance().setScreen(new HudPositionsScreen(MinecraftClient.getInstance().currentScreen));
-    };
+    public Runnable editGuiLocations = () -> MinecraftClient.getInstance().setScreen(new HudPositionsScreen(MinecraftClient.getInstance().currentScreen));
 
 }
