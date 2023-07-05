@@ -167,8 +167,6 @@ public class ConfigScreen extends Screen {
                 }
                 DrawableHelper.drawTexture(matrices, (int) ((x2 - 64) / 1.5f), (int) ((propertyY + 10) / 1.5f), 0, 0, 0, 32, 16, 32, 16);
                 matrices.pop();
-
-//                DrawableHelper.drawHorizontalLine(matrices, x1, x2, propertyY + 39, new Color(20, 20, 40).getRGB());
             } else if (isConfigDropdown) {
                 DrawableHelper.fill(matrices, x2 - 64, propertyY + 13, x2 - 16, propertyY + 31, SECTION_BACKGROUND_SHADOW);
                 DrawableHelper.fill(matrices, x2 - 62, propertyY + 15, x2 - 16, propertyY + 31, SECTION_BACKGROUND);
