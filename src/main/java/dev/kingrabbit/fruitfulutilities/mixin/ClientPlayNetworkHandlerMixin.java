@@ -72,6 +72,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
         }
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Inject(method = "onPlaySound", at = @At("HEAD"))
     public void onPlaySound(PlaySoundS2CPacket packet, CallbackInfo ci) {
         ConfigManager configManager = FruitfulUtilities.getInstance().configManager;

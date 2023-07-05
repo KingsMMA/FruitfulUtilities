@@ -56,7 +56,7 @@ public class FruitfulUtilities implements ClientModInitializer {
         HudRenderCallback.EVENT.register(new HudRenderer());
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-            LiteralCommandNode<FabricClientCommandSource> commandNode = dispatcher.register(
+            dispatcher.register(
                     ClientCommandManager.literal("reload_paths")
                             .executes(context -> {
                                 context.getSource().sendFeedback(Text.of("§aReloading paths..."));
