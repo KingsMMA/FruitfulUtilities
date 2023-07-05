@@ -4,6 +4,7 @@ import dev.kingrabbit.fruitfulutilities.config.CategoryInfo;
 import dev.kingrabbit.fruitfulutilities.config.ConfigCategory;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 
+@SuppressWarnings("CanBeFinal")
 @CategoryInfo(id = "path_viewer", display = "Path Viewer")
 public class PathViewerCategory extends ConfigCategory {
 

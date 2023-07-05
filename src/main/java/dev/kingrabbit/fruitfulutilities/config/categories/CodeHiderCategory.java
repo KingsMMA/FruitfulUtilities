@@ -4,6 +4,7 @@ import dev.kingrabbit.fruitfulutilities.config.CategoryInfo;
 import dev.kingrabbit.fruitfulutilities.config.ConfigCategory;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 
+@SuppressWarnings("CanBeFinal")
 @CategoryInfo(id = "code_hider", display = "Code Hider")
 public class CodeHiderCategory extends ConfigCategory {
 

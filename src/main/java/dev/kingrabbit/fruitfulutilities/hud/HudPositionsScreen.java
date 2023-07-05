@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+@SuppressWarnings("CanBeFinal")
 public class HudPositionsScreen extends Screen {
 
     public Screen parent;

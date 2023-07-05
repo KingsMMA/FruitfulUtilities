@@ -26,6 +26,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+@SuppressWarnings("CanBeFinal")
 public class PathScreen extends Screen {
 
     public static final String[] section_order = new String[]{

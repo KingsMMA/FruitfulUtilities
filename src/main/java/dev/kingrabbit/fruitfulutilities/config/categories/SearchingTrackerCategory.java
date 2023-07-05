@@ -5,6 +5,7 @@ import dev.kingrabbit.fruitfulutilities.config.ConfigCategory;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigDropdown;
 
+@SuppressWarnings("CanBeFinal")
 @CategoryInfo(id = "searching", display = "Searching Tracker")
 public class SearchingTrackerCategory extends ConfigCategory {
 
