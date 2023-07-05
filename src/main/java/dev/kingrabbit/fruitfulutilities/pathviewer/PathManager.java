@@ -77,10 +77,6 @@ public class PathManager {
         return requiredToUnlock(upgrade, true, true);
     }
 
-    public static List<JsonObject> requiredToUnlock(JsonObject upgrade, boolean includeUpgrade) {
-        return requiredToUnlock(upgrade, includeUpgrade, true);
-    }
-
     public static List<JsonObject> requiredToUnlock(JsonObject upgrade, boolean includeUpgrade, boolean disableIfNotCumulative) {
         List<JsonObject> allRequired = new ArrayList<>();
 
