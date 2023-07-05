@@ -312,12 +312,7 @@ public class PathScreen extends Screen {
                     }
                 } else {
                     information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
-                    for (String currency : cost.keySet()) {
-                        char[] colors = PathManager.currencyColors(currency);
-                        int price = cost.get(currency);
-                        information.append("§").append(colors[1]).append(price).append(" ").append(currency).append("§7, ");
-                    }
-                    information = new StringBuilder(information.substring(0, information.length() - 2));
+                    information = PathManager.appendFormattedCost(information, cost);
                 }
             }
             for (OrderedText line : textRenderer.wrapLines(StringVisitable.plain(information.toString()), width / 5 - 20)) {

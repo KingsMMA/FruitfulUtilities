@@ -11,7 +11,10 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.text.StringVisitable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 @ElementInfo(id = "tracked_upgrades")
 public class TrackedUpgradesElement extends HudElement {
@@ -44,12 +47,7 @@ public class TrackedUpgradesElement extends HudElement {
                     else information.append("§eUnlocked!");
                     result.add(information.toString());
                 } else {
-                    for (String currency : cost.keySet()) {
-                        char[] colors = PathManager.currencyColors(currency);
-                        int price = cost.get(currency);
-                        information.append("§").append(colors[1]).append(price).append(" ").append(currency).append("§7, ");
-                    }
-                    information = new StringBuilder(information.substring(0, information.length() - 2));
+                    information = PathManager.appendFormattedCost(information, cost);
                     result.add(information.toString());
                 }
             }

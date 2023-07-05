@@ -60,6 +60,8 @@ public class ConfigScreen extends Screen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        if (client == null) return;
+
         renderBackground(matrices);
 
         // Background
@@ -85,15 +87,14 @@ public class ConfigScreen extends Screen {
             int currentY = y.getAndAdd(16);
 
             int x1 = x - 2;
-            int y1 = currentY;
             int x2 = x + 106;
             int y2 = y.get() - 1;
             if (selected_section.equals(categoryInfo.id())) {
-                DrawableHelper.fill(matrices, x1, y1, x2, y2, new Color(40, 40, 80).getRGB());
+                DrawableHelper.fill(matrices, x1, currentY, x2, y2, new Color(40, 40, 80).getRGB());
             }
             if (x1 <= mouseX && mouseX <= x2 &&
-                    y1 <= mouseY && mouseY <= y2) {
-                DrawableHelper.fill(matrices, x1, y1, x2, y2, HOVER_OVERLAY);
+                    currentY <= mouseY && mouseY <= y2) {
+                DrawableHelper.fill(matrices, x1, currentY, x2, y2, HOVER_OVERLAY);
             }
 
             DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, categoryInfo.display(), x + 1, currentY + 3, 0xFFFFFF);
@@ -117,7 +118,7 @@ public class ConfigScreen extends Screen {
             if ((isConfigBoolean && isConfigDropdown) || (isConfigBoolean && isConfigButton) || (isConfigDropdown && isConfigButton))
                 throw new UnsupportedOperationException("Found field with non-one value of attributes: " + field.getName() + " (" + selectedCategory.getClass().getName() + ")");
 
-            ConfigBoolean configBoolean = null;
+            ConfigBoolean configBoolean;
             ConfigDropdown configDropdown = null;
             ConfigButton configButton = null;
             if (isConfigBoolean || isConfigDropdown || isConfigButton) {
@@ -138,7 +139,7 @@ public class ConfigScreen extends Screen {
                     configButton = field.getAnnotation(ConfigButton.class);
 
                     display = configButton.display();
-                    description = configButton.description();;
+                    description = configButton.description();
                 }
 
                 DrawableHelper.fill(matrices, x1 + 5, propertyY, x2 - 5, propertyY + 50, SECTION_BACKGROUND_SHADOW);
@@ -227,12 +228,11 @@ public class ConfigScreen extends Screen {
                 if (!selected_section.equals(categoryInfo.id())) {
 
                     int x1 = x - 2;
-                    int y1 = currentY;
                     int x2 = x + 106;
                     int y2 = y.get() - 1;
 
                     if (x1 <= mouseX && mouseX <= x2 &&
-                            y1 <= mouseY && mouseY <= y2) {
+                            currentY <= mouseY && mouseY <= y2) {
                         selected_section = categoryInfo.id();
                         selected_element = "";
 
@@ -243,7 +243,6 @@ public class ConfigScreen extends Screen {
                 if (categoryInfo.id().equals(selected_section)) {
                     Field[] fields = configCategory.getClass().getFields();
                     int propertyY = height / 2 - 150 + 65;
-                    int x1 = width / 2 - 200 + 130 + 2;
                     int x2 = width / 2 + 200 - 11;
                     for (Field field : fields) {
                         if (field.isAnnotationPresent(ConfigBoolean.class)) {
@@ -271,8 +270,7 @@ public class ConfigScreen extends Screen {
                             } else {
                                 if (selected_element.equals(configDropdown.id())) {
                                     int propertyOptionsY = propertyY + 31;
-                                    int i = 0;
-                                    for (String option : configDropdown.options()) {
+                                    for (int i = 0; i < configDropdown.options().length; i++) {
                                         if (x2 - 62 <= mouseX && mouseX <= x2 - 16 &&
                                                 propertyOptionsY + 1 <= mouseY && mouseY <= propertyOptionsY + 15) {
                                             try {
@@ -285,7 +283,6 @@ public class ConfigScreen extends Screen {
                                             }
                                         }
 
-                                        i += 1;
                                         propertyOptionsY += 16;
                                     }
                                 }

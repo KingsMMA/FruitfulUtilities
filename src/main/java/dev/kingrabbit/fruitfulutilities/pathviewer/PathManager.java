@@ -130,6 +130,16 @@ public class PathManager {
         };
     }
 
+    public static StringBuilder appendFormattedCost(StringBuilder stringBuilder, HashMap<String, Integer> costMap) {
+        for (String currency : costMap.keySet()) {
+            char[] colors = PathManager.currencyColors(currency);
+            int price = costMap.get(currency);
+            stringBuilder.append("§").append(colors[1]).append(price).append(" ").append(currency).append("§7, ");
+        }
+        stringBuilder = new StringBuilder(stringBuilder.substring(0, stringBuilder.length() - 2));
+        return stringBuilder;
+    }
+
     public static boolean locked(JsonObject upgrade) {
         if (!upgrade.has("requires")) return false;
         JsonArray required = upgrade.getAsJsonArray("requires");
