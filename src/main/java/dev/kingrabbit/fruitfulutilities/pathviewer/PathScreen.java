@@ -74,7 +74,7 @@ public class PathScreen extends Screen {
         }
     }
 
-    @SuppressWarnings("IfCanBeSwitch")
+    @SuppressWarnings({"IfCanBeSwitch", "SpellCheckingInspection"})
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         clearChildren();
