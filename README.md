@@ -2,7 +2,7 @@
 <img src="assets/banner.png" alt="Banner" width=70%/>
 
 FruitfulUtilities is a utility mod for Melon King on the DiamondFire minecraft server.  
-It is a Fabric 1.19.4 mod designed to enhance the experience and guide newer players on Melon King, containing the following features:
+It is a Fabric 1.19.4 mod designed to enhance the user experience and guide newer players on Melon King, containing the following features:
 - In-depth path viewer
 - Upgrade tracker
 - Searching tracker
