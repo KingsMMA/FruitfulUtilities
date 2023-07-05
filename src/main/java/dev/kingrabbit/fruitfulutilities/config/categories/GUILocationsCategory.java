@@ -6,6 +6,7 @@ import dev.kingrabbit.fruitfulutilities.config.properties.ConfigButton;
 import dev.kingrabbit.fruitfulutilities.hud.HudPositionsScreen;
 import net.minecraft.client.MinecraftClient;
 
+@SuppressWarnings("unused")
 @CategoryInfo(id = "gui_locations", display = "GUI Locations")
 public class GUILocationsCategory extends ConfigCategory {
 

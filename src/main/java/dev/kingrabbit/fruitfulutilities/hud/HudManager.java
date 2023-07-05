@@ -48,6 +48,7 @@ public class HudManager {
         load();
     }
 
+    @SuppressWarnings("unused")
     public <T extends HudElement> T getElement(Class<T> element) {
         return element.cast(elementMap.get(element));
     }
