@@ -61,8 +61,8 @@ public class HudPositionsScreen extends Screen {
                         yOffset = mouseY - y1;
                         break;
                     }
-                } catch (IllegalAccessException | NoSuchFieldException e) {
-                    e.printStackTrace();
+                } catch (IllegalAccessException | NoSuchFieldException exception) {
+                    FruitfulUtilities.LOGGER.error("An error occurred modifying the position fields of " + elementClass.getName(), exception);
                     continue;
                 }
             }

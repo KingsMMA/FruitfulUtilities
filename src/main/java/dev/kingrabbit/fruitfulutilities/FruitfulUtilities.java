@@ -22,10 +22,13 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Environment(EnvType.CLIENT)
 public class FruitfulUtilities implements ClientModInitializer {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger("fruitful_utilities");
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 

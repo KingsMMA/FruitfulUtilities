@@ -51,7 +51,7 @@ public class HudRenderer implements HudRenderCallback {
                             try {
                                 opacity = Integer.parseInt(stringLine.substring(6, stringLine.length() - 7));
                             } catch (NumberFormatException exception) {
-                                exception.printStackTrace();
+                                FruitfulUtilities.LOGGER.error("An error occurred parsing the opacity value on line \"" + stringLine + "\"", exception);
                             }
                             continue;
                         }
@@ -61,9 +61,8 @@ public class HudRenderer implements HudRenderCallback {
                     y += 2 + textRenderer.fontHeight;
                     opacity = 100;
                 }
-            } catch (IllegalAccessException | NoSuchFieldException e) {
-                e.printStackTrace();
-                continue;
+            } catch (IllegalAccessException | NoSuchFieldException exception) {
+                FruitfulUtilities.LOGGER.error("An error occurred accessing the position fields of " + elementClass.getName(), exception);
             }
         }
     }

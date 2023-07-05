@@ -72,8 +72,8 @@ public class HudManager {
                     }
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            FruitfulUtilities.LOGGER.error("An error occurred loading the HUD data", exception);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -89,10 +89,10 @@ public class HudManager {
                 if (field.isAnnotationPresent(Serializable.class)) {
                     try {
                         elementData.add(field.getAnnotation(Serializable.class).id(), FruitfulUtilities.GSON.toJsonTree(field.get(element)));
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                        System.out.println(field.getName());
-                        System.out.println(element.getClass().getName());
+                    } catch (IllegalAccessException exception) {
+                        FruitfulUtilities.LOGGER.error("Unable to save hud data", exception);
+                        FruitfulUtilities.LOGGER.error("Field: " + field.getName());
+                        FruitfulUtilities.LOGGER.error("Element: " + element.getClass().getName());
                     }
                 }
             }
@@ -106,8 +106,8 @@ public class HudManager {
             BufferedWriter writer = Files.newBufferedWriter(fabricHudDirectory.resolve("fruitful_utilities_hud.json"));
             FruitfulUtilities.GSON.toJson(configData, writer);
             writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            FruitfulUtilities.LOGGER.error("An error occurred saving the HUD data", exception);
         }
     }
 

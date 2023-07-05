@@ -161,9 +161,9 @@ public class ConfigScreen extends Screen {
                 matrices.scale(1.5f, 1.5f, 1.5f);
                 try {
                     RenderSystem.setShaderTexture(0, (boolean) field.get(selectedCategory) ? SWITCH_ENABLED : SWITCH_DISABLED);
-                } catch (IllegalAccessException e) {
+                } catch (IllegalAccessException exception) {
                     RenderSystem.setShaderTexture(0, SWITCH_UNKNOWN);
-                    e.printStackTrace();
+                    FruitfulUtilities.LOGGER.error("An error occurred accessing the value of " + field.getName() + " in " + selectedCategory.getClass().getName(), exception);
                 }
                 DrawableHelper.drawTexture(matrices, (int) ((x2 - 64) / 1.5f), (int) ((propertyY + 10) / 1.5f), 0, 0, 0, 32, 16, 32, 16);
                 matrices.pop();

@@ -78,14 +78,14 @@ public class ConfigManager {
                     if (!id.equals("404") && section.has(id)) {
                         try {
                             field.set(category, FruitfulUtilities.GSON.fromJson(section.get(id), field.getType()));
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
+                        } catch (IllegalAccessException exception) {
+                            FruitfulUtilities.LOGGER.error("An error occurred loading the config value with id " + id + " in category " + category.getClass().getName(), exception);
                         }
                     }
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            FruitfulUtilities.LOGGER.error("An error occurred reading the config, most likely meaning this is the user's first launch", exception);
         }
     }
 
@@ -102,10 +102,10 @@ public class ConfigManager {
 
                 try {
                     categoryData.add(id, FruitfulUtilities.GSON.toJsonTree(field.get(category)));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                    System.out.println(field.getName());
-                    System.out.println(category.getClass().getName());
+                } catch (IllegalAccessException exception) {
+                    FruitfulUtilities.LOGGER.error("Unable to save config data", exception);
+                    FruitfulUtilities.LOGGER.error("Field: " + field.getName());
+                    FruitfulUtilities.LOGGER.error("Category: " + category.getClass().getName());
                 }
             }
 
@@ -118,8 +118,8 @@ public class ConfigManager {
             BufferedWriter writer = Files.newBufferedWriter(fabricConfigDirectory.resolve("fruitful_utilities.json"));
             FruitfulUtilities.GSON.toJson(configData, writer);
             writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            FruitfulUtilities.LOGGER.error("An error occurred saving the config", exception);
         }
     }
 
