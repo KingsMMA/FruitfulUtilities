@@ -54,6 +54,7 @@ public class ConfigManager {
         return category.cast(categoryMap.get(category));
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean enabled() {
         GeneralCategory generalCategory = getCategory(GeneralCategory.class);
         if (!generalCategory.enabled) return false;
