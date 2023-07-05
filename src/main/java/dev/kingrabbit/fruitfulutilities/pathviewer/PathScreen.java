@@ -396,9 +396,7 @@ public class PathScreen extends Screen {
         RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
         Tessellator tessellator = RenderSystem.renderThreadTesselator();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
-//        RenderSystem.lineWidth((float) (5 * Math.atan((y2 - y1) / (x2 - x1))));
         RenderSystem.lineWidth(5 + (float) Math.abs(10 * Math.atan((y2 - y1) / (x2 - x1))));  // A constant width results in steeper angles appearing thinner
-//        RenderSystem.lineWidth(5);
         bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
         bufferBuilder.vertex((x1 + 29 + _xOffset) * _zoom, (y1 + 16 + _yOffset) * _zoom, 0).color(0, 0, 0, 255).normal(1.0f, 0.0f, 0.0f).next();
         bufferBuilder.vertex((x2 + 4 + _xOffset) * _zoom, (y2 + 16 + _yOffset) * _zoom, 0).color(0, 0, 0, 255).normal(1.0f, 0.0f, 0.0f).next();
