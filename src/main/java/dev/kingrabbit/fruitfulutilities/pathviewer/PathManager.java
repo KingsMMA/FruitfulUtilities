@@ -122,7 +122,7 @@ public class PathManager {
         return null;
     }
 
-    public static char[] currencyColours(String currency) {
+    public static char[] currencyColors(String currency) {
         return switch (currency) {
             case "coins", "gold" -> new char[]{'6', 'e'};
             case "shards", "cshards" -> new char[]{'3', 'b'};

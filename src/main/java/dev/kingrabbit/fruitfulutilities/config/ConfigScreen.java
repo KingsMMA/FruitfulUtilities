@@ -9,8 +9,6 @@ import dev.kingrabbit.fruitfulutilities.util.SoundUtils;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
@@ -36,7 +34,7 @@ public class ConfigScreen extends Screen {
     public static final int SECTION_BACKGROUND_SHADOW = new Color(20, 20, 40).getRGB();
     public static final int DROP_OPTION_SEPARATOR = new Color(25, 25, 50).getRGB();
     public static final int OPTION_FOREGROUND = new Color(40, 40, 70).getRGB();
-    public static final int DESCRIPTION_TEXT_COLOUR = new Color(170, 170, 170).getRGB();
+    public static final int DESCRIPTION_TEXT_COLOR = new Color(170, 170, 170).getRGB();
 
     public static String selected_section = "general";
     public static String selected_element = "";
@@ -153,7 +151,7 @@ public class ConfigScreen extends Screen {
                 List<OrderedText> descriptionLines = textRenderer.wrapLines(StringVisitable.plain(description), 220);
                 int offset = -9;
                 for (OrderedText line : descriptionLines) {
-                    DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, line, (int) ((x1 + 8) / 0.8f), (int) ((propertyY + 14 + (offset += 9)) / 0.8f), DESCRIPTION_TEXT_COLOUR);
+                    DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, line, (int) ((x1 + 8) / 0.8f), (int) ((propertyY + 14 + (offset += 9)) / 0.8f), DESCRIPTION_TEXT_COLOR);
                 }
                 matrices.pop();
             }
@@ -187,7 +185,7 @@ public class ConfigScreen extends Screen {
                         DrawableHelper.drawHorizontalLine(matrices, x2 - 64, x2 - 17, propertyOptionsY - 1, SECTION_BACKGROUND_SHADOW);
                         DrawableHelper.drawHorizontalLine(matrices, x2 - 64, x2 - 17, propertyOptionsY, SECTION_BACKGROUND_SHADOW);
                         for (String option : configDropdown.options()) {
-                            DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, option, x2 - 59, propertyOptionsY + 4, DESCRIPTION_TEXT_COLOUR);
+                            DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, option, x2 - 59, propertyOptionsY + 4, DESCRIPTION_TEXT_COLOR);
 
                             if (x2 - 62 <= mouseX && mouseX <= x2 - 16 &&
                                     propertyOptionsY + 1 <= mouseY && mouseY <= propertyOptionsY + 15) {

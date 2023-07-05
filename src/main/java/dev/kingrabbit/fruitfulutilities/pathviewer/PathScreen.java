@@ -39,7 +39,7 @@ public class PathScreen extends Screen {
     public static final Identifier MAJOR_PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/major_path_icon.png");
     public static final int PRIMARY = new Color(70, 70, 70).getRGB();
     public static final int SECONDARY = new Color(50, 50, 50).getRGB();
-    public static final int HEADER_COLOUR = new Color(70, 215, 10).getRGB();
+    public static final int HEADER_COLOR = new Color(70, 215, 10).getRGB();
     private static final Identifier TAB_TEXTURE = new Identifier("fruitfulutilities", "textures/gui/tabs.png");
     public static String section = "beginnings";
     public static HashMap<String, float[]> sections = new HashMap<>();
@@ -251,7 +251,7 @@ public class PathScreen extends Screen {
         DrawableHelper.fill(matrices, 0, 0, width / 5, height, PRIMARY);
         DrawableHelper.fill(matrices, width / 5, 0, width / 5 + 6, height, SECONDARY);
 
-        DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, "Path Viewer", width / 10, 20, HEADER_COLOUR);
+        DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, "Path Viewer", width / 10, 20, HEADER_COLOR);
         int y = 40;
         if (!selectedElement.containsKey(section)) {
             for (OrderedText line : textRenderer.wrapLines(StringVisitable.plain("Click on an upgrade to view information about it."), width / 5 - 20)) {
@@ -291,7 +291,7 @@ public class PathScreen extends Screen {
 
         y += 50;
 
-        DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, "Tracked Upgrades", width / 10, y, HEADER_COLOUR);
+        DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, "Tracked Upgrades", width / 10, y, HEADER_COLOR);
         y += 20;
 
         if (PathManager.tracking.isEmpty()) {
@@ -313,9 +313,9 @@ public class PathScreen extends Screen {
                 } else {
                     information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
                     for (String currency : cost.keySet()) {
-                        char[] colours = PathManager.currencyColours(currency);
+                        char[] colors = PathManager.currencyColors(currency);
                         int price = cost.get(currency);
-                        information.append("§").append(colours[1]).append(price).append(" ").append(currency).append("§7, ");
+                        information.append("§").append(colors[1]).append(price).append(" ").append(currency).append("§7, ");
                     }
                     information = new StringBuilder(information.substring(0, information.length() - 2));
                 }
@@ -447,8 +447,8 @@ public class PathScreen extends Screen {
             newLines.add(Text.literal("§a" + upgrade.get("display").getAsString()).asOrderedText());
             newLines.addAll(lines);
             String currency = upgrade.get("currency").getAsString();
-            char[] colours = PathManager.currencyColours(currency);
-            newLines.add(Text.literal("§" + colours[0] + "Price: §" + colours[1] + upgrade.get("price").getAsString() + " " + currency).asOrderedText());
+            char[] colors = PathManager.currencyColors(currency);
+            newLines.add(Text.literal("§" + colors[0] + "Price: §" + colors[1] + upgrade.get("price").getAsString() + " " + currency).asOrderedText());
 
             tooltip = newLines;
         }

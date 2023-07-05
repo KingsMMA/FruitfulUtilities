@@ -15,7 +15,7 @@ import java.util.List;
 
 public class HudRenderer implements HudRenderCallback {
 
-    public static final Color BACKGROUND_COLOUR = new Color(100, 100, 100, 150);
+    public static final Color BACKGROUND_COLOR = new Color(100, 100, 100, 150);
 
     @Override
     public void onHudRender(MatrixStack matrices, float tickDelta) {
@@ -43,7 +43,7 @@ public class HudRenderer implements HudRenderCallback {
                     int lineWidth = line instanceof String ? textRenderer.getWidth((String) line) : (line instanceof OrderedText ? textRenderer.getWidth((OrderedText) line) : textRenderer.getWidth((Text) line));
                     if (lineWidth > maxWidth) maxWidth = lineWidth;
                 }
-                DrawableHelper.fill(matrices, x, y, x + 4 + maxWidth, y + 2 + (textRenderer.fontHeight + 2) * totalLines, BACKGROUND_COLOUR.getRGB());
+                DrawableHelper.fill(matrices, x, y, x + 4 + maxWidth, y + 2 + (textRenderer.fontHeight + 2) * totalLines, BACKGROUND_COLOR.getRGB());
                 int opacity = 100;
                 for (Object line : lines) {
 //                    System.out.println(opacity);

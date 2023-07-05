@@ -18,9 +18,7 @@ import java.awt.*;
 import java.util.logging.Logger;
 
 public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRenderEvents.End {
-
-    public static final Color UPGRADE_COLOUR = new Color(140, 0, 250);
-
+    
     @Override
     public void rendered(MatrixStack matrices) {
         PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);

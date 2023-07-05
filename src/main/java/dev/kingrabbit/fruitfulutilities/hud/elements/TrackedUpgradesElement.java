@@ -9,8 +9,6 @@ import dev.kingrabbit.fruitfulutilities.hud.Serializable;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 
 import java.util.*;
@@ -47,9 +45,9 @@ public class TrackedUpgradesElement extends HudElement {
                     result.add(information.toString());
                 } else {
                     for (String currency : cost.keySet()) {
-                        char[] colours = PathManager.currencyColours(currency);
+                        char[] colors = PathManager.currencyColors(currency);
                         int price = cost.get(currency);
-                        information.append("§").append(colours[1]).append(price).append(" ").append(currency).append("§7, ");
+                        information.append("§").append(colors[1]).append(price).append(" ").append(currency).append("§7, ");
                     }
                     information = new StringBuilder(information.substring(0, information.length() - 2));
                     result.add(information.toString());
