@@ -24,6 +24,7 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
     @Override
     public void rendered(MatrixStack matrices) {
         if (MinecraftClient.getInstance().player == null) return;
+        if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
 
         PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
 
