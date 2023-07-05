@@ -64,7 +64,6 @@ public class HudPositionsScreen extends Screen {
                     }
                 } catch (IllegalAccessException | NoSuchFieldException exception) {
                     FruitfulUtilities.LOGGER.error("An error occurred modifying the position fields of " + elementClass.getName(), exception);
-                    continue;
                 }
             }
         }
