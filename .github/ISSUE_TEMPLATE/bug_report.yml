@@ -17,6 +17,13 @@ body:
     options:
       - label: I am using the latest version of the mod
         required: true
+- type: input
+  attributions:
+    label: Other Mods
+    description: What other mods are you using?
+    placeholder: Fabric API, Sodium, etc...
+  validations:
+    required: true
 - type: textarea
   attributes:
     label: Current Behavior
