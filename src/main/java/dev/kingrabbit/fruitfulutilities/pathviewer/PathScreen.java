@@ -454,12 +454,11 @@ public class PathScreen extends Screen {
         }
     }
 
-    // TODO Make zooming keep the mouse's relative position remain constant (i.e. such that the pixel underneath the cursor shall not change)
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
         zoom(zoom() + amount * 0.2f);
-        if (zoom() <= 0) zoom(0.2f);
-        else if (zoom() >= 10) zoom(10f);
+        if (zoom() < 0.2f) zoom(0.2f);
+        else if (zoom() > 10f) zoom(10f);
         return super.mouseScrolled(mouseX, mouseY, amount);
     }
 
