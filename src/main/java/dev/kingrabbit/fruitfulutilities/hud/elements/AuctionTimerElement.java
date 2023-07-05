@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
 
+@SuppressWarnings("unused")
 @ElementInfo(id = "auction_timer")
 public class AuctionTimerElement extends HudElement {
 
