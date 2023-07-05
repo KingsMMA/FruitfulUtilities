@@ -46,7 +46,6 @@ public class HudRenderer implements HudRenderCallback {
                 DrawableHelper.fill(matrices, x, y, x + 4 + maxWidth, y + 2 + (textRenderer.fontHeight + 2) * totalLines, BACKGROUND_COLOR.getRGB());
                 int opacity = 100;
                 for (Object line : lines) {
-//                    System.out.println(opacity);
                     if (line instanceof String stringLine) {
                         if (stringLine.startsWith("<opac>")) {
                             try {

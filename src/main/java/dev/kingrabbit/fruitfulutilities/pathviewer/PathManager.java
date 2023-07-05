@@ -56,7 +56,6 @@ public class PathManager {
         }
     }
 
-    // TODO ??
     public static void unlocked(String upgradeName) {
         purchased.add(upgradeName);
         for (JsonObject path : paths.values()) {

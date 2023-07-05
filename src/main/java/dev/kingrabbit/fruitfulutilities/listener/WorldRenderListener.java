@@ -18,7 +18,7 @@ import java.awt.*;
 import java.util.logging.Logger;
 
 public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRenderEvents.End {
-    
+
     @Override
     public void rendered(MatrixStack matrices) {
         PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
@@ -66,7 +66,6 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
             double distance = playerPos.distanceTo(upgradePos);
             int alpha = (int) Math.min(Math.max(Math.pow(2, 0.5 * distance) * 5, 50), 255);
             if (distance >= 5) {
-//                System.out.println(x);
                 context.matrixStack().push();
                 context.matrixStack().translate(x - playerPos.x, y - playerPos.y - 0.7, z - playerPos.z);
                 RenderSystem.setShaderColor(140, 0, 250, alpha);
