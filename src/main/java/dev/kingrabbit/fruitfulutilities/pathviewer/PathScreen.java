@@ -90,9 +90,7 @@ public class PathScreen extends Screen {
         matrices.push();
         float _zoom = zoom();
         matrices.scale(_zoom, _zoom, _zoom);
-
-//        DrawableHelper.drawTexture(matrices, (int) xOffset + 12, (int) yOffset + 12, 0, 0, 0, 32, 32, 32, 32);
-
+        
         if (section.equals("beginnings")) {
             JsonObject beginnings = PathManager.paths.get("beginnings");
             renderUpgrade(matrices, beginnings.getAsJsonObject("faster_melon_spawn_rate"), 1, 1, mouseX, mouseY);
