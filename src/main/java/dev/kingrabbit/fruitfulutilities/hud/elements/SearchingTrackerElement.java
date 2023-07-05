@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@SuppressWarnings("unused")
 @ElementInfo(id = "searching_tracker")
 public class SearchingTrackerElement extends HudElement {
 

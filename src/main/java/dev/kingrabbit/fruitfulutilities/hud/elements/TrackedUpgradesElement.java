@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+@SuppressWarnings("unused")
 @ElementInfo(id = "tracked_upgrades")
 public class TrackedUpgradesElement extends HudElement {
 
