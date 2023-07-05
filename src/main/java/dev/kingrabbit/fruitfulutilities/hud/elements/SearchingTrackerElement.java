@@ -40,7 +40,7 @@ public class SearchingTrackerElement extends HudElement {
                 keysToRemove.add(tick);
                 continue;
             }
-            if (timeSince >= 50)
+            if (timeSince >= 90)
                 result.add("<opac>" + ((int) ((100 - timeSince) / 10f * 100f)) + "</opac>");
             result.add(drops.get(tick));
         }
