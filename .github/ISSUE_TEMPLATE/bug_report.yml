@@ -18,7 +18,7 @@ body:
       - label: I am using the latest version of the mod
         required: true
 - type: input
-  attributions:
+  attributes:
     label: Other Mods
     description: What other mods are you using?
     placeholder: Fabric API, Sodium, etc...
