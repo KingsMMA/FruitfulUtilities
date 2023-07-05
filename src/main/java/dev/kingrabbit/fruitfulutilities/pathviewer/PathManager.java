@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
+import dev.kingrabbit.fruitfulutilities.config.categories.PathViewerCategory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -73,15 +74,24 @@ public class PathManager {
     }
 
     public static List<JsonObject> requiredToUnlock(JsonObject upgrade) {
-        return requiredToUnlock(upgrade, true);
+        return requiredToUnlock(upgrade, true, true);
     }
 
     public static List<JsonObject> requiredToUnlock(JsonObject upgrade, boolean includeUpgrade) {
+        return requiredToUnlock(upgrade, includeUpgrade, true);
+    }
+
+    public static List<JsonObject> requiredToUnlock(JsonObject upgrade, boolean includeUpgrade, boolean disableIfNotCumulative) {
         List<JsonObject> allRequired = new ArrayList<>();
 
         if (purchased.contains(upgrade.get("display").getAsString())) return allRequired;
 
         if (includeUpgrade) allRequired.add(upgrade);
+
+        if (disableIfNotCumulative) {
+            PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
+            if (!category.cumulative) return allRequired;
+        }
 
         if (upgrade.has("requires")) {
             String path = upgradeToPath.get(upgrade);
