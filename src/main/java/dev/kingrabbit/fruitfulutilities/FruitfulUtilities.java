@@ -2,7 +2,6 @@ package dev.kingrabbit.fruitfulutilities;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mojang.brigadier.tree.LiteralCommandNode;
 import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.hud.HudManager;
 import dev.kingrabbit.fruitfulutilities.hud.HudRenderer;
@@ -16,7 +15,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;

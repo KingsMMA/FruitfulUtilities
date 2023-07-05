@@ -4,7 +4,7 @@ import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.Keybinds;
 import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.config.ConfigScreen;
-import dev.kingrabbit.fruitfulutilities.config.categories.*;
+import dev.kingrabbit.fruitfulutilities.config.categories.SearchingTrackerCategory;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathScreen;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
@@ -17,9 +17,9 @@ import java.util.HashMap;
 public class TickListener implements ClientTickEvents.EndTick {
 
     public static final HashMap<BlockPos, Integer> clicked = new HashMap<>();
+    public static final HashMap<Integer, Text> searchingDrops = new HashMap<>();
     public static int tick = 0;
     public static int searchingUntil = 0;
-    public static final HashMap<Integer, Text> searchingDrops = new HashMap<>();
 
     @Override
     public void onEndTick(MinecraftClient client) {

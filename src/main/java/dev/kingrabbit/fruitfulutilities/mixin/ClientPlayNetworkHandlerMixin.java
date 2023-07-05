@@ -1,26 +1,21 @@
 package dev.kingrabbit.fruitfulutilities.mixin;
 
-import com.mojang.brigadier.ParseResults;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
-import dev.kingrabbit.fruitfulutilities.config.categories.GeneralCategory;
 import dev.kingrabbit.fruitfulutilities.config.categories.MessageHiderCategory;
 import dev.kingrabbit.fruitfulutilities.listener.TickListener;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.command.CommandSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
-import net.minecraft.network.packet.s2c.play.ScoreboardObjectiveUpdateS2CPacket;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
