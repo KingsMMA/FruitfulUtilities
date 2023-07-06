@@ -113,13 +113,14 @@ public class PathManager {
         HashMap<Currency, Integer> totalPrice = new HashMap<>();
 
         for (JsonObject upgrade : upgrades) {
+            String currencyRaw = upgrade.get("currency").getAsString();
             try {
-                Currency currency = Currency.valueOf(upgrade.get("currency").getAsString().toUpperCase());
+                Currency currency = Currency.valueOf(currencyRaw.toUpperCase());
                 int price = upgrade.get("price").getAsInt();
                 if (totalPrice.containsKey(currency)) totalPrice.put(currency, totalPrice.get(currency) + price);
                 else totalPrice.put(currency, price);
             } catch (IllegalArgumentException exception) {
-                FruitfulUtilities.LOGGER.error("Unknown currency: " + upgrade.get("currency").getAsString(), exception);
+                FruitfulUtilities.LOGGER.error("Unknown currency: " + currencyRaw, exception);
             }
         }
 
