@@ -41,3 +41,19 @@ connectUpgrades(<gridX1>, <gridY1>, <gridX2>, <gridY2>);
 <b>1.</b> Edit this file and update code references to match their new positions.  
 <b>2.</b> In the pull request, send a screenshot of the path viewer with your new path/upgrades.  
 <b>3.</b> Request a review in your pull request so a maintainer can review your changes.
+
+## Hotswapping
+Hotswapping allows you to test your changes without restarting your game.  It is recommended to use [IntelliJ](https://www.jetbrains.com/idea/) as your development environment.
+Start by running the `Minecraft Client` task on debug mode.  
+After making any changes, build the project by clicking `Build > Build Project` or clicking `Ctrl + F9`.
+
+### Hotswapping Mixins
+Mixins can't be hotswapped in a default FabricMC environment.  
+For more information, see [here](https://fabricmc.net/wiki/tutorial:mixin_hotswaps).
+
+### Limitations
+While hotswaps are a great utility for easily testing changes, there are certain limitations.  
+
+- Methods and field signatures cannot be changed
+- Classes cannot be created or deleted
+- Performance may be slower than that of a normal environment
