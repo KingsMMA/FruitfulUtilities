@@ -6,6 +6,7 @@ import dev.kingrabbit.fruitfulutilities.config.categories.PathViewerCategory;
 import dev.kingrabbit.fruitfulutilities.hud.ElementInfo;
 import dev.kingrabbit.fruitfulutilities.hud.HudElement;
 import dev.kingrabbit.fruitfulutilities.hud.Serializable;
+import dev.kingrabbit.fruitfulutilities.pathviewer.Currency;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -42,7 +43,7 @@ public class TrackedUpgradesElement extends HudElement {
         } else {
             for (JsonObject tracked : PathManager.tracking) {
                 StringBuilder information = new StringBuilder("    §7• §a" + tracked.get("display").getAsString() + "§7: ");
-                HashMap<String, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
+                HashMap<Currency, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
                 if (cost.isEmpty()) {
                     if (category.hideIfUnlocked) continue;
                     else information.append("§eUnlocked!");

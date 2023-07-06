@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.config.categories.PathViewerCategory;
+import dev.kingrabbit.fruitfulutilities.util.NumberUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -108,14 +109,19 @@ public class PathManager {
         return allRequired;
     }
 
-    public static HashMap<String, Integer> cumulativePrice(List<JsonObject> upgrades) {
-        HashMap<String, Integer> totalPrice = new HashMap<>();
+    public static HashMap<Currency, Integer> cumulativePrice(List<JsonObject> upgrades) {
+        HashMap<Currency, Integer> totalPrice = new HashMap<>();
 
         for (JsonObject upgrade : upgrades) {
-            String currency = upgrade.get("currency").getAsString();
-            int price = upgrade.get("price").getAsInt();
-            if (totalPrice.containsKey(currency)) totalPrice.put(currency, totalPrice.get(currency) + price);
-            else totalPrice.put(currency, price);
+            String currencyRaw = upgrade.get("currency").getAsString();
+            try {
+                Currency currency = Currency.valueOf(currencyRaw.toUpperCase());
+                int price = upgrade.get("price").getAsInt();
+                if (totalPrice.containsKey(currency)) totalPrice.put(currency, totalPrice.get(currency) + price);
+                else totalPrice.put(currency, price);
+            } catch (IllegalArgumentException exception) {
+                FruitfulUtilities.LOGGER.error("Unknown currency: " + currencyRaw, exception);
+            }
         }
 
         return totalPrice;
@@ -127,23 +133,12 @@ public class PathManager {
         return null;
     }
 
-    public static char[] currencyColors(String currency) {
-        return switch (currency) {
-            case "coins", "gold" -> new char[]{'6', 'e'};
-            case "shards", "cshards" -> new char[]{'3', 'b'};
-            case "favors" -> new char[]{'2', 'a'};
-            default -> new char[]{'8', '7'};
-        };
-    }
-
-    public static StringBuilder appendFormattedCost(StringBuilder stringBuilder, HashMap<String, Integer> costMap) {
-        for (String currency : costMap.keySet()) {
-            char[] colors = PathManager.currencyColors(currency);
+    public static StringBuilder appendFormattedCost(StringBuilder stringBuilder, HashMap<Currency, Integer> costMap) {
+        for (Currency currency : costMap.keySet()) {
             int price = costMap.get(currency);
-            stringBuilder.append("§").append(colors[1]).append(price).append(" ").append(currency).append("§7, ");
+            stringBuilder.append("§").append(currency.getSecondaryColor()).append(NumberUtils.toFancyNumber(price)).append(" ").append(currency.format(price)).append("§7, ");
         }
-        stringBuilder = new StringBuilder(stringBuilder.substring(0, stringBuilder.length() - 2));
-        return stringBuilder;
+        return new StringBuilder(stringBuilder.substring(0, stringBuilder.length() - 2));
     }
 
     public static boolean locked(JsonObject upgrade) {

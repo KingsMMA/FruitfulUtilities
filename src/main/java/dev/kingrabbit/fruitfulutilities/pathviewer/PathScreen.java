@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.config.categories.PathViewerCategory;
 import dev.kingrabbit.fruitfulutilities.util.ColorOverlay;
+import dev.kingrabbit.fruitfulutilities.util.NumberUtils;
 import dev.kingrabbit.fruitfulutilities.util.Region;
 import dev.kingrabbit.fruitfulutilities.util.SoundUtils;
 import net.minecraft.client.gui.DrawableHelper;
@@ -263,10 +264,11 @@ public class PathScreen extends Screen {
         } else {
             JsonObject _selectedElement = selectedElement.get(section);
             String display = _selectedElement.get("display").getAsString();
+            int price = _selectedElement.get("price").getAsInt();
             for (OrderedText line : textRenderer.wrapLines(StringVisitable.plain(
                     "§6Name: §f" + display + "\n" +
                             "§6Description: §f" + _selectedElement.get("description").getAsString() + "\n" +
-                            "§6Price: §f" + _selectedElement.get("price").getAsInt() + " " + _selectedElement.get("currency").getAsString() + "\n" +
+                            "§6Price: §f" + NumberUtils.toFancyNumber(price) + " " + Currency.valueOf(_selectedElement.get("currency").getAsString().toUpperCase()).format(price) + "\n" +
                             "§6Location: §f" + _selectedElement.get("location").getAsString().replaceAll(",", ", ")
             ), width / 5 - 20)) {
                 DrawableHelper.drawTextWithShadow(matrices, textRenderer, line, 10, y, 0xFFFFFF);
@@ -306,7 +308,7 @@ public class PathScreen extends Screen {
 
             StringBuilder information = new StringBuilder("Currently tracking the following upgrades:");
             for (JsonObject tracked : PathManager.tracking) {
-                HashMap<String, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
+                HashMap<Currency, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
                 if (cost.isEmpty()) {
                     if (!category.hideIfUnlocked) {
                         information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
@@ -441,11 +443,16 @@ public class PathScreen extends Screen {
             List<OrderedText> newLines = new ArrayList<>();
             newLines.add(Text.literal("§a" + upgrade.get("display").getAsString()).asOrderedText());
             newLines.addAll(lines);
-            String currency = upgrade.get("currency").getAsString();
-            char[] colors = PathManager.currencyColors(currency);
-            newLines.add(Text.literal("§" + colors[0] + "Price: §" + colors[1] + upgrade.get("price").getAsString() + " " + currency).asOrderedText());
+            String currencyRaw = upgrade.get("currency").getAsString();
+            try {
+                Currency currency = Currency.valueOf(currencyRaw.toUpperCase());
+                int price = upgrade.get("price").getAsInt();
+                newLines.add(Text.literal("§" + currency.getPrimaryColor() + "Price: §" + currency.getSecondaryColor() + NumberUtils.toFancyNumber(price) + " " + currency.format(price)).asOrderedText());
 
-            tooltip = newLines;
+                tooltip = newLines;
+            } catch (IllegalArgumentException exception) {
+                FruitfulUtilities.LOGGER.error("Unknown currency: " + currencyRaw, exception);
+            }
         }
     }
 
