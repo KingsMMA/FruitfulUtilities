@@ -65,7 +65,7 @@ public class PathScreen extends Screen {
             section_icons.put("true_urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aTrue Urban")).icon(() -> new ItemStack(Items.GOLD_BLOCK)).build());
         }
 
-        if (sections.isEmpty()) {
+        if (!sections.containsKey("beginnings")) {
             sections.put("beginnings", new float[]{-19284, -64, 1});
         }
 
