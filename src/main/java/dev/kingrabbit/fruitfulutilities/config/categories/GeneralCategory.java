@@ -12,6 +12,6 @@ public class GeneralCategory extends ConfigCategory {
     public boolean enabled = true;
 
     @ConfigBoolean(id = "game_detection", display = "Only Enable on Melon King", description = "Automatically detects if you are on the game, disabling the mod elsewhere.")
-    public boolean gameDetection = true;
+    public boolean gameDetection = false;
 
 }
