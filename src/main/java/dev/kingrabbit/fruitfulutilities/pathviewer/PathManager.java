@@ -22,14 +22,16 @@ public class PathManager {
     public static final HashMap<String, JsonObject> paths = new HashMap<>();
     public static final HashMap<JsonObject, String> upgradeToPath = new HashMap<>();
     public static final ArrayList<JsonObject> tracking = new ArrayList<>();
+    public static int undergroundWallStatus = 0;
 
     static {
         pathParents.put("urban", "beginnings");
+        pathParents.put("religion", "beginnings");
+        pathParents.put("underground", "beginnings");
+
         pathParents.put("true_urban", "urban");
         pathParents.put("science", "urban");
         pathParents.put("democracy", "urban");
-
-        pathParents.put("religion", "beginnings");
     }
 
     public static void loadPaths() {
@@ -38,6 +40,7 @@ public class PathManager {
         loadPath("religion", "religion");
         loadPath("urban", "urban");
         loadPath("true_urban", "true_urban");
+        loadPath("underground", "underground");
 
         for (String pathId : paths.keySet()) {
             JsonObject path = paths.get(pathId);
@@ -147,13 +150,24 @@ public class PathManager {
         if (required.isEmpty()) return false;
         String path = upgradeToPath.get(upgrade);
         for (JsonElement _requiredUpgradeId : required) {
+
             String requiredUpgradeId = _requiredUpgradeId.getAsString();
+
+            if (requiredUpgradeId.equals("destroy_wall_1")) {
+                if (undergroundWallStatus < 1) return true;
+                else continue;
+            } else if (requiredUpgradeId.equals("destroy_wall_2")) {
+                if (undergroundWallStatus < 2) return true;
+                else continue;
+            }
+
             boolean not = requiredUpgradeId.startsWith("!");
             if (not) requiredUpgradeId = requiredUpgradeId.substring(1);
             JsonObject requiredUpgrade = findUpgrade(path, requiredUpgradeId);
             if (requiredUpgrade == null) continue;
             boolean unlocked = purchased.contains(requiredUpgrade.get("display").getAsString());
             if ((not && unlocked) || (!not && !unlocked)) return true;
+
         }
         return false;
     }

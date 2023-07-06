@@ -88,6 +88,7 @@ public class FruitfulUtilities implements ClientModInitializer {
         PathScreen.sections.put("beginnings", new float[]{-19284, -64, 1});
         PathScreen.selectedElement.clear();
         PathScreen.section = "beginnings";
+        PathManager.undergroundWallStatus = 0;
     }
 
     public static boolean inPlot(BlockPos pos) {

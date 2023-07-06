@@ -34,7 +34,8 @@ public class PathScreen extends Screen {
             "beginnings",
             "religion",
             "urban",
-            "true_urban"
+            "true_urban",
+            "underground"
     };
     public static final HashMap<String, ItemGroup> section_icons = new HashMap<>();
     public static final Identifier PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon.png");
@@ -63,6 +64,7 @@ public class PathScreen extends Screen {
             section_icons.put("religion", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aReligion")).icon(() -> new ItemStack(Items.ENCHANTING_TABLE)).build());
             section_icons.put("urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUrban")).icon(() -> new ItemStack(Items.IRON_BLOCK)).build());
             section_icons.put("true_urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aTrue Urban")).icon(() -> new ItemStack(Items.GOLD_BLOCK)).build());
+            section_icons.put("underground", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUnderground")).icon(() -> new ItemStack(Items.DIRT)).build());
         }
 
         if (!sections.containsKey("beginnings")) {
@@ -125,6 +127,7 @@ public class PathScreen extends Screen {
             connectUpgrades(2, 5, 3, 5);
 
             renderUpgrade(matrices, beginnings.getAsJsonObject("religion_start"), 3, 4, mouseX, mouseY);
+            renderUpgrade(matrices, beginnings.getAsJsonObject("underground_start"), 4, 4, mouseX, mouseY);
         } else if (section.equals("religion")){
             JsonObject religion = PathManager.paths.get("religion");
             renderUpgrade(matrices, religion.getAsJsonObject("special_delivery"), 1, 1, mouseX, mouseY);
@@ -246,6 +249,26 @@ public class PathScreen extends Screen {
             connectUpgrades(4, 5, 5, 5);
             connectUpgrades(4, 5, 5, 6);
             connectUpgrades(4, 5, 5, 7);
+        } else if (section.equals("underground")) {
+            JsonObject underground = PathManager.paths.get("underground");
+
+            renderUpgrade(matrices, underground.getAsJsonObject("revoke_weapon_bans"), 1, 1, mouseX, mouseY);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_bm"), 2, 1, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("quicker_trading"), 3, 1, mouseX, mouseY);
+            connectUpgrades(2, 1, 3, 1);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("lucky_day"), 1, 2, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("farming_rally"), 2, 2, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("faster_cooking"), 3, 2, mouseX, mouseY);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_armory"), 1, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("advanced_weaponry"), 2, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("public_executions"), 2, 4, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("increased_blast_resistance"), 2, 5, mouseX, mouseY);
+            connectUpgrades(1, 3, 2, 3);
+            connectUpgrades(1, 3, 2, 4);
+            connectUpgrades(1, 3, 2, 5);
         }
 
         matrices.pop();

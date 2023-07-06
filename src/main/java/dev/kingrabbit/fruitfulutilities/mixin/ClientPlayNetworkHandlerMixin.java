@@ -65,6 +65,11 @@ public abstract class ClientPlayNetworkHandlerMixin {
         } else if (message.matches("^The (king|queen|monarch) has [1-5][0-9] trophies! \\(Hover to view buffs\\)$")) {
             PathManager.unlocked("Economics Room");
         }
+
+        if (message.equals("> The wall has fallen!")) {
+            PathManager.undergroundWallStatus++;
+        }
+
     }
 
     @SuppressWarnings("SpellCheckingInspection")
