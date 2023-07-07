@@ -382,6 +382,8 @@ public class PathScreen extends Screen {
         if (x1 == x2) {
             float lineWidth = 1.5f;
             double calculatedX = (x1 + _xOffset + 15.5);
+            float calculatedY1 = y1 + _yOffset + 32;
+            double calculatedY2 = y2 + _yOffset + 0.5;
 
             GlStateManager._depthMask(false);
             GlStateManager._disableCull();
@@ -389,31 +391,41 @@ public class PathScreen extends Screen {
             Tessellator tessellator = RenderSystem.renderThreadTesselator();
             BufferBuilder bufferBuilder = tessellator.getBuffer();
             bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-            bufferBuilder.vertex((calculatedX - lineWidth / 2) * _zoom,  (y1 + _yOffset + 32) * _zoom, 0).color(0, 0, 0, 255).next();
-            bufferBuilder.vertex((calculatedX + lineWidth / 2) * _zoom, (y1 + _yOffset + 32) * _zoom, 0).color(0, 0, 0, 255).next();
-            bufferBuilder.vertex((calculatedX + lineWidth / 2) * _zoom, (y2 + _yOffset + 0.5) * _zoom, 0).color(0, 0, 0, 255).next();
-            bufferBuilder.vertex((calculatedX - lineWidth / 2) * _zoom, (y2 + _yOffset + 0.5) * _zoom, 0).color(0, 0, 0, 255).next();
+            bufferBuilder.vertex((calculatedX - lineWidth / 2) * _zoom,  calculatedY1 * _zoom, 0).color(0, 0, 0, 255).next();
+            bufferBuilder.vertex((calculatedX + lineWidth / 2) * _zoom, calculatedY1 * _zoom, 0).color(0, 0, 0, 255).next();
+            bufferBuilder.vertex((calculatedX + lineWidth / 2) * _zoom, calculatedY2 * _zoom, 0).color(0, 0, 0, 255).next();
+            bufferBuilder.vertex((calculatedX - lineWidth / 2) * _zoom, calculatedY2 * _zoom, 0).color(0, 0, 0, 255).next();
             tessellator.draw();
             GlStateManager._enableCull();
             GlStateManager._depthMask(true);
             return;
         }
 
-        // A constant angle results in differently angled lines appearing thicker/thinner.
-        // Not overly sure as to why this happens.
-        float lineWidth = 5 + (float) Math.abs(10 * Math.atan((y2 - y1) / (x2 - x1)));
+        float calculatedX1 = x1 + _xOffset + 29;
+        float calculatedX2 = x2 + _xOffset + 4;
+        float calculatedY1 = y1 + _yOffset + 16;
+        float calculatedY2 = y2 + _yOffset + 16;
+
+        float dx = calculatedX2 - calculatedX1;
+        float dy = calculatedY2 - calculatedY1;
+        double angle = Math.atan(dx / dy);
+        double lineWidth = 1.5f / Math.sin(angle);
 
         GlStateManager._depthMask(false);
         GlStateManager._disableCull();
         RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
         Tessellator tessellator = RenderSystem.renderThreadTesselator();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
-        RenderSystem.lineWidth(lineWidth * _zoom);
-        bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
-        bufferBuilder.vertex((x1 + 29 + _xOffset) * _zoom, (y1 + 16 + _yOffset) * _zoom, 0).color(0, 0, 0, 255).normal(1.0f, 0.0f, 0.0f).next();
-        bufferBuilder.vertex((x2 + 4 + _xOffset) * _zoom, (y2 + 16 + _yOffset) * _zoom, 0).color(0, 0, 0, 255).normal(1.0f, 0.0f, 0.0f).next();
+        bufferBuilder.begin(VertexFormat.DrawMode.TRIANGLES, VertexFormats.POSITION_COLOR);
+        bufferBuilder.vertex(calculatedX1 * _zoom, (calculatedY1 - lineWidth / 2) * _zoom, 0).color(0, 0, 0, 255).next();
+        bufferBuilder.vertex(calculatedX1 * _zoom, (calculatedY1 + lineWidth / 2) * _zoom, 0).color(0, 0, 0, 255).next();
+        bufferBuilder.vertex(calculatedX2 * _zoom, (calculatedY2 + lineWidth / 2) * _zoom, 0).color(0, 0, 0, 255).next();
         tessellator.draw();
-        RenderSystem.lineWidth(1.0f);
+        bufferBuilder.begin(VertexFormat.DrawMode.TRIANGLES, VertexFormats.POSITION_COLOR);
+        bufferBuilder.vertex(calculatedX2 * _zoom, (calculatedY2 + lineWidth / 2) * _zoom, 0).color(0, 0, 0, 255).next();
+        bufferBuilder.vertex(calculatedX2 * _zoom, (calculatedY2 - lineWidth / 2) * _zoom, 0).color(0, 0, 0, 255).next();
+        bufferBuilder.vertex(calculatedX1 * _zoom, (calculatedY1 - lineWidth / 2) * _zoom, 0).color(0, 0, 0, 255).next();
+        tessellator.draw();
         GlStateManager._enableCull();
         GlStateManager._depthMask(true);
     }
