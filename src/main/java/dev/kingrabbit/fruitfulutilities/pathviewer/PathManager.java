@@ -75,7 +75,7 @@ public class PathManager {
             for (String upgradeId : path.keySet()) {
                 JsonObject upgrade = path.getAsJsonObject(upgradeId);
                 if (upgrade.get("display").getAsString().equals(upgradeName)) {
-                    if (upgrade.has("has_duplicate_names") && upgrade.get("has_duplicates_names").getAsBoolean()) {
+                    if (upgrade.has("has_duplicate_names") && upgrade.get("has_duplicate_names").getAsBoolean()) {
                         if (!Objects.equals(description, upgrade.get("description").getAsString()))
                             continue;
                     }
