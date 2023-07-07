@@ -387,14 +387,12 @@ public class PathScreen extends Screen {
             RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
             Tessellator tessellator = RenderSystem.renderThreadTesselator();
             BufferBuilder bufferBuilder = tessellator.getBuffer();
-            RenderSystem.lineWidth(10 * _zoom);
             bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
             bufferBuilder.vertex(calculatedX,  (y1 + _yOffset + 32) * _zoom, 0).color(0, 0, 0, 255).next();
             bufferBuilder.vertex((x2 + _xOffset + 17.5) * _zoom, (y1 + _yOffset + 32) * _zoom, 0).color(0, 0, 0, 255).next();
             bufferBuilder.vertex((x2 + _xOffset + 17.5) * _zoom, (y2 + _yOffset + 0.5) * _zoom, 0).color(0, 0, 0, 255).next();
             bufferBuilder.vertex(calculatedX, (y2 + _yOffset + 0.5) * _zoom, 0).color(0, 0, 0, 255).next();
             tessellator.draw();
-            RenderSystem.lineWidth(1.0f);
             GlStateManager._enableCull();
             GlStateManager._depthMask(true);
             return;
