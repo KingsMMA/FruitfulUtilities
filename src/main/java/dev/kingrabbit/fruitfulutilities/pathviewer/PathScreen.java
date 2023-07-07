@@ -380,6 +380,8 @@ public class PathScreen extends Screen {
         y2 = 32 + y2 * 64;
 
         if (x1 == x2) {
+            double calculatedX = (x1 + _xOffset - 2 + 17.5) * _zoom;
+
             GlStateManager._depthMask(false);
             GlStateManager._disableCull();
             RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
@@ -387,10 +389,10 @@ public class PathScreen extends Screen {
             BufferBuilder bufferBuilder = tessellator.getBuffer();
             RenderSystem.lineWidth(10 * _zoom);
             bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-            bufferBuilder.vertex((int) ((int) (x1 + _xOffset - 2 + 17.5) * _zoom), (int) ((int) (y1 + _yOffset + 32) * _zoom), 0).color(0, 0, 0, 255).next();
-            bufferBuilder.vertex((int) ((int) (x2 + _xOffset + 17.5) * _zoom), (int) ((int) (y1 + _yOffset + 32) * _zoom), 0).color(0, 0, 0, 255).next();
-            bufferBuilder.vertex((int) ((int) (x2 + _xOffset + 17.5) * _zoom), (int) ((int) (y2 + _yOffset + 0.5) * _zoom), 0).color(0, 0, 0, 255).next();
-            bufferBuilder.vertex((int) ((int) (x1 + _xOffset - 2 + 17.5) * _zoom), (int) ((int) (y2 + _yOffset + 0.5) * _zoom), 0).color(0, 0, 0, 255).next();
+            bufferBuilder.vertex(calculatedX,  (y1 + _yOffset + 32) * _zoom, 0).color(0, 0, 0, 255).next();
+            bufferBuilder.vertex((x2 + _xOffset + 17.5) * _zoom, (y1 + _yOffset + 32) * _zoom, 0).color(0, 0, 0, 255).next();
+            bufferBuilder.vertex((x2 + _xOffset + 17.5) * _zoom, (y2 + _yOffset + 0.5) * _zoom, 0).color(0, 0, 0, 255).next();
+            bufferBuilder.vertex(calculatedX, (y2 + _yOffset + 0.5) * _zoom, 0).color(0, 0, 0, 255).next();
             tessellator.draw();
             RenderSystem.lineWidth(1.0f);
             GlStateManager._enableCull();
@@ -403,7 +405,7 @@ public class PathScreen extends Screen {
         RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
         Tessellator tessellator = RenderSystem.renderThreadTesselator();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
-        RenderSystem.lineWidth(5 + (float) Math.abs(10 * Math.atan((y2 - y1) / (x2 - x1))));  // A constant width results in steeper angles appearing thinner
+        RenderSystem.lineWidth((5 + (float) Math.abs(10 * Math.atan((y2 - y1) / (x2 - x1)))) * _zoom);  // A constant width results in steeper angles appearing thinner
         bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
         bufferBuilder.vertex((x1 + 29 + _xOffset) * _zoom, (y1 + 16 + _yOffset) * _zoom, 0).color(0, 0, 0, 255).normal(1.0f, 0.0f, 0.0f).next();
         bufferBuilder.vertex((x2 + 4 + _xOffset) * _zoom, (y2 + 16 + _yOffset) * _zoom, 0).color(0, 0, 0, 255).normal(1.0f, 0.0f, 0.0f).next();
