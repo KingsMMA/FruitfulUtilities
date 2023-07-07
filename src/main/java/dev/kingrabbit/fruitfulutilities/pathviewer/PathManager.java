@@ -34,6 +34,8 @@ public class PathManager {
         pathParents.put("true_urban", "urban");
         pathParents.put("science", "urban");
         pathParents.put("democracy", "urban");
+
+        pathParents.put("raid", "underground");
     }
 
     public static void loadPaths() {
@@ -43,6 +45,7 @@ public class PathManager {
         loadPath("urban", "urban");
         loadPath("true_urban", "true_urban");
         loadPath("underground", "underground");
+        loadPath("raid", "raid");
 
         for (String pathId : paths.keySet()) {
             JsonObject path = paths.get(pathId);
@@ -181,10 +184,10 @@ public class PathManager {
             String requiredUpgradeId = _requiredUpgradeId.getAsString();
 
             if (requiredUpgradeId.equals("destroy_wall_1")) {
-                if (undergroundWallStatus < 1) return true;
+                if (undergroundWallStatus < 2) return true;
                 else continue;
             } else if (requiredUpgradeId.equals("destroy_wall_2")) {
-                if (undergroundWallStatus < 2) return true;
+                if (undergroundWallStatus < 4) return true;
                 else continue;
             }
 

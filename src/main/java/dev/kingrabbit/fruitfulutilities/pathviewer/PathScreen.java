@@ -35,7 +35,8 @@ public class PathScreen extends Screen {
             "religion",
             "urban",
             "true_urban",
-            "underground"
+            "underground",
+            "raid"
     };
     public static final HashMap<String, ItemGroup> section_icons = new HashMap<>();
     public static final Identifier PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon.png");
@@ -65,6 +66,7 @@ public class PathScreen extends Screen {
             section_icons.put("urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUrban")).icon(() -> new ItemStack(Items.IRON_BLOCK)).build());
             section_icons.put("true_urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aTrue Urban")).icon(() -> new ItemStack(Items.GOLD_BLOCK)).build());
             section_icons.put("underground", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUnderground")).icon(() -> new ItemStack(Items.DIRT)).build());
+            section_icons.put("raid", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aRaid")).icon(() -> new ItemStack(Items.PUMPKIN)).build());
         }
 
         if (!sections.containsKey("beginnings")) {
@@ -262,13 +264,94 @@ public class PathScreen extends Screen {
             renderUpgrade(matrices, underground.getAsJsonObject("farming_rally"), 2, 2, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("faster_cooking"), 3, 2, mouseX, mouseY);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_armory"), 1, 3, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("advanced_weaponry"), 2, 3, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("public_executions"), 2, 4, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("increased_blast_resistance"), 2, 5, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_armory"), 2, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("advanced_weaponry"), 1, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("public_executions"), 1, 4, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("increased_blast_resistance"), 1, 5, mouseX, mouseY);
             connectUpgrades(1, 3, 2, 3);
-            connectUpgrades(1, 3, 2, 4);
-            connectUpgrades(1, 3, 2, 5);
+            connectUpgrades(1, 4, 2, 3);
+            connectUpgrades(1, 5, 2, 3);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("better_bankers"), 2, 4, mouseX, mouseY);
+            connectUpgrades(2, 3, 2, 4);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("faster_selling"), 3, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("rapid_reload"), 3, 4, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("better_return_rates"), 3, 5, mouseX, mouseY);
+            connectUpgrades(2, 3, 3, 3);
+            connectUpgrades(2, 3, 3, 4);
+            connectUpgrades(2, 3, 3, 5);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_center"), 4, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("quicker_sprouting"), 4, 1, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("fertile_soil"), 5, 1, mouseX, mouseY);
+            connectUpgrades(4, 3, 4, 1);
+            connectUpgrades(4, 3, 5, 1);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("golden_extractors"), 6, 1, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("market_manipulation"), 6, 2, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("projectile_proofing"), 6, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("light_based_growth_spurts"), 6, 4, mouseX, mouseY);
+            connectUpgrades(4, 3, 6, 1);
+            connectUpgrades(4, 3, 6, 2);
+            connectUpgrades(4, 3, 6, 3);
+            connectUpgrades(4, 3, 6, 4);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_depths"), 4, 6, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("revoke_weapon_bans"), 3, 6, mouseX, mouseY); // TODO Placeholder for Lift Restoration
+            renderUpgrade(matrices, underground.getAsJsonObject("richer_metals"), 3, 7, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("grenade_tech_breakthrough"), 4, 7, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("doubled_city_funding"), 5, 7, mouseX, mouseY);
+            connectUpgrades(4, 3, 4, 6);
+            connectUpgrades(3, 6, 4, 6);
+            connectUpgrades(3, 7, 4, 6);
+            connectUpgrades(4, 6, 4, 7);
+            connectUpgrades(4, 6, 5, 7);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_farm"), 7, 7, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("what_shines_bright"), 6, 7, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("guaranteed_returns"), 8, 7, mouseX, mouseY);
+            connectUpgrades(4, 3, 7, 7);
+            connectUpgrades(6, 7, 7, 7);
+            connectUpgrades(7, 7, 8, 7);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("farming_reservations"), 6, 8, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("extra_fertilizer"), 7, 8, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("melon_generators"), 8, 8, mouseX, mouseY);
+            connectUpgrades(6, 8, 7, 7);
+            connectUpgrades(7, 7, 7, 8);
+            connectUpgrades(7, 7, 8, 8);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_second_wall"), 6, 5, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_teleporter"), 7, 4, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("currency_exchange"), 7, 6, mouseX, mouseY);
+            connectUpgrades(4, 3, 6, 5);
+            connectUpgrades(6, 5, 7, 4);
+            connectUpgrades(6, 5, 7, 6);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_raid"), 7, 5, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("cutting_through"), 8, 4, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("start_raid"), 8, 6, mouseX, mouseY);
+            connectUpgrades(6, 5, 7, 5);
+            connectUpgrades(7, 5, 8, 4);
+            connectUpgrades(7, 5, 8, 6);
+        } else if (section.equals("raid")) {
+            JsonObject raid = PathManager.paths.get("raid");
+
+            renderUpgrade(matrices, raid.getAsJsonObject("standard_issue_forges"), 1, 1, mouseX, mouseY); // TODO Placeholder for Extreme Measures
+
+            renderUpgrade(matrices, raid.getAsJsonObject("standard_issue_forges"), 1, 2, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("basic_armory"), 2, 2, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("grenade_stockpiles"), 3, 2, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("power_through"), 4, 2, mouseX, mouseY);
+
+            renderUpgrade(matrices, raid.getAsJsonObject("thorough_defense"), 1, 3, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("stronger_blades"), 2, 3, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("gemstone_blades"), 3, 3, mouseX, mouseY);
+
+            renderUpgrade(matrices, raid.getAsJsonObject("diamond_forges"), 1, 4, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("the_perfect_weapons"), 2, 4, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("impenetrable_defenses"), 3, 4, mouseX, mouseY);
         }
 
         matrices.pop();
