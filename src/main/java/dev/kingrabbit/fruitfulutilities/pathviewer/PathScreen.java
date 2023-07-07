@@ -105,7 +105,7 @@ public class PathScreen extends Screen {
             renderUpgrade(matrices, beginnings.getAsJsonObject("lock_and_key"), 5, 1, mouseX, mouseY);
             renderUpgrade(matrices, beginnings.getAsJsonObject("item_removal_procedures"), 6, 1, mouseX, mouseY);
 
-            renderUpgrade(matrices, beginnings.getAsJsonObject("economics_room"), 1, 3, mouseX, mouseY);
+            renderUpgrade(matrices, beginnings.getAsJsonObject("economic_room"), 1, 3, mouseX, mouseY);
             renderUpgrade(matrices, beginnings.getAsJsonObject("faster_coin_generation"), 2, 2, mouseX, mouseY);
             renderUpgrade(matrices, beginnings.getAsJsonObject("better_sell_deals"), 2, 3, mouseX, mouseY);
             renderUpgrade(matrices, beginnings.getAsJsonObject("increased_guard_limit"), 2, 4, mouseX, mouseY);
@@ -298,15 +298,17 @@ public class PathScreen extends Screen {
                 y += textRenderer.fontHeight + 2;
             }
 
+            String upgradeId = PathManager.getId(_selectedElement);
+
             boolean isTracking = PathManager.tracking.contains(_selectedElement);
-            boolean isUnlocked = PathManager.purchased.contains(display);
+            boolean isUnlocked = PathManager.purchasedIds.contains(upgradeId);
             ButtonWidget track = ButtonWidget.builder(Text.of(isTracking ? "Untrack" : "Track"), widget -> {
                 if (isTracking) PathManager.tracking.remove(_selectedElement);
                 else PathManager.tracking.add(_selectedElement);
             }).dimensions(20, y + 20, width / 10 - 10 - 20, 30).build();
             ButtonWidget unlock = ButtonWidget.builder(Text.of(isUnlocked ? "Lock" : "Unlock"), widget -> {
-                if (isUnlocked) PathManager.purchased.remove(display);
-                else PathManager.purchased.add(display);
+                if (isUnlocked) PathManager.purchasedIds.remove(upgradeId);
+                else PathManager.purchasedIds.add(upgradeId);
             }).dimensions(width / 10 + 10, y + 20, width / 10 - 10 - 20, 30).build();
             addSelectableChild(track);
             addSelectableChild(unlock);
@@ -439,7 +441,7 @@ public class PathScreen extends Screen {
         drawnElements.put(new Region((x + _xOffset) * _zoom, (y + _yOffset) * _zoom, (x + 32 + _xOffset) * _zoom, (y + 32 + _yOffset) * _zoom), upgrade);
 
         boolean major = upgrade.has("path");
-        boolean unlocked = PathManager.purchased.contains(upgrade.get("display").getAsString());
+        boolean unlocked = PathManager.purchasedIds.contains(PathManager.getId(upgrade));
         boolean hovered = x + _xOffset <= mouseX / _zoom && mouseX / _zoom <= x + _xOffset + 32 &&
                 y + _yOffset <= mouseY / _zoom && mouseY / _zoom <= y + _yOffset + 32;
         boolean selected = Objects.equals(selectedElement.get(section), upgrade);

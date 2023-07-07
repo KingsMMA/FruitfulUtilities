@@ -29,7 +29,7 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
         PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
 
         for (JsonObject upgrade : PathManager.tracking) {
-            if (PathManager.purchased.contains(upgrade.get("display").getAsString()) && category.hideIfUnlocked)
+            if (PathManager.purchasedIds.contains(PathManager.getId(upgrade)) && category.hideIfUnlocked)
                 continue;
 
             String[] location = upgrade.get("location").getAsString().split(",");
@@ -58,7 +58,7 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
 
         Vec3d playerPos = MinecraftClient.getInstance().player.getPos();
         for (JsonObject upgrade : PathManager.tracking) {
-            if (PathManager.purchased.contains(upgrade.get("display").getAsString()) && category.hideIfUnlocked)
+            if (PathManager.purchasedIds.contains(PathManager.getId(upgrade)) && category.hideIfUnlocked)
                 continue;
 
             String[] location = upgrade.get("location").getAsString().split(",");
