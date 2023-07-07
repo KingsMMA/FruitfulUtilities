@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class PathManager {
 
@@ -66,11 +67,15 @@ public class PathManager {
         return null;
     }
 
-    public static void unlocked(String upgradeName) {
+    public static void unlocked(String upgradeName, String description) {
         for (JsonObject path : paths.values()) {
             for (String upgradeId : path.keySet()) {
                 JsonObject upgrade = path.getAsJsonObject(upgradeId);
                 if (upgrade.get("display").getAsString().equals(upgradeName)) {
+                    if (upgrade.has("has_duplicate_names") && upgrade.get("has_duplicates_names").getAsBoolean()) {
+                        if (!Objects.equals(description, upgrade.get("description").getAsString()))
+                            continue;
+                    }
                     purchasedIds.add(getId(upgrade));
                     if (upgrade.has("path")) {
                         String newPath = upgrade.get("path").getAsString();
