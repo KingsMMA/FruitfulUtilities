@@ -142,6 +142,17 @@ public class PathManager {
     }
 
     public static boolean locked(JsonObject upgrade) {
+        if (purchased.contains(upgrade.get("display").getAsString())) return false;
+
+        if (upgrade.has("path")) {
+            String path = upgrade.get("path").getAsString();
+            List<String> parents = getParentPaths(path, true);
+
+            for (String unlockedPath : PathScreen.sections.keySet()) {
+                if (!parents.contains(unlockedPath)) return true;
+            }
+        }
+
         if (!upgrade.has("requires")) return false;
         JsonArray required = upgrade.getAsJsonArray("requires");
         if (required.isEmpty()) return false;
@@ -157,4 +168,18 @@ public class PathManager {
         }
         return false;
     }
+
+    public static List<String> getParentPaths(String path, boolean includeOriginal) {
+        List<String> parents = new ArrayList<>();
+        if (includeOriginal) parents.add(path);
+
+        String parent = pathParents.get(path);
+        while (parent != null) {
+            parents.add(parent);
+            parent = pathParents.get(parent);
+        }
+
+        return parents;
+    }
+
 }
