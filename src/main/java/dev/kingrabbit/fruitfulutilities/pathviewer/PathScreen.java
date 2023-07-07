@@ -275,25 +275,33 @@ public class PathScreen extends Screen {
                 y += textRenderer.fontHeight + 2;
             }
 
+            int maxWidth = 98;
+            int horizontalSpacing = 8;
+            int buttonWidth = Math.min(maxWidth, width / 5 - horizontalSpacing * 2);
+            boolean sameLine = buttonWidth == maxWidth && width / 5 - horizontalSpacing * 3 >= maxWidth * 2 + horizontalSpacing * 3;
             boolean isTracking = PathManager.tracking.contains(_selectedElement);
             boolean isUnlocked = PathManager.purchased.contains(display);
+
             ButtonWidget track = ButtonWidget.builder(Text.of(isTracking ? "Untrack" : "Track"), widget -> {
                 if (isTracking) PathManager.tracking.remove(_selectedElement);
                 else PathManager.tracking.add(_selectedElement);
-            }).dimensions(20, y + 20, width / 10 - 10 - 20, 30).build();
+            }).dimensions(width / 10 - (sameLine ? maxWidth + horizontalSpacing: buttonWidth / 2), y + 20, buttonWidth, 20).build();
+
             ButtonWidget unlock = ButtonWidget.builder(Text.of(isUnlocked ? "Lock" : "Unlock"), widget -> {
                 if (isUnlocked) PathManager.purchased.remove(display);
                 else PathManager.purchased.add(display);
-            }).dimensions(width / 10 + 10, y + 20, width / 10 - 10 - 20, 30).build();
+            }).dimensions(width / 10 - (sameLine ? -horizontalSpacing : buttonWidth / 2), sameLine ? y + 20 : y + 50, buttonWidth, 20).build();
+
             addSelectableChild(track);
             addSelectableChild(unlock);
             track.render(matrices, mouseX, mouseY, delta);
             unlock.render(matrices, mouseX, mouseY, delta);
 
             y += 60;
+            if (!sameLine) y += 30;
         }
 
-        y += 50;
+        y += 20;
 
         DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, "Tracked Upgrades", width / 10, y, HEADER_COLOR);
         y += 20;
