@@ -61,7 +61,7 @@ public class PathManager {
 
     public static void loadPath(String localName, String remoteName) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/KingsMMA/FruitfulData/depths/" + remoteName + ".json").openStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/KingsMMA/FruitfulData/main/" + remoteName + ".json").openStream()));
             JsonObject beginnings = FruitfulUtilities.GSON.fromJson(reader, JsonObject.class);
             paths.put(localName, beginnings);
         } catch (IOException e) {
