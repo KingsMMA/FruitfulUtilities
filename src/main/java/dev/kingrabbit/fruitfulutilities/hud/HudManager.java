@@ -113,4 +113,20 @@ public class HudManager {
         }
     }
 
+    public void resetLocations() {
+        for (HudElement element : elementList.keySet()) {
+            Class<? extends HudElement> elementClass = element.getClass();
+            try {
+                HudElement newInstance = elementClass.getDeclaredConstructor().newInstance();
+                Field x = elementClass.getField("x");
+                Field y = elementClass.getField("y");
+                x.set(element, x.get(newInstance));
+                y.set(element, y.get(newInstance));
+            } catch (NoSuchFieldException | InstantiationException | IllegalAccessException |
+                     InvocationTargetException | NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 }
