@@ -89,6 +89,9 @@ public abstract class ClientPlayNetworkHandlerMixin {
             FruitfulUtilities.getInstance().restartRun();
         } else if (message.matches("^The (king|queen|monarch) has [1-5][0-9] trophies! \\(Hover to view buffs\\)$")) {
             PathManager.unlocked("Economic Room", null);
+        } else if (message.matches("^The (king|queen|monarch) has 2[5-9] trophies! \\(Hover To view buffs\\)$") || message.matches("^The (king|queen|monarch) has [3-5][0-9] trophies! \\(Hover To view buffs\\)$")) {
+            PathManager.unlocked("Private Merchant", null);
+            PathManager.unlocked("Personal Greenhouse", null);
         }
 
         if (message.equals("> The wall has fallen!")) {
