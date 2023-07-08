@@ -38,15 +38,16 @@ public class TrackedUpgradesElement extends HudElement {
 
         result.add("§2Tracked Upgrades:");
 
-        if (PathManager.tracking.isEmpty()) {
+        List<JsonObject> allTracked = PathManager.allTracked();
+
+        if (allTracked.isEmpty()) {
             result.addAll(textRenderer.wrapLines(StringVisitable.plain("Track an upgrade to view its waypoint and track your progress towards it."), 150));
         } else {
-            for (JsonObject tracked : PathManager.tracking) {
+            for (JsonObject tracked : allTracked) {
                 StringBuilder information = new StringBuilder("    §7• §a" + tracked.get("display").getAsString() + "§7: ");
                 HashMap<Currency, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
                 if (cost.isEmpty()) {
-                    if (category.hideIfUnlocked) continue;
-                    else information.append("§eUnlocked!");
+                    information.append("§eUnlocked!");
                     result.add(information.toString());
                 } else {
                     information = PathManager.appendFormattedCost(information, cost);

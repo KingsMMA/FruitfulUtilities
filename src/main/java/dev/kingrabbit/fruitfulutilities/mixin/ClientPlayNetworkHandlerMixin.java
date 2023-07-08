@@ -15,11 +15,14 @@ import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.HoverEvent;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +36,16 @@ public abstract class ClientPlayNetworkHandlerMixin {
     public void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
         ConfigManager configManager = FruitfulUtilities.getInstance().configManager;
         String message = packet.content().getString();
+        String description = null;
+        if (packet.content().getStyle() != null) {
+            if (packet.content().getStyle().getHoverEvent() != null) {
+                Text hoverText = packet.content().getStyle().getHoverEvent().getValue(HoverEvent.Action.SHOW_TEXT);
+                if (hoverText != null) {
+                    description = hoverText.getString();
+                }
+            }
+        }
+
         if (message.matches("^> [a-zA-Z_0-9]{1,16} is the new (king|queen|monarch)!$")) {
             FruitfulUtilities.getInstance().restartRun();
             return;
@@ -56,15 +69,35 @@ public abstract class ClientPlayNetworkHandlerMixin {
             while (matcher.find()) {
                 String upgradeName = matcher.group(2);
                 if (upgradeName.endsWith(" major")) upgradeName = upgradeName.substring(0, upgradeName.length() - 6);
-                PathManager.unlocked(upgradeName);
+
+                if (upgradeName.equals("Upgrade Town") && Objects.equals(description, "Opens a new area with a few new upgrades.")) {
+                    if (PathManager.purchasedIds.contains("upgrade_town_farm")) {
+                        if (!PathManager.purchasedIds.contains("upgrade_town_second_wall")) PathManager.purchasedIds.add("upgrade_town_second_wall");
+                    } else if (PathManager.purchasedIds.contains("upgrade_town_second_wall")) {
+                        if (!PathManager.purchasedIds.contains("upgrade_town_farm")) PathManager.purchasedIds.add("upgrade_town_farm");
+                    } else {
+                        TickListener.testUndergroundAt = TickListener.tick + 5;
+                    }
+                    return;
+                }
+
+                PathManager.unlocked(upgradeName, description);
             }
         }
 
         if (message.equals("» Joined game: < Melon King > (4.0) by DeepSeaBlue.")) {
             FruitfulUtilities.getInstance().restartRun();
         } else if (message.matches("^The (king|queen|monarch) has [1-5][0-9] trophies! \\(Hover to view buffs\\)$")) {
-            PathManager.unlocked("Economics Room");
+            PathManager.unlocked("Economic Room", null);
+        } else if (message.matches("^The (king|queen|monarch) has 2[5-9] trophies! \\(Hover To view buffs\\)$") || message.matches("^The (king|queen|monarch) has [3-5][0-9] trophies! \\(Hover To view buffs\\)$")) {
+            PathManager.unlocked("Private Merchant", null);
+            PathManager.unlocked("Personal Greenhouse", null);
         }
+
+        if (message.equals("> The wall has fallen!")) {
+            PathManager.undergroundWallStatus++;
+        }
+
     }
 
     @SuppressWarnings("SpellCheckingInspection")

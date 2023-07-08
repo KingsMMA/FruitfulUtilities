@@ -5,8 +5,10 @@ import dev.kingrabbit.fruitfulutilities.Keybinds;
 import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.config.ConfigScreen;
 import dev.kingrabbit.fruitfulutilities.config.categories.SearchingTrackerCategory;
+import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathScreen;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -20,6 +22,7 @@ public class TickListener implements ClientTickEvents.EndTick {
     public static final HashMap<Integer, Text> searchingDrops = new HashMap<>();
     public static int tick = 0;
     public static int searchingUntil = 0;
+    public static int testUndergroundAt = -1;
 
     @Override
     public void onEndTick(MinecraftClient client) {
@@ -42,6 +45,21 @@ public class TickListener implements ClientTickEvents.EndTick {
             tick = 0;
             searchingUntil = 0;
             clicked.clear();
+        }
+
+        if (tick >= testUndergroundAt) {
+            if (client.world != null) {
+                if (!PathManager.purchasedIds.contains("upgrade_town_farm")) {
+                    if (client.world.getBlockState(new BlockPos(-929, 37, -4193)).isOf(Blocks.AIR)) {
+                        PathManager.purchasedIds.add("upgrade_town_farm");
+                    }
+                }
+                if (!PathManager.purchasedIds.contains("upgrade_town_second_wall")) {
+                    if (client.world.getBlockState(new BlockPos(-938, 37, -4200)).isOf(Blocks.AIR)) {
+                        PathManager.purchasedIds.add("upgrade_town_second_wall");
+                    }
+                }
+            }
         }
 
         SearchingTrackerCategory searchingCategory = fruitfulUtilities.configManager.getCategory(SearchingTrackerCategory.class);

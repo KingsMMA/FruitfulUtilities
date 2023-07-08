@@ -8,13 +8,16 @@ import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 @CategoryInfo(id = "path_viewer", display = "Path Viewer")
 public class PathViewerCategory extends ConfigCategory {
 
-    @ConfigBoolean(id = "cumulative", display = "Cumulative Cost", description = "Includes the cost of all required upgrades to the cost of the selected upgrade.")
-    public boolean cumulative = true;
-
     @ConfigBoolean(id = "hud", display = "Show on HUD", description = "Shows all currently tracked upgrades on the HUD.")
     public boolean hud = true;
 
-    @ConfigBoolean(id = "hide_if_unlocked", display = "Hide if Unlocked", description = "Hides tracked upgrades if they have already been unlocked.")
+    @ConfigBoolean(id = "cumulative", display = "Cumulative Cost", description = "Includes the cost of all required upgrades to the cost of the selected upgrade.")
+    public boolean cumulative = true;
+
+    @ConfigBoolean(id = "hide_if_unlocked", display = "Hide if Purchased", description = "Hides tracked upgrades if they have already been purchased.")
     public boolean hideIfUnlocked = false;
+
+    @ConfigBoolean(id = "hide_if_locked", display = "Hide if Locked", description = "Hides tracked upgrades if they are locked.")
+    public boolean hideIfLocked = false;
 
 }

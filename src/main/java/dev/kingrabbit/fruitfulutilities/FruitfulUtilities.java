@@ -82,12 +82,13 @@ public class FruitfulUtilities implements ClientModInitializer {
     }
 
     public void restartRun() {
-        PathManager.purchased.clear();
+        PathManager.purchasedIds.clear();
         PathManager.tracking.clear();
         PathScreen.sections.clear();
         PathScreen.sections.put("beginnings", new float[]{-19284, -64, 1});
         PathScreen.selectedElement.clear();
         PathScreen.section = "beginnings";
+        PathManager.undergroundWallStatus = 0;
     }
 
     public static boolean inPlot(BlockPos pos) {

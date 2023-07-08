@@ -1,10 +1,10 @@
 package dev.kingrabbit.fruitfulutilities.pathviewer;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
-import dev.kingrabbit.fruitfulutilities.config.categories.PathViewerCategory;
 import dev.kingrabbit.fruitfulutilities.util.ColorOverlay;
 import dev.kingrabbit.fruitfulutilities.util.NumberUtils;
 import dev.kingrabbit.fruitfulutilities.util.Region;
@@ -34,7 +34,9 @@ public class PathScreen extends Screen {
             "beginnings",
             "religion",
             "urban",
-            "true_urban"
+            "true_urban",
+            "underground",
+            "raid"
     };
     public static final HashMap<String, ItemGroup> section_icons = new HashMap<>();
     public static final Identifier PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon.png");
@@ -63,6 +65,8 @@ public class PathScreen extends Screen {
             section_icons.put("religion", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aReligion")).icon(() -> new ItemStack(Items.ENCHANTING_TABLE)).build());
             section_icons.put("urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUrban")).icon(() -> new ItemStack(Items.IRON_BLOCK)).build());
             section_icons.put("true_urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aTrue Urban")).icon(() -> new ItemStack(Items.GOLD_BLOCK)).build());
+            section_icons.put("underground", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUnderground")).icon(() -> new ItemStack(Items.DIRT)).build());
+            section_icons.put("raid", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aRaid")).icon(() -> new ItemStack(Items.CARVED_PUMPKIN)).build());
         }
 
         if (!sections.containsKey("beginnings")) {
@@ -125,6 +129,7 @@ public class PathScreen extends Screen {
             connectUpgrades(2, 5, 3, 5);
 
             renderUpgrade(matrices, beginnings.getAsJsonObject("religion_start"), 3, 4, mouseX, mouseY);
+            renderUpgrade(matrices, beginnings.getAsJsonObject("underground_start"), 4, 4, mouseX, mouseY);
         } else if (section.equals("religion")){
             JsonObject religion = PathManager.paths.get("religion");
             renderUpgrade(matrices, religion.getAsJsonObject("special_delivery"), 1, 1, mouseX, mouseY);
@@ -246,6 +251,105 @@ public class PathScreen extends Screen {
             connectUpgrades(4, 5, 5, 5);
             connectUpgrades(4, 5, 5, 6);
             connectUpgrades(4, 5, 5, 7);
+        } else if (section.equals("underground")) {
+            JsonObject underground = PathManager.paths.get("underground");
+
+            renderUpgrade(matrices, underground.getAsJsonObject("revoke_weapon_bans"), 1, 1, mouseX, mouseY);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_bm"), 2, 1, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("quicker_trading"), 3, 1, mouseX, mouseY);
+            connectUpgrades(2, 1, 3, 1);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("lucky_day"), 1, 2, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("farming_rally"), 2, 2, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("faster_cooking"), 3, 2, mouseX, mouseY);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_armory"), 2, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("advanced_weaponry"), 1, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("public_executions"), 1, 4, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("increased_blast_resistance"), 1, 5, mouseX, mouseY);
+            connectUpgrades(1, 3, 2, 3);
+            connectUpgrades(1, 4, 2, 3);
+            connectUpgrades(1, 5, 2, 3);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("better_bankers"), 2, 4, mouseX, mouseY);
+            connectUpgrades(2, 3, 2, 4);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("faster_selling"), 3, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("rapid_reload"), 3, 4, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("better_return_rates"), 3, 5, mouseX, mouseY);
+            connectUpgrades(2, 3, 3, 3);
+            connectUpgrades(2, 3, 3, 4);
+            connectUpgrades(2, 3, 3, 5);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_center"), 4, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("quicker_sprouting"), 4, 1, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("fertile_soil"), 5, 1, mouseX, mouseY);
+            connectUpgrades(4, 1, 4, 3);
+            connectUpgrades(4, 3, 5, 1);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("golden_extractors"), 6, 1, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("market_manipulation"), 6, 2, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("projectile_proofing"), 6, 3, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("light_based_growth_spurts"), 6, 4, mouseX, mouseY);
+            connectUpgrades(4, 3, 6, 1);
+            connectUpgrades(4, 3, 6, 2);
+            connectUpgrades(4, 3, 6, 3);
+            connectUpgrades(4, 3, 6, 4);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_depths"), 4, 6, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("lift_restoration"), 3, 6, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("richer_metals"), 3, 7, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("grenade_tech_breakthrough"), 4, 7, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("doubled_city_funding"), 5, 7, mouseX, mouseY);
+            connectUpgrades(4, 3, 4, 6);
+            connectUpgrades(3, 6, 4, 6);
+            connectUpgrades(3, 7, 4, 6);
+            connectUpgrades(4, 6, 4, 7);
+            connectUpgrades(4, 6, 5, 7);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_farm"), 7, 7, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("what_shines_bright"), 6, 7, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("guaranteed_returns"), 8, 7, mouseX, mouseY);
+            connectUpgrades(4, 3, 7, 7);
+            connectUpgrades(6, 7, 7, 7);
+            connectUpgrades(7, 7, 8, 7);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("farming_reservations"), 6, 8, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("extra_fertilizer"), 7, 8, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("melon_generators"), 8, 8, mouseX, mouseY);
+            connectUpgrades(6, 8, 7, 7);
+            connectUpgrades(7, 7, 7, 8);
+            connectUpgrades(7, 7, 8, 8);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_second_wall"), 6, 5, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_teleporter"), 7, 4, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("currency_exchange"), 7, 6, mouseX, mouseY);
+            connectUpgrades(4, 3, 6, 5);
+            connectUpgrades(6, 5, 7, 4);
+            connectUpgrades(6, 5, 7, 6);
+
+            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_raid"), 7, 5, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("cutting_through"), 8, 4, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("start_raid"), 8, 6, mouseX, mouseY);
+            connectUpgrades(6, 5, 7, 5);
+            connectUpgrades(7, 5, 8, 4);
+            connectUpgrades(7, 5, 8, 6);
+        } else if (section.equals("raid")) {
+            JsonObject raid = PathManager.paths.get("raid");
+
+            renderUpgrade(matrices, raid.getAsJsonObject("standard_issue_forges"), 1, 1, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("basic_armory"), 2, 1, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("grenade_stockpiles"), 3, 1, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("power_through"), 4, 1, mouseX, mouseY);
+
+            renderUpgrade(matrices, raid.getAsJsonObject("thorough_defense"), 1, 2, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("stronger_blades"), 2, 2, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("gemstone_blades"), 3, 2, mouseX, mouseY);
+
+            renderUpgrade(matrices, raid.getAsJsonObject("diamond_forges"), 1, 3, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("the_perfect_weapons"), 2, 3, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("impenetrable_defenses"), 3, 3, mouseX, mouseY);
         }
 
         matrices.pop();
@@ -275,12 +379,14 @@ public class PathScreen extends Screen {
                 y += textRenderer.fontHeight + 2;
             }
 
+            String upgradeId = PathManager.getId(_selectedElement);
+
             int maxWidth = 98;
             int horizontalSpacing = 8;
             int buttonWidth = Math.min(maxWidth, width / 5 - horizontalSpacing * 2);
             boolean sameLine = buttonWidth == maxWidth && width / 5 - horizontalSpacing * 3 >= maxWidth * 2 + horizontalSpacing * 3;
             boolean isTracking = PathManager.tracking.contains(_selectedElement);
-            boolean isUnlocked = PathManager.purchased.contains(display);
+            boolean isUnlocked = PathManager.purchasedIds.contains(upgradeId);
 
             ButtonWidget track = ButtonWidget.builder(Text.of(isTracking ? "Untrack" : "Track"), widget -> {
                 if (isTracking) PathManager.tracking.remove(_selectedElement);
@@ -288,8 +394,8 @@ public class PathScreen extends Screen {
             }).dimensions(width / 10 - (sameLine ? maxWidth + horizontalSpacing: buttonWidth / 2), y + 20, buttonWidth, 20).build();
 
             ButtonWidget unlock = ButtonWidget.builder(Text.of(isUnlocked ? "Lock" : "Unlock"), widget -> {
-                if (isUnlocked) PathManager.purchased.remove(display);
-                else PathManager.purchased.add(display);
+                if (isUnlocked) PathManager.purchasedIds.remove(upgradeId);
+                else PathManager.purchasedIds.add(upgradeId);
             }).dimensions(width / 10 - (sameLine ? -horizontalSpacing : buttonWidth / 2), sameLine ? y + 20 : y + 50, buttonWidth, 20).build();
 
             addSelectableChild(track);
@@ -306,22 +412,21 @@ public class PathScreen extends Screen {
         DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, "Tracked Upgrades", width / 10, y, HEADER_COLOR);
         y += 20;
 
-        if (PathManager.tracking.isEmpty()) {
+        List<JsonObject> allTracked = PathManager.allTracked();
+
+        if (allTracked.isEmpty()) {
             for (OrderedText line : textRenderer.wrapLines(StringVisitable.plain("Track an upgrade to view its waypoint and track your progress towards it."), width / 5 - 20)) {
                 DrawableHelper.drawTextWithShadow(matrices, textRenderer, line, 10, y, 0xFFFFFF);
                 y += textRenderer.fontHeight + 2;
             }
         } else {
-            PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
 
             StringBuilder information = new StringBuilder("Currently tracking the following upgrades:");
-            for (JsonObject tracked : PathManager.tracking) {
+            for (JsonObject tracked : allTracked) {
                 HashMap<Currency, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
                 if (cost.isEmpty()) {
-                    if (!category.hideIfUnlocked) {
-                        information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
-                        information.append("§eUnlocked!");
-                    }
+                    information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
+                    information.append("§eUnlocked!");
                 } else {
                     information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
                     information = PathManager.appendFormattedCost(information, cost);
@@ -333,6 +438,25 @@ public class PathScreen extends Screen {
             }
 
         }
+
+        addSelectableChild(ButtonWidget.builder(Text.of("Reset Position"), button -> {
+            xOffset(width / 5f - 64 + 32 * 1.5f);
+            yOffset(-64);
+            zoom(1);
+        }).dimensions(width - 103, height - 75, 98, 20).build()).render(matrices, mouseX, mouseY, delta);
+
+        addSelectableChild(ButtonWidget.builder(Text.of("Track All"), button -> {
+            for (JsonElement _pathUpgrade : PathManager.paths.get(section).asMap().values()) {
+                JsonObject pathUpgrade = _pathUpgrade.getAsJsonObject();
+                if (!PathManager.tracking.contains(pathUpgrade)) {
+                    PathManager.tracking.add(pathUpgrade);
+                }
+            }
+        }).dimensions(width - 103, height - 50, 98, 20).build()).render(matrices, mouseX, mouseY, delta);
+
+        addSelectableChild(ButtonWidget.builder(Text.of("Untrack All"),
+                button -> PathManager.tracking.removeIf(jsonObject -> PathManager.paths.get(section).asMap().containsValue(jsonObject))
+        ).dimensions(width - 103, height - 25, 98, 20).build()).render(matrices, mouseX, mouseY, delta);
 
         // Item tabs
         matrices.push();
@@ -441,7 +565,7 @@ public class PathScreen extends Screen {
         drawnElements.put(new Region((x + _xOffset) * _zoom, (y + _yOffset) * _zoom, (x + 32 + _xOffset) * _zoom, (y + 32 + _yOffset) * _zoom), upgrade);
 
         boolean major = upgrade.has("path");
-        boolean unlocked = PathManager.purchased.contains(upgrade.get("display").getAsString());
+        boolean unlocked = PathManager.purchasedIds.contains(PathManager.getId(upgrade));
         boolean hovered = x + _xOffset <= mouseX / _zoom && mouseX / _zoom <= x + _xOffset + 32 &&
                 y + _yOffset <= mouseY / _zoom && mouseY / _zoom <= y + _yOffset + 32;
         boolean selected = Objects.equals(selectedElement.get(section), upgrade);
