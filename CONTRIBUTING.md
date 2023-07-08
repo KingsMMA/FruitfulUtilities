@@ -42,6 +42,10 @@ connectUpgrades(<gridX1>, <gridY1>, <gridX2>, <gridY2>);
 <b>2.</b> In the pull request, send a screenshot of the path viewer with your new path/upgrades.  
 <b>3.</b> Request a review in your pull request so a maintainer can review your changes.
 
+## Joining DiamondFire
+When launching in a development environment, you will not be logged in.  
+It is recommended to use [AuthMe](https://github.com/axieum/authme), which will add a button to the multiplayer screen allowing you to log in.
+
 ## Hotswapping
 Hotswapping allows you to test your changes without restarting your game.  It is recommended to use [IntelliJ](https://www.jetbrains.com/idea/) as your development environment.
 Start by running the `Minecraft Client` task on debug mode.  

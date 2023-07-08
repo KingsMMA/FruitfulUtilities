@@ -29,15 +29,13 @@ public class TickListener implements ClientTickEvents.EndTick {
         if (keybinds.openConfig.wasPressed()) {
             client.setScreen(new ConfigScreen());
             return;
+        } else if (keybinds.openPathViewer.wasPressed()) {
+            client.setScreen(new PathScreen());
+            return;
         }
 
         ConfigManager configManager = fruitfulUtilities.configManager;
         if (!configManager.enabled()) return;
-
-        if (keybinds.openPathViewer.wasPressed()) {
-            client.setScreen(new PathScreen());
-            return;
-        }
 
         tick += 1;
         if (tick >= 12_000) {
