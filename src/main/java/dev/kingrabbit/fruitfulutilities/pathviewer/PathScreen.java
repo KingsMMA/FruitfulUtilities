@@ -1,10 +1,10 @@
 package dev.kingrabbit.fruitfulutilities.pathviewer;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
-import dev.kingrabbit.fruitfulutilities.config.categories.PathViewerCategory;
 import dev.kingrabbit.fruitfulutilities.util.ColorOverlay;
 import dev.kingrabbit.fruitfulutilities.util.NumberUtils;
 import dev.kingrabbit.fruitfulutilities.util.Region;
@@ -440,6 +440,25 @@ public class PathScreen extends Screen {
             }
 
         }
+
+        addSelectableChild(ButtonWidget.builder(Text.of("Reset Position"), button -> {
+            xOffset(width / 5f - 64 + 32 * 1.5f);
+            yOffset(-64);
+            zoom(1);
+        }).dimensions(width - 103, height - 75, 98, 20).build()).render(matrices, mouseX, mouseY, delta);
+
+        addSelectableChild(ButtonWidget.builder(Text.of("Track All"), button -> {
+            for (JsonElement _pathUpgrade : PathManager.paths.get(section).asMap().values()) {
+                JsonObject pathUpgrade = _pathUpgrade.getAsJsonObject();
+                if (!PathManager.tracking.contains(pathUpgrade)) {
+                    PathManager.tracking.add(pathUpgrade);
+                }
+            }
+        }).dimensions(width - 103, height - 50, 98, 20).build()).render(matrices, mouseX, mouseY, delta);
+
+        addSelectableChild(ButtonWidget.builder(Text.of("Untrack All"),
+                button -> PathManager.tracking.removeIf(jsonObject -> PathManager.paths.get(section).asMap().containsValue(jsonObject))
+        ).dimensions(width - 103, height - 25, 98, 20).build()).render(matrices, mouseX, mouseY, delta);
 
         // Item tabs
         matrices.push();
