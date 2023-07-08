@@ -66,7 +66,7 @@ public class PathScreen extends Screen {
             section_icons.put("urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUrban")).icon(() -> new ItemStack(Items.IRON_BLOCK)).build());
             section_icons.put("true_urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aTrue Urban")).icon(() -> new ItemStack(Items.GOLD_BLOCK)).build());
             section_icons.put("underground", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUnderground")).icon(() -> new ItemStack(Items.DIRT)).build());
-            section_icons.put("raid", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aRaid")).icon(() -> new ItemStack(Items.PUMPKIN)).build());
+            section_icons.put("raid", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aRaid")).icon(() -> new ItemStack(Items.CARVED_PUMPKIN)).build());
         }
 
         if (!sections.containsKey("beginnings")) {
