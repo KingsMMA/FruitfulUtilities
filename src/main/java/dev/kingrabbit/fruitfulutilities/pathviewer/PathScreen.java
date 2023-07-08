@@ -401,10 +401,10 @@ public class PathScreen extends Screen {
             return;
         }
 
-        float calculatedX1 = x1 + _xOffset + 29;
-        float calculatedX2 = x2 + _xOffset + 4;
-        float calculatedY1 = y1 + _yOffset + 16;
-        float calculatedY2 = y2 + _yOffset + 16;
+        float calculatedX1 = (int) (x1 + _xOffset + 29);
+        float calculatedX2 = (int) (x2 + _xOffset + 4);
+        float calculatedY1 = (int) (y1 + _yOffset + 16);
+        float calculatedY2 = (int) (y2 + _yOffset + 16);
 
         float dx = calculatedX2 - calculatedX1;
         float dy = calculatedY2 - calculatedY1;
