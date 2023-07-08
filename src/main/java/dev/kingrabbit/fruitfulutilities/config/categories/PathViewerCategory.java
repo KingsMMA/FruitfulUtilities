@@ -17,4 +17,7 @@ public class PathViewerCategory extends ConfigCategory {
     @ConfigBoolean(id = "hide_if_unlocked", display = "Hide if Purchased", description = "Hides tracked upgrades if they have already been purchased.")
     public boolean hideIfUnlocked = false;
 
+    @ConfigBoolean(id = "hide_if_locked", display = "Hide if Locked", description = "Hides tracked upgrades if they are locked.")
+    public boolean hideIfLocked = false;
+
 }

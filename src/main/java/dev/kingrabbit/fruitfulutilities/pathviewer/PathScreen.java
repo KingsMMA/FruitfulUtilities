@@ -406,22 +406,21 @@ public class PathScreen extends Screen {
         DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, "Tracked Upgrades", width / 10, y, HEADER_COLOR);
         y += 20;
 
-        if (PathManager.tracking.isEmpty()) {
+        List<JsonObject> allTracked = PathManager.allTracked();
+
+        if (allTracked.isEmpty()) {
             for (OrderedText line : textRenderer.wrapLines(StringVisitable.plain("Track an upgrade to view its waypoint and track your progress towards it."), width / 5 - 20)) {
                 DrawableHelper.drawTextWithShadow(matrices, textRenderer, line, 10, y, 0xFFFFFF);
                 y += textRenderer.fontHeight + 2;
             }
         } else {
-            PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
 
             StringBuilder information = new StringBuilder("Currently tracking the following upgrades:");
-            for (JsonObject tracked : PathManager.tracking) {
+            for (JsonObject tracked : allTracked) {
                 HashMap<Currency, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
                 if (cost.isEmpty()) {
-                    if (!category.hideIfUnlocked) {
-                        information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
-                        information.append("§eUnlocked!");
-                    }
+                    information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
+                    information.append("§eUnlocked!");
                 } else {
                     information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
                     information = PathManager.appendFormattedCost(information, cost);

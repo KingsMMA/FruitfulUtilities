@@ -215,4 +215,19 @@ public class PathManager {
         return parents;
     }
 
+    public static List<JsonObject> allTracked() {
+        PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
+
+        ArrayList<JsonObject> allTracked;
+        if (category.hideIfLocked || category.hideIfUnlocked) {
+            allTracked = new ArrayList<>();
+            for (JsonObject tracked : PathManager.tracking) {
+                if (PathManager.locked(tracked) && category.hideIfLocked) continue;
+                if (PathManager.purchasedIds.contains(PathManager.getId(tracked)) && category.hideIfUnlocked) continue;
+                allTracked.add(tracked);
+            }
+        } else allTracked = PathManager.tracking;
+        return allTracked;
+    }
+
 }

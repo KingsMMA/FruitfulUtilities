@@ -25,12 +25,8 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
     public void rendered(MatrixStack matrices) {
         if (MinecraftClient.getInstance().player == null) return;
         if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
-
-        PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
-
-        for (JsonObject upgrade : PathManager.tracking) {
-            if (PathManager.purchasedIds.contains(PathManager.getId(upgrade)) && category.hideIfUnlocked)
-                continue;
+        
+        for (JsonObject upgrade : PathManager.allTracked()) {
 
             String[] location = upgrade.get("location").getAsString().split(",");
             if (location.length != 3)
@@ -54,12 +50,8 @@ public class WorldRenderListener implements RenderEvents.RenderEvent, WorldRende
         if (MinecraftClient.getInstance().player == null) return;
         if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
 
-        PathViewerCategory category = FruitfulUtilities.getInstance().configManager.getCategory(PathViewerCategory.class);
-
         Vec3d playerPos = MinecraftClient.getInstance().player.getPos();
-        for (JsonObject upgrade : PathManager.tracking) {
-            if (PathManager.purchasedIds.contains(PathManager.getId(upgrade)) && category.hideIfUnlocked)
-                continue;
+        for (JsonObject upgrade : PathManager.allTracked()) {
 
             String[] location = upgrade.get("location").getAsString().split(",");
             if (location.length != 3)
