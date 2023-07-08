@@ -14,7 +14,7 @@ public class PathViewerCategory extends ConfigCategory {
     @ConfigBoolean(id = "cumulative", display = "Cumulative Cost", description = "Includes the cost of all required upgrades to the cost of the selected upgrade.")
     public boolean cumulative = true;
 
-    @ConfigBoolean(id = "hide_if_unlocked", display = "Hide if Unlocked", description = "Hides tracked upgrades if they have already been unlocked.")
+    @ConfigBoolean(id = "hide_if_unlocked", display = "Hide if Purchased", description = "Hides tracked upgrades if they have already been purchased.")
     public boolean hideIfUnlocked = false;
 
 }
