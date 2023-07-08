@@ -452,6 +452,7 @@ public class PathScreen extends Screen {
             ButtonWidget unlock = ButtonWidget.builder(Text.of(isUnlocked ? "Lock" : "Unlock"), widget -> {
                 if (isUnlocked) PathManager.purchasedIds.remove(upgradeId);
                 else PathManager.purchasedIds.add(upgradeId);
+                PathManager.clearCache();
             }).dimensions(width / 10 - (sameLine ? -horizontalSpacing : buttonWidth / 2), sameLine ? y + 20 : y + 50, buttonWidth, 20).build();
 
             addSelectableChild(track);
@@ -479,7 +480,7 @@ public class PathScreen extends Screen {
 
             StringBuilder information = new StringBuilder("Currently tracking the following upgrades:");
             for (JsonObject tracked : allTracked) {
-                HashMap<Currency, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
+                HashMap<Currency, Integer> cost = PathManager.getCost(tracked);
                 if (cost.isEmpty()) {
                     information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
                     information.append("§eUnlocked!");

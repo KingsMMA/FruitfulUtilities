@@ -24,6 +24,8 @@ public class PathManager {
     public static final HashMap<JsonObject, String> upgradeToId = new HashMap<>();
     public static final HashMap<JsonObject, String> upgradeToPath = new HashMap<>();
     public static final ArrayList<JsonObject> tracking = new ArrayList<>();
+    public static final HashMap<JsonObject, Boolean> lockedCache = new HashMap<>();
+    public static final HashMap<JsonObject, HashMap<Currency, Integer>> costCache = new HashMap<>();
     public static int undergroundWallStatus = 0;
 
     static {
@@ -90,11 +92,22 @@ public class PathManager {
                         if (!PathScreen.sections.containsKey(newPath))
                             PathScreen.sections.put(newPath, new float[]{-19284, -64, 1});
                     }
+
+                    clearCache();
                     return;
                 }
             }
         }
         FruitfulUtilities.LOGGER.warn("Unable to find upgrade with name \"" + upgradeName + "\".");
+    }
+
+    public static HashMap<Currency, Integer> getCost(JsonObject upgrade) {
+        if (costCache.containsKey(upgrade)) return costCache.get(upgrade);
+
+        HashMap<Currency, Integer> cost = cumulativePrice(requiredToUnlock(upgrade));
+        costCache.put(upgrade, cost);
+
+        return cost;
     }
 
     public static List<JsonObject> requiredToUnlock(JsonObject upgrade) {
@@ -166,6 +179,15 @@ public class PathManager {
     }
 
     public static boolean locked(JsonObject upgrade) {
+        if (lockedCache.containsKey(upgrade)) return lockedCache.get(upgrade);
+
+        boolean locked = _locked(upgrade);
+        lockedCache.put(upgrade, locked);
+
+        return locked;
+    }
+
+    private static boolean _locked(JsonObject upgrade) {
         if (purchasedIds.contains(getId(upgrade))) return false;
 
         if (upgrade.has("path")) {
@@ -230,6 +252,11 @@ public class PathManager {
             }
         } else allTracked = PathManager.tracking;
         return allTracked;
+    }
+
+    public static void clearCache() {
+        lockedCache.clear();
+        costCache.clear();
     }
 
 }
