@@ -298,7 +298,7 @@ public class PathScreen extends Screen {
             connectUpgrades(4, 3, 6, 4);
 
             renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_depths"), 4, 6, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("revoke_weapon_bans"), 3, 6, mouseX, mouseY); // TODO Placeholder for Lift Restoration
+            //renderUpgrade(matrices, underground.getAsJsonObject("lift_restoration"), 3, 6, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("richer_metals"), 3, 7, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("grenade_tech_breakthrough"), 4, 7, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("doubled_city_funding"), 5, 7, mouseX, mouseY);
@@ -338,20 +338,18 @@ public class PathScreen extends Screen {
         } else if (section.equals("raid")) {
             JsonObject raid = PathManager.paths.get("raid");
 
-            renderUpgrade(matrices, raid.getAsJsonObject("standard_issue_forges"), 1, 1, mouseX, mouseY); // TODO Placeholder for Extreme Measures
+            renderUpgrade(matrices, raid.getAsJsonObject("standard_issue_forges"), 1, 1, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("basic_armory"), 2, 1, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("grenade_stockpiles"), 3, 1, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("power_through"), 4, 1, mouseX, mouseY);
 
-            renderUpgrade(matrices, raid.getAsJsonObject("standard_issue_forges"), 1, 2, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("basic_armory"), 2, 2, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("grenade_stockpiles"), 3, 2, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("power_through"), 4, 2, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("thorough_defense"), 1, 2, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("stronger_blades"), 2, 2, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("gemstone_blades"), 3, 2, mouseX, mouseY);
 
-            renderUpgrade(matrices, raid.getAsJsonObject("thorough_defense"), 1, 3, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("stronger_blades"), 2, 3, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("gemstone_blades"), 3, 3, mouseX, mouseY);
-
-            renderUpgrade(matrices, raid.getAsJsonObject("diamond_forges"), 1, 4, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("the_perfect_weapons"), 2, 4, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("impenetrable_defenses"), 3, 4, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("diamond_forges"), 1, 3, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("the_perfect_weapons"), 2, 3, mouseX, mouseY);
+            renderUpgrade(matrices, raid.getAsJsonObject("impenetrable_defenses"), 3, 3, mouseX, mouseY);
         }
 
         matrices.pop();

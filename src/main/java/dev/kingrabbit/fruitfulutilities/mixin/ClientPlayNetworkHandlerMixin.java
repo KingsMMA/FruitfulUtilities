@@ -69,6 +69,18 @@ public abstract class ClientPlayNetworkHandlerMixin {
             while (matcher.find()) {
                 String upgradeName = matcher.group(2);
                 if (upgradeName.endsWith(" major")) upgradeName = upgradeName.substring(0, upgradeName.length() - 6);
+
+                if (upgradeName.equals("Upgrade Town") && Objects.equals(description, "Opens a new area with a few new upgrades.")) {
+                    if (PathManager.purchasedIds.contains("upgrade_town_farm")) {
+                        if (!PathManager.purchasedIds.contains("upgrade_town_second_wall")) PathManager.purchasedIds.add("upgrade_town_second_wall");
+                    } else if (PathManager.purchasedIds.contains("upgrade_town_second_wall")) {
+                        if (!PathManager.purchasedIds.contains("upgrade_town_farm")) PathManager.purchasedIds.add("upgrade_town_farm");
+                    } else {
+                        TickListener.testUndergroundAt = TickListener.tick + 5;
+                    }
+                    return;
+                }
+
                 PathManager.unlocked(upgradeName, description);
             }
         }
