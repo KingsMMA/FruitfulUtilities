@@ -47,7 +47,8 @@ public class TickListener implements ClientTickEvents.EndTick {
             clicked.clear();
         }
 
-        if (tick >= testUndergroundAt) {
+        if (tick >= testUndergroundAt && testUndergroundAt != -1) {
+            testUndergroundAt = -1;
             if (client.world != null) {
                 if (!PathManager.purchasedIds.contains("upgrade_town_farm")) {
                     if (client.world.getBlockState(new BlockPos(-929, 37, -4193)).isOf(Blocks.AIR)) {
