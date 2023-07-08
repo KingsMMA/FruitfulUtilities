@@ -103,7 +103,7 @@ public class PathScreen extends Screen {
             renderUpgrade(matrices, beginnings.getAsJsonObject("lock_and_key"), 5, 1, mouseX, mouseY);
             renderUpgrade(matrices, beginnings.getAsJsonObject("item_removal_procedures"), 6, 1, mouseX, mouseY);
 
-            renderUpgrade(matrices, beginnings.getAsJsonObject("economics_room"), 1, 3, mouseX, mouseY);
+            renderUpgrade(matrices, beginnings.getAsJsonObject("economic_room"), 1, 3, mouseX, mouseY);
             renderUpgrade(matrices, beginnings.getAsJsonObject("faster_coin_generation"), 2, 2, mouseX, mouseY);
             renderUpgrade(matrices, beginnings.getAsJsonObject("better_sell_deals"), 2, 3, mouseX, mouseY);
             renderUpgrade(matrices, beginnings.getAsJsonObject("increased_guard_limit"), 2, 4, mouseX, mouseY);
