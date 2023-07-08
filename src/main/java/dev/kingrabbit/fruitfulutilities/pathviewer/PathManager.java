@@ -36,6 +36,7 @@ public class PathManager {
         pathParents.put("democracy", "urban");
 
         pathParents.put("raid", "underground");
+        pathParents.put("depths", "underground");
     }
 
     public static void loadPaths() {
@@ -46,6 +47,7 @@ public class PathManager {
         loadPath("true_urban", "true_urban");
         loadPath("underground", "underground");
         loadPath("raid", "raid");
+        loadPath("depths", "depths");
 
         for (String pathId : paths.keySet()) {
             JsonObject path = paths.get(pathId);
@@ -59,7 +61,7 @@ public class PathManager {
 
     public static void loadPath(String localName, String remoteName) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/KingsMMA/FruitfulData/main/" + remoteName + ".json").openStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/KingsMMA/FruitfulData/depths/" + remoteName + ".json").openStream()));
             JsonObject beginnings = FruitfulUtilities.GSON.fromJson(reader, JsonObject.class);
             paths.put(localName, beginnings);
         } catch (IOException e) {

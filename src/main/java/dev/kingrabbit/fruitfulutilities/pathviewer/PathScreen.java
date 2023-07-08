@@ -36,7 +36,8 @@ public class PathScreen extends Screen {
             "urban",
             "true_urban",
             "underground",
-            "raid"
+            "raid",
+            "depths"
     };
     public static final HashMap<String, ItemGroup> section_icons = new HashMap<>();
     public static final Identifier PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon.png");
@@ -67,6 +68,7 @@ public class PathScreen extends Screen {
             section_icons.put("true_urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aTrue Urban")).icon(() -> new ItemStack(Items.GOLD_BLOCK)).build());
             section_icons.put("underground", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUnderground")).icon(() -> new ItemStack(Items.DIRT)).build());
             section_icons.put("raid", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aRaid")).icon(() -> new ItemStack(Items.CARVED_PUMPKIN)).build());
+            section_icons.put("depths", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aDepths")).icon(() -> new ItemStack(Items.COBBLED_DEEPSLATE)).build());
         }
 
         if (!sections.containsKey("beginnings")) {
@@ -298,15 +300,15 @@ public class PathScreen extends Screen {
             connectUpgrades(4, 3, 6, 4);
 
             renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_depths"), 4, 6, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("lift_restoration"), 3, 6, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("richer_metals"), 3, 7, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("grenade_tech_breakthrough"), 4, 7, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("doubled_city_funding"), 5, 7, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("depths_start"), 3, 6, mouseX, mouseY);
             connectUpgrades(4, 3, 4, 6);
-            connectUpgrades(3, 6, 4, 6);
             connectUpgrades(3, 7, 4, 6);
             connectUpgrades(4, 6, 4, 7);
             connectUpgrades(4, 6, 5, 7);
+            connectUpgrades(3, 6, 4, 6);
 
             renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_farm"), 7, 7, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("what_shines_bright"), 6, 7, mouseX, mouseY);
@@ -350,6 +352,60 @@ public class PathScreen extends Screen {
             renderUpgrade(matrices, raid.getAsJsonObject("diamond_forges"), 1, 3, mouseX, mouseY);
             renderUpgrade(matrices, raid.getAsJsonObject("the_perfect_weapons"), 2, 3, mouseX, mouseY);
             renderUpgrade(matrices, raid.getAsJsonObject("impenetrable_defenses"), 3, 3, mouseX, mouseY);
+        } else if (section.equals("depths")) {
+            JsonObject depths = PathManager.paths.get("depths");
+
+            renderUpgrade(matrices, depths.getAsJsonObject("warrant_funding"), 1, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("farmland_acquisition"), 2, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("even_quicker_trading"), 3, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("luckier_day"), 4, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("value_duplication"), 5, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("double_duplication"), 6, 1, mouseX, mouseY);
+            connectUpgrades(5, 1, 6, 1);
+            renderUpgrade(matrices, depths.getAsJsonObject("better_negotiations"), 7, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("triple_city_funding"), 8, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("dual_polishing_measures"), 9, 1, mouseX, mouseY);
+
+            renderUpgrade(matrices, depths.getAsJsonObject("upgrade_town_east"), 1, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("blacklight_photosynthesis"), 2, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("farmland_expansion"), 3, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("greed_is_good"), 4, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("exponential_scaling"), 5, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("quadruple_city_funding"), 6, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("expert_economists"), 7, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("underground_trade_routes"), 8, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("extrinsic_value"), 9, 2, mouseX, mouseY);
+
+            renderUpgrade(matrices, depths.getAsJsonObject("upgrade_town_north"), 1, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("melon_to_melon_ratio"), 2, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("insider_knowledge"), 3, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("value_incrementation"), 4, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("the_house_always_wins"), 5, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("quintuple_city_funding"), 6, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("multiply_demand"), 7, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("quantum_fluctuations"), 8, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("farming_permits"), 9, 3, mouseX, mouseY);
+
+            renderUpgrade(matrices, depths.getAsJsonObject("upgrade_town_south"), 1, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("tri_polishing_process"), 2, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("sextuple_city_funding"), 3, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("repeated_multiplication"), 4, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("farmland_reclamation"), 5, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("the_foundry"), 6, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("perfect_profits"), 7, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("we_need_to_go_deeper"), 8, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("final_funding"), 9, 4, mouseX, mouseY);
+            connectUpgrades(8, 4, 9, 4);
+
+            renderUpgrade(matrices, depths.getAsJsonObject("better_farmers"), 1, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("a_little_richer"), 2, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("septuple_city_funding"), 3, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("fullest_farmland"), 4, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("octuple_city_funding"), 5, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("true_value"), 6, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("ultimate_exponential"), 7, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("flawless_extraction"), 8, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("one_billion_gold"), 9, 5, mouseX, mouseY);
         }
 
         matrices.pop();

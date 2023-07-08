@@ -81,6 +81,24 @@ public abstract class ClientPlayNetworkHandlerMixin {
                     return;
                 }
 
+                if (upgradeName.equals("Upgrade Town") && Objects.equals(description, "Opens a new area in the Depths.")) {
+                    String upgradeCost = matcher.group(4);
+                    switch (upgradeCost) {
+                        case " for 50000 Bank Gold" -> {
+                            if (!PathManager.purchasedIds.contains("upgrade_town_east"))
+                                PathManager.purchasedIds.add("upgrade_town_east");
+                        }
+                        case " for 150000 Bank Gold" -> {
+                            if (!PathManager.purchasedIds.contains("upgrade_town_north"))
+                                PathManager.purchasedIds.add("upgrade_town_north");
+                        }
+                        case " for 450000 Bank Gold" -> {
+                            if (!PathManager.purchasedIds.contains("upgrade_town_south"))
+                                PathManager.purchasedIds.add("upgrade_town_south");
+                        }
+                    }
+                }
+
                 PathManager.unlocked(upgradeName, description);
             }
         }
