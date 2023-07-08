@@ -285,7 +285,7 @@ public class PathScreen extends Screen {
             renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_center"), 4, 3, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("quicker_sprouting"), 4, 1, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("fertile_soil"), 5, 1, mouseX, mouseY);
-            connectUpgrades(4, 3, 4, 1);
+            connectUpgrades(4, 1, 4, 3);
             connectUpgrades(4, 3, 5, 1);
 
             renderUpgrade(matrices, underground.getAsJsonObject("golden_extractors"), 6, 1, mouseX, mouseY);
