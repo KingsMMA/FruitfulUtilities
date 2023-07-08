@@ -387,7 +387,7 @@ public class PathScreen extends Screen {
 
             GlStateManager._depthMask(false);
             GlStateManager._disableCull();
-            RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
+            RenderSystem.setShader(GameRenderer::getPositionColorProgram);
             Tessellator tessellator = RenderSystem.renderThreadTesselator();
             BufferBuilder bufferBuilder = tessellator.getBuffer();
             bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
@@ -413,7 +413,7 @@ public class PathScreen extends Screen {
 
         GlStateManager._depthMask(false);
         GlStateManager._disableCull();
-        RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
+        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
         Tessellator tessellator = RenderSystem.renderThreadTesselator();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         bufferBuilder.begin(VertexFormat.DrawMode.TRIANGLES, VertexFormats.POSITION_COLOR);
