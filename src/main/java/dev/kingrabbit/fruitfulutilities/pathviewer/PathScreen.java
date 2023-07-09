@@ -555,6 +555,11 @@ public class PathScreen extends Screen {
     }
 
     public void renderUpgrade(MatrixStack matrices, JsonObject upgrade, float x, float y, int mouseX, int mouseY) {
+        if (upgrade == null) {
+            FruitfulUtilities.LOGGER.error("Not rendering upgrade at " + x + ", " + y + " on path " + section + " as it is null.");
+            return;
+        }
+
         float _xOffset = xOffset();
         float _yOffset = yOffset();
         float _zoom = zoom();
