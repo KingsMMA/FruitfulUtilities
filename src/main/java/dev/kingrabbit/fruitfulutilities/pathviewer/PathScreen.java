@@ -52,6 +52,7 @@ public class PathScreen extends Screen {
     public static HashMap<String, JsonObject> selectedElement = new HashMap<>();
 
     public final HashMap<Region, JsonObject> drawnElements = new HashMap<>();
+    public final List<String> sentErrors = new ArrayList<>();
     public List<OrderedText> tooltip = null;
 
     public PathScreen() {
@@ -617,6 +618,15 @@ public class PathScreen extends Screen {
     }
 
     public void renderUpgrade(MatrixStack matrices, JsonObject upgrade, float x, float y, int mouseX, int mouseY) {
+        if (upgrade == null) {
+            String errorMessage = "Not rendering upgrade at " + x + ", " + y + " on path " + section + " as it is null.";
+            if (!sentErrors.contains(errorMessage)) {
+                sentErrors.add(errorMessage);
+                FruitfulUtilities.LOGGER.error(errorMessage);
+            }
+            return;
+        }
+
         float _xOffset = xOffset();
         float _yOffset = yOffset();
         float _zoom = zoom();

@@ -9,7 +9,6 @@ import dev.kingrabbit.fruitfulutilities.listener.TickListener;
 import dev.kingrabbit.fruitfulutilities.listener.WorldRenderListener;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathScreen;
-import me.x150.renderer.event.RenderEvents;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -50,10 +49,16 @@ public class FruitfulUtilities implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(new TickListener());
         WorldRenderEvents.END.register(new WorldRenderListener());
-        RenderEvents.WORLD.register(new WorldRenderListener());
         HudRenderCallback.EVENT.register(new HudRenderer());
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+            dispatcher.register(
+                    ClientCommandManager.literal("restart_run")
+                            .executes(context -> {
+                                context.getSource().sendFeedback(Text.of("§aRestarted run."));
+                                restartRun();
+                                return 1;
+                            }));
             dispatcher.register(
                     ClientCommandManager.literal("reload_paths")
                             .executes(context -> {

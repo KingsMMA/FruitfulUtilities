@@ -32,7 +32,7 @@ public class ConfigManager {
         categoryMap = new HashMap<>();
 
         for (Class<? extends ConfigCategory> categoryClass : new Class[]{
-                GeneralCategory.class, GUILocationsCategory.class, PathViewerCategory.class, CodeHiderCategory.class, SearchingTrackerCategory.class, MessageHiderCategory.class, AuctionTimerCategory.class
+                GeneralCategory.class, GUILocationsCategory.class, PathViewerCategory.class, UpgradeBeaconCategory.class, CodeHiderCategory.class, SearchingTrackerCategory.class, MessageHiderCategory.class, AuctionTimerCategory.class
         }) {
 
             try {
