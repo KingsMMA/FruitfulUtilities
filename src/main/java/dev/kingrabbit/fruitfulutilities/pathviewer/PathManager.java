@@ -24,6 +24,8 @@ public class PathManager {
     public static final HashMap<JsonObject, String> upgradeToId = new HashMap<>();
     public static final HashMap<JsonObject, String> upgradeToPath = new HashMap<>();
     public static final ArrayList<JsonObject> tracking = new ArrayList<>();
+    public static final HashMap<JsonObject, Boolean> lockedCache = new HashMap<>();
+    public static final HashMap<JsonObject, HashMap<Currency, Long>> costCache = new HashMap<>();
     public static int undergroundWallStatus = 0;
 
     static {
@@ -36,6 +38,7 @@ public class PathManager {
         pathParents.put("democracy", "urban");
 
         pathParents.put("raid", "underground");
+        pathParents.put("depths", "underground");
     }
 
     public static void loadPaths() {
@@ -46,6 +49,7 @@ public class PathManager {
         loadPath("true_urban", "true_urban");
         loadPath("underground", "underground");
         loadPath("raid", "raid");
+        loadPath("depths", "depths");
 
         for (String pathId : paths.keySet()) {
             JsonObject path = paths.get(pathId);
@@ -88,11 +92,22 @@ public class PathManager {
                         if (!PathScreen.sections.containsKey(newPath))
                             PathScreen.sections.put(newPath, new float[]{-19284, -64, 1});
                     }
+
+                    clearCache();
                     return;
                 }
             }
         }
         FruitfulUtilities.LOGGER.warn("Unable to find upgrade with name \"" + upgradeName + "\".");
+    }
+
+    public static HashMap<Currency, Long> getCost(JsonObject upgrade) {
+        if (costCache.containsKey(upgrade)) return costCache.get(upgrade);
+
+        HashMap<Currency, Long> cost = cumulativePrice(requiredToUnlock(upgrade));
+        costCache.put(upgrade, cost);
+
+        return cost;
     }
 
     public static List<JsonObject> requiredToUnlock(JsonObject upgrade) {
@@ -131,14 +146,14 @@ public class PathManager {
         return allRequired;
     }
 
-    public static HashMap<Currency, Integer> cumulativePrice(List<JsonObject> upgrades) {
-        HashMap<Currency, Integer> totalPrice = new HashMap<>();
+    public static HashMap<Currency, Long> cumulativePrice(List<JsonObject> upgrades) {
+        HashMap<Currency, Long> totalPrice = new HashMap<>();
 
         for (JsonObject upgrade : upgrades) {
             String currencyRaw = upgrade.get("currency").getAsString();
             try {
                 Currency currency = Currency.valueOf(currencyRaw.toUpperCase());
-                int price = upgrade.get("price").getAsInt();
+                long price = upgrade.get("price").getAsLong();
                 if (totalPrice.containsKey(currency)) totalPrice.put(currency, totalPrice.get(currency) + price);
                 else totalPrice.put(currency, price);
             } catch (IllegalArgumentException exception) {
@@ -155,15 +170,24 @@ public class PathManager {
         return null;
     }
 
-    public static StringBuilder appendFormattedCost(StringBuilder stringBuilder, HashMap<Currency, Integer> costMap) {
+    public static StringBuilder appendFormattedCost(StringBuilder stringBuilder, HashMap<Currency, Long> costMap) {
         for (Currency currency : costMap.keySet()) {
-            int price = costMap.get(currency);
+            long price = costMap.get(currency);
             stringBuilder.append("§").append(currency.getSecondaryColor()).append(NumberUtils.toFancyNumber(price)).append(" ").append(currency.format(price)).append("§7, ");
         }
         return new StringBuilder(stringBuilder.substring(0, stringBuilder.length() - 2));
     }
 
     public static boolean locked(JsonObject upgrade) {
+        if (lockedCache.containsKey(upgrade)) return lockedCache.get(upgrade);
+
+        boolean locked = _locked(upgrade);
+        lockedCache.put(upgrade, locked);
+
+        return locked;
+    }
+
+    private static boolean _locked(JsonObject upgrade) {
         if (purchasedIds.contains(getId(upgrade))) return false;
 
         if (upgrade.has("path")) {
@@ -228,6 +252,11 @@ public class PathManager {
             }
         } else allTracked = PathManager.tracking;
         return allTracked;
+    }
+
+    public static void clearCache() {
+        lockedCache.clear();
+        costCache.clear();
     }
 
 }

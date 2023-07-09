@@ -11,6 +11,7 @@ import dev.kingrabbit.fruitfulutilities.util.Region;
 import dev.kingrabbit.fruitfulutilities.util.SoundUtils;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
@@ -36,7 +37,8 @@ public class PathScreen extends Screen {
             "urban",
             "true_urban",
             "underground",
-            "raid"
+            "raid",
+            "depths"
     };
     public static final HashMap<String, ItemGroup> section_icons = new HashMap<>();
     public static final Identifier PATH_ICON = new Identifier("fruitfulutilities", "textures/gui/path_icon.png");
@@ -67,6 +69,7 @@ public class PathScreen extends Screen {
             section_icons.put("true_urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aTrue Urban")).icon(() -> new ItemStack(Items.GOLD_BLOCK)).build());
             section_icons.put("underground", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUnderground")).icon(() -> new ItemStack(Items.DIRT)).build());
             section_icons.put("raid", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aRaid")).icon(() -> new ItemStack(Items.CARVED_PUMPKIN)).build());
+            section_icons.put("depths", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aDepths")).icon(() -> new ItemStack(Items.COBBLED_DEEPSLATE)).build());
         }
 
         if (!sections.containsKey("beginnings")) {
@@ -298,15 +301,15 @@ public class PathScreen extends Screen {
             connectUpgrades(4, 3, 6, 4);
 
             renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_depths"), 4, 6, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("lift_restoration"), 3, 6, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("richer_metals"), 3, 7, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("grenade_tech_breakthrough"), 4, 7, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("doubled_city_funding"), 5, 7, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("depths_start"), 3, 6, mouseX, mouseY);
             connectUpgrades(4, 3, 4, 6);
-            connectUpgrades(3, 6, 4, 6);
             connectUpgrades(3, 7, 4, 6);
             connectUpgrades(4, 6, 4, 7);
             connectUpgrades(4, 6, 5, 7);
+            connectUpgrades(3, 6, 4, 6);
 
             renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_farm"), 7, 7, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("what_shines_bright"), 6, 7, mouseX, mouseY);
@@ -350,6 +353,60 @@ public class PathScreen extends Screen {
             renderUpgrade(matrices, raid.getAsJsonObject("diamond_forges"), 1, 3, mouseX, mouseY);
             renderUpgrade(matrices, raid.getAsJsonObject("the_perfect_weapons"), 2, 3, mouseX, mouseY);
             renderUpgrade(matrices, raid.getAsJsonObject("impenetrable_defenses"), 3, 3, mouseX, mouseY);
+        } else if (section.equals("depths")) {
+            JsonObject depths = PathManager.paths.get("depths");
+
+            renderUpgrade(matrices, depths.getAsJsonObject("warrant_funding"), 2, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("farmland_acquisition"), 3, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("even_quicker_trading"), 4, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("luckier_day"), 2, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("value_duplication"), 3, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("double_duplication"), 4, 2, mouseX, mouseY);
+            connectUpgrades(3, 2, 4, 2);
+            renderUpgrade(matrices, depths.getAsJsonObject("better_negotiations"), 2, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("triple_city_funding"), 3, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("dual_polishing_measures"), 4, 3, mouseX, mouseY);
+
+            renderUpgrade(matrices, depths.getAsJsonObject("upgrade_town_east"), 6, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("blacklight_photosynthesis"), 7, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("farmland_expansion"), 8, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("greed_is_good"), 9, 1, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("exponential_scaling"), 7, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("quadruple_city_funding"), 8, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("expert_economists"), 9, 2, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("underground_trade_routes"), 7, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("extrinsic_value"), 8, 3, mouseX, mouseY);
+
+            renderUpgrade(matrices, depths.getAsJsonObject("upgrade_town_north"), 1, 6, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("melon_to_melon_ratio"), 2, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("insider_knowledge"), 3, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("value_incrementation"), 4, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("the_house_always_wins"), 2, 6, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("quintuple_city_funding"), 3, 6, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("multiply_demand"), 4, 6, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("quantum_fluctuations"), 2, 7, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("farming_permits"), 3, 7, mouseX, mouseY);
+
+            renderUpgrade(matrices, depths.getAsJsonObject("upgrade_town_south"), 6, 6, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("tri_polishing_process"), 7, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("sextuple_city_funding"), 8, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("repeated_multiplication"), 7, 6, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("farmland_reclamation"), 8, 6, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("the_foundry"), 7, 7, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("perfect_profits"), 8, 7, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("we_need_to_go_deeper"), 10, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("final_funding"), 10, 5, mouseX, mouseY);
+            connectUpgrades(10, 4, 10, 5);
+
+            renderUpgrade(matrices, depths.getAsJsonObject("better_farmers"), 11, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("a_little_richer"), 12, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("septuple_city_funding"), 13, 3, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("fullest_farmland"), 11, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("octuple_city_funding"), 12, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("true_value"), 13, 4, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("ultimate_exponential"), 11, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("flawless_extraction"), 12, 5, mouseX, mouseY);
+            renderUpgrade(matrices, depths.getAsJsonObject("one_billion_gold"), 13, 5, mouseX, mouseY);
         }
 
         matrices.pop();
@@ -396,6 +453,7 @@ public class PathScreen extends Screen {
             ButtonWidget unlock = ButtonWidget.builder(Text.of(isUnlocked ? "Lock" : "Unlock"), widget -> {
                 if (isUnlocked) PathManager.purchasedIds.remove(upgradeId);
                 else PathManager.purchasedIds.add(upgradeId);
+                PathManager.clearCache();
             }).dimensions(width / 10 - (sameLine ? -horizontalSpacing : buttonWidth / 2), sameLine ? y + 20 : y + 50, buttonWidth, 20).build();
 
             addSelectableChild(track);
@@ -423,7 +481,7 @@ public class PathScreen extends Screen {
 
             StringBuilder information = new StringBuilder("Currently tracking the following upgrades:");
             for (JsonObject tracked : allTracked) {
-                HashMap<Currency, Integer> cost = PathManager.cumulativePrice(PathManager.requiredToUnlock(tracked));
+                HashMap<Currency, Long> cost = PathManager.getCost(tracked);
                 if (cost.isEmpty()) {
                     information.append("\n    §7• §a").append(tracked.get("display").getAsString()).append("§7: ");
                     information.append("§eUnlocked!");
@@ -443,7 +501,7 @@ public class PathScreen extends Screen {
             xOffset(width / 5f - 64 + 32 * 1.5f);
             yOffset(-64);
             zoom(1);
-        }).dimensions(width - 103, height - 75, 98, 20).build()).render(matrices, mouseX, mouseY, delta);
+        }).dimensions(width - 103, height - 100, 98, 20).tooltip(Tooltip.of(Text.of("Reset the window's current offset and zoom. (R)"))).build()).render(matrices, mouseX, mouseY, delta);
 
         addSelectableChild(ButtonWidget.builder(Text.of("Track All"), button -> {
             for (JsonElement _pathUpgrade : PathManager.paths.get(section).asMap().values()) {
@@ -452,11 +510,15 @@ public class PathScreen extends Screen {
                     PathManager.tracking.add(pathUpgrade);
                 }
             }
-        }).dimensions(width - 103, height - 50, 98, 20).build()).render(matrices, mouseX, mouseY, delta);
+        }).dimensions(width - 103, height - 75, 98, 20).tooltip(Tooltip.of(Text.of("Track all upgrades in the selected path."))).build()).render(matrices, mouseX, mouseY, delta);
 
         addSelectableChild(ButtonWidget.builder(Text.of("Untrack All"),
                 button -> PathManager.tracking.removeIf(jsonObject -> PathManager.paths.get(section).asMap().containsValue(jsonObject))
-        ).dimensions(width - 103, height - 25, 98, 20).build()).render(matrices, mouseX, mouseY, delta);
+        ).dimensions(width - 103, height - 50, 98, 20).tooltip(Tooltip.of(Text.of("Untrack all upgrades in the selected path."))).build()).render(matrices, mouseX, mouseY, delta);
+
+        addSelectableChild(ButtonWidget.builder(Text.of("Clear Cache"),
+                button -> PathManager.clearCache()
+        ).dimensions(width - 103, height - 25, 98, 20).tooltip(Tooltip.of(Text.of("Reculates the state and cost of upgrades."))).build()).render(matrices, mouseX, mouseY, delta);
 
         // Item tabs
         matrices.push();
@@ -505,9 +567,9 @@ public class PathScreen extends Screen {
 
         if (x1 == x2) {
             float lineWidth = 1.5f;
-            double calculatedX = (x1 + _xOffset + 15.5);
-            float calculatedY1 = y1 + _yOffset + 32;
-            double calculatedY2 = y2 + _yOffset + 0.5;
+            float calculatedX = (int) (x1 + _xOffset + 16);
+            float calculatedY1 = (int) (y1 + _yOffset + 32);
+            float calculatedY2 = (int) (y2 + _yOffset + 0.5);
 
             GlStateManager._depthMask(false);
             GlStateManager._disableCull();
@@ -525,7 +587,7 @@ public class PathScreen extends Screen {
             return;
         }
 
-        float calculatedX1 = (int) (x1 + _xOffset + 29);
+        float calculatedX1 = (int) (x1 + _xOffset + 30);
         float calculatedX2 = (int) (x2 + _xOffset + 2);
         float calculatedY1 = (int) (y1 + _yOffset + 16);
         float calculatedY2 = (int) (y2 + _yOffset + 16);
