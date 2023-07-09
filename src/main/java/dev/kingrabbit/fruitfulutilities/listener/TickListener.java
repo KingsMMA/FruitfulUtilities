@@ -88,6 +88,7 @@ public class TickListener implements ClientTickEvents.EndTick {
                 if (auctionTimerCategory.warning && !auctionWarningReceived) {
                     auctionWarningReceived = true;
                     client.player.sendMessage(Text.of("§8» §7A set of auctions is starting in 60 seconds!"));
+                    client.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0f, 1.0f);
                 }
                 sendAuctionAlertAt = tick + secondsRemaining * 20;
             } else if (auctionWarningReceived || auctionAlertReceived) {
