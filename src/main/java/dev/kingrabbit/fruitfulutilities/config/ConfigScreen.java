@@ -5,6 +5,7 @@ import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigButton;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigDropdown;
+import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import dev.kingrabbit.fruitfulutilities.util.SoundUtils;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
@@ -54,6 +55,7 @@ public class ConfigScreen extends Screen {
     public void close() {
         FruitfulUtilities.getInstance().configManager.save();
         FruitfulUtilities.getInstance().hudManager.save();
+        PathManager.clearCache();
 
         super.close();
     }
