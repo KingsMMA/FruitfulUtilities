@@ -28,9 +28,12 @@ public class WorldRenderListener implements WorldRenderEvents.End {
             String[] location = upgrade.get("location").getAsString().split(",");
             if (location.length != 3)
                 Logger.getGlobal().severe("Unable to parse location of " + upgrade.get("display").getAsString() + " (" + upgrade.get("location").getAsString() + ")");
-            int x = Integer.parseInt(location[0]);
-            int y = Integer.parseInt(location[1]);
-            int z = Integer.parseInt(location[2]);
+            int x1 = Integer.parseInt(location[0]);
+            int y1 = Integer.parseInt(location[1]);
+            int z1 = Integer.parseInt(location[2]);
+            int x2 = x1 + 1;
+            int y2 = y1 + 1;
+            int z2 = z1 + 1;
 
             Vec3d upgradePos = new Vec3d(x, y, z);
             double distance = playerPos.distanceTo(upgradePos);
