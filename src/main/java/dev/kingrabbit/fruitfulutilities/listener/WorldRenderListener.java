@@ -37,9 +37,10 @@ public class WorldRenderListener implements WorldRenderEvents.End {
             Vec3d upgradePos = new Vec3d(rawX, rawY, rawZ);
             MatrixStack matrices = context.matrixStack();
             Matrix4f matrix = matrices.peek().getPositionMatrix();
-            Vec3d offset = upgradePos.subtract(MinecraftClient.getInstance().gameRenderer.getCamera().getPos());
+            Vec3d cameraPos = MinecraftClient.getInstance().gameRenderer.getCamera().getPos();
+            Vec3d offset = upgradePos.subtract(cameraPos);
 
-            double distance = playerPos.distanceTo(upgradePos);
+            double distance = cameraPos.distanceTo(upgradePos);
             float red = 140 / 255f;
             float green = 0f;
             float blue = 250 / 255f;
