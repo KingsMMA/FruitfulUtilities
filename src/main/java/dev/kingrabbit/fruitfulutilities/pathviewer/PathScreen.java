@@ -562,9 +562,9 @@ public class PathScreen extends Screen {
 
         if (x1 == x2) {
             float lineWidth = 1.5f;
-            double calculatedX = (x1 + _xOffset + 15.5);
-            float calculatedY1 = y1 + _yOffset + 32;
-            double calculatedY2 = y2 + _yOffset + 0.5;
+            float calculatedX = (int) (x1 + _xOffset + 16);
+            float calculatedY1 = (int) (y1 + _yOffset + 32);
+            float calculatedY2 = (int) (y2 + _yOffset + 0.5);
 
             GlStateManager._depthMask(false);
             GlStateManager._disableCull();
