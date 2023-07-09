@@ -3,6 +3,8 @@ package dev.kingrabbit.fruitfulutilities.listener;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
+import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
+import dev.kingrabbit.fruitfulutilities.config.categories.UpgradeBeaconCategory;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
@@ -21,7 +23,12 @@ public class WorldRenderListener implements WorldRenderEvents.End {
     @Override
     public void onEnd(WorldRenderContext context) {
         if (MinecraftClient.getInstance().player == null) return;
-        if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
+
+        ConfigManager configManager = FruitfulUtilities.getInstance().configManager;
+        if (!configManager.enabled()) return;
+
+        UpgradeBeaconCategory category = configManager.getCategory(UpgradeBeaconCategory.class);
+        if (!(category.highlight || category.beacon)) return;
 
         for (JsonObject upgrade : PathManager.allTracked()) {
 
@@ -45,7 +52,7 @@ public class WorldRenderListener implements WorldRenderEvents.End {
             float blue = 250 / 255f;
             float alpha = ((int) Math.min(Math.max(Math.pow(2, 0.5 * distance) * 5, 50), 255)) / 255f;
 
-            if (true) {
+            if (category.highlight) {
                 float x1, x2, y1, y2, z1, z2;
                 x1 = x2 = (float) offset.x;
                 y1 = y2 = (float) offset.y;
@@ -100,7 +107,7 @@ public class WorldRenderListener implements WorldRenderEvents.End {
                 RenderSystem.enableDepthTest();
             }
 
-            if (distance >= 5) {
+            if (category.beacon && distance >= 5) {
                 matrices.push();
                 matrices.translate(offset.x, offset.y + 1, offset.z);
                 BeaconBlockEntityRenderer.renderBeam(
