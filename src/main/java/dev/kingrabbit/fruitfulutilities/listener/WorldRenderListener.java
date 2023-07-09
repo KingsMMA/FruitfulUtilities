@@ -35,12 +35,13 @@ public class WorldRenderListener implements WorldRenderEvents.End {
             Vec3d upgradePos = new Vec3d(x, y, z);
             double distance = playerPos.distanceTo(upgradePos);
             int alpha = (int) Math.min(Math.max(Math.pow(2, 0.5 * distance) * 5, 50), 255);
+
+            MatrixStack matrices = context.matrixStack();
             if (distance >= 5) {
-                context.matrixStack().push();
-                context.matrixStack().translate(x - playerPos.x, y - playerPos.y - 0.7, z - playerPos.z);
-                RenderSystem.setShaderColor(140, 0, 250, alpha);
+                matrices.push();
+                matrices.translate(x - playerPos.x, y - playerPos.y - 0.7, z - playerPos.z);
                 BeaconBlockEntityRenderer.renderBeam(
-                        context.matrixStack(),
+                        matrices,
                         Objects.requireNonNull(context.consumers()),
                         BeaconBlockEntityRenderer.BEAM_TEXTURE,
                         context.tickDelta(),
@@ -52,7 +53,7 @@ public class WorldRenderListener implements WorldRenderEvents.End {
                         0.2f,
                         0f
                 );
-                context.matrixStack().pop();
+                matrices.pop();
             }
         }
     }
