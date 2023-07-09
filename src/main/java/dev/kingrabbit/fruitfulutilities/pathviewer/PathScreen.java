@@ -501,7 +501,7 @@ public class PathScreen extends Screen {
             xOffset(width / 5f - 64 + 32 * 1.5f);
             yOffset(-64);
             zoom(1);
-        }).dimensions(width - 103, height - 75, 98, 20).tooltip(Tooltip.of(Text.of("Reset the window's current offset and zoom. (R)"))).build()).render(matrices, mouseX, mouseY, delta);
+        }).dimensions(width - 103, height - 100, 98, 20).tooltip(Tooltip.of(Text.of("Reset the window's current offset and zoom. (R)"))).build()).render(matrices, mouseX, mouseY, delta);
 
         addSelectableChild(ButtonWidget.builder(Text.of("Track All"), button -> {
             for (JsonElement _pathUpgrade : PathManager.paths.get(section).asMap().values()) {
@@ -510,11 +510,15 @@ public class PathScreen extends Screen {
                     PathManager.tracking.add(pathUpgrade);
                 }
             }
-        }).dimensions(width - 103, height - 50, 98, 20).tooltip(Tooltip.of(Text.of("Track all upgrades in the selected path."))).build()).render(matrices, mouseX, mouseY, delta);
+        }).dimensions(width - 103, height - 75, 98, 20).tooltip(Tooltip.of(Text.of("Track all upgrades in the selected path."))).build()).render(matrices, mouseX, mouseY, delta);
 
         addSelectableChild(ButtonWidget.builder(Text.of("Untrack All"),
                 button -> PathManager.tracking.removeIf(jsonObject -> PathManager.paths.get(section).asMap().containsValue(jsonObject))
-        ).dimensions(width - 103, height - 25, 98, 20).tooltip(Tooltip.of(Text.of("Untrack all upgrades in the selected path."))).build()).render(matrices, mouseX, mouseY, delta);
+        ).dimensions(width - 103, height - 50, 98, 20).tooltip(Tooltip.of(Text.of("Untrack all upgrades in the selected path."))).build()).render(matrices, mouseX, mouseY, delta);
+
+        addSelectableChild(ButtonWidget.builder(Text.of("Clear Cache"),
+                button -> PathManager.clearCache()
+        ).dimensions(width - 103, height - 25, 98, 20).tooltip(Tooltip.of(Text.of("Reculates the state and cost of upgrades."))).build()).render(matrices, mouseX, mouseY, delta);
 
         // Item tabs
         matrices.push();
