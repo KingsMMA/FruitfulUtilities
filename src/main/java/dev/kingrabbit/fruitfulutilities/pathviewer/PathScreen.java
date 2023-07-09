@@ -334,7 +334,7 @@ public class PathScreen extends Screen {
 
             renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_raid"), 7, 5, mouseX, mouseY);
             renderUpgrade(matrices, underground.getAsJsonObject("cutting_through"), 8, 4, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("start_raid"), 8, 6, mouseX, mouseY);
+            renderUpgrade(matrices, underground.getAsJsonObject("raid_start"), 8, 6, mouseX, mouseY);
             connectUpgrades(6, 5, 7, 5);
             connectUpgrades(7, 5, 8, 4);
             connectUpgrades(7, 5, 8, 6);
