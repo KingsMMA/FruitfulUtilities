@@ -25,7 +25,7 @@ public class PathManager {
     public static final HashMap<JsonObject, String> upgradeToPath = new HashMap<>();
     public static final ArrayList<JsonObject> tracking = new ArrayList<>();
     public static final HashMap<JsonObject, Boolean> lockedCache = new HashMap<>();
-    public static final HashMap<JsonObject, HashMap<Currency, Integer>> costCache = new HashMap<>();
+    public static final HashMap<JsonObject, HashMap<Currency, Long>> costCache = new HashMap<>();
     public static int undergroundWallStatus = 0;
 
     static {
@@ -101,10 +101,10 @@ public class PathManager {
         FruitfulUtilities.LOGGER.warn("Unable to find upgrade with name \"" + upgradeName + "\".");
     }
 
-    public static HashMap<Currency, Integer> getCost(JsonObject upgrade) {
+    public static HashMap<Currency, Long> getCost(JsonObject upgrade) {
         if (costCache.containsKey(upgrade)) return costCache.get(upgrade);
 
-        HashMap<Currency, Integer> cost = cumulativePrice(requiredToUnlock(upgrade));
+        HashMap<Currency, Long> cost = cumulativePrice(requiredToUnlock(upgrade));
         costCache.put(upgrade, cost);
 
         return cost;
@@ -146,14 +146,14 @@ public class PathManager {
         return allRequired;
     }
 
-    public static HashMap<Currency, Integer> cumulativePrice(List<JsonObject> upgrades) {
-        HashMap<Currency, Integer> totalPrice = new HashMap<>();
+    public static HashMap<Currency, Long> cumulativePrice(List<JsonObject> upgrades) {
+        HashMap<Currency, Long> totalPrice = new HashMap<>();
 
         for (JsonObject upgrade : upgrades) {
             String currencyRaw = upgrade.get("currency").getAsString();
             try {
                 Currency currency = Currency.valueOf(currencyRaw.toUpperCase());
-                int price = upgrade.get("price").getAsInt();
+                long price = upgrade.get("price").getAsLong();
                 if (totalPrice.containsKey(currency)) totalPrice.put(currency, totalPrice.get(currency) + price);
                 else totalPrice.put(currency, price);
             } catch (IllegalArgumentException exception) {
@@ -170,9 +170,9 @@ public class PathManager {
         return null;
     }
 
-    public static StringBuilder appendFormattedCost(StringBuilder stringBuilder, HashMap<Currency, Integer> costMap) {
+    public static StringBuilder appendFormattedCost(StringBuilder stringBuilder, HashMap<Currency, Long> costMap) {
         for (Currency currency : costMap.keySet()) {
-            int price = costMap.get(currency);
+            long price = costMap.get(currency);
             stringBuilder.append("§").append(currency.getSecondaryColor()).append(NumberUtils.toFancyNumber(price)).append(" ").append(currency.format(price)).append("§7, ");
         }
         return new StringBuilder(stringBuilder.substring(0, stringBuilder.length() - 2));

@@ -32,7 +32,7 @@ public enum Currency {
         this.makePlural = makePlural;
     }
 
-    public String format(int amount) {
+    public String format(long amount) {
         if (makePlural && amount != 1) {
             return display + "s";
         } else {

@@ -5,8 +5,8 @@ import java.util.Locale;
 
 public class NumberUtils {
 
-    public static String toFancyNumber(int num) {
-        return NumberFormat.getInstance(Locale.US).format((Integer) num);
+    public static String toFancyNumber(long num) {
+        return NumberFormat.getInstance(Locale.US).format(num);
     }
 
 }
