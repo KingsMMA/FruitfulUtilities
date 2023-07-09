@@ -53,6 +53,13 @@ public class FruitfulUtilities implements ClientModInitializer {
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(
+                    ClientCommandManager.literal("restart_run")
+                            .executes(context -> {
+                                context.getSource().sendFeedback(Text.of("§aRestarted run."));
+                                restartRun();
+                                return 1;
+                            }));
+            dispatcher.register(
                     ClientCommandManager.literal("reload_paths")
                             .executes(context -> {
                                 context.getSource().sendFeedback(Text.of("§aReloading paths..."));
