@@ -40,6 +40,7 @@ public class WorldRenderListener implements WorldRenderEvents.End {
             if (distance >= 5) {
                 matrices.push();
                 matrices.translate(x - playerPos.x, y - playerPos.y - 0.7, z - playerPos.z);
+                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, alpha / 255f);
                 BeaconBlockEntityRenderer.renderBeam(
                         matrices,
                         Objects.requireNonNull(context.consumers()),
@@ -49,7 +50,7 @@ public class WorldRenderListener implements WorldRenderEvents.End {
                         context.world().getTime(),
                         0,
                         255,
-                        new float[]{255, 255, 255},
+                        new float[]{140 / 255f, 0 / 255f, 250 / 255f},
                         0.2f,
                         0f
                 );
