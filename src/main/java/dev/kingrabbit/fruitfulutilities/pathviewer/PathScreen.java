@@ -36,6 +36,7 @@ public class PathScreen extends Screen {
             "religion",
             "urban",
             "true_urban",
+            "science",
             "underground",
             "raid",
             "depths"
@@ -67,6 +68,7 @@ public class PathScreen extends Screen {
             section_icons.put("religion", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aReligion")).icon(() -> new ItemStack(Items.ENCHANTING_TABLE)).build());
             section_icons.put("urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUrban")).icon(() -> new ItemStack(Items.IRON_BLOCK)).build());
             section_icons.put("true_urban", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aTrue Urban")).icon(() -> new ItemStack(Items.GOLD_BLOCK)).build());
+            section_icons.put("science", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aScience")).icon(() -> new ItemStack(Items.BREWING_STAND)).build());
             section_icons.put("underground", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aUnderground")).icon(() -> new ItemStack(Items.DIRT)).build());
             section_icons.put("raid", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aRaid")).icon(() -> new ItemStack(Items.CARVED_PUMPKIN)).build());
             section_icons.put("depths", ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.of("§aDepths")).icon(() -> new ItemStack(Items.COBBLED_DEEPSLATE)).build());
@@ -254,6 +256,47 @@ public class PathScreen extends Screen {
             connectUpgrades(4, 5, 5, 5);
             connectUpgrades(4, 5, 5, 6);
             connectUpgrades(4, 5, 5, 7);
+        } else if (section.equals("science")) {
+            JsonObject science = PathManager.paths.get("science");
+
+            renderUpgrade(matrices, science.getAsJsonObject("strongest_front_door"), 1, 1, mouseX, mouseY);
+            renderUpgrade(matrices, science.getAsJsonObject("fortify_defenses"), 1, 2, mouseX, mouseY);
+            renderUpgrade(matrices, science.getAsJsonObject("plasma_accelerator"), 1, 3, mouseX, mouseY);
+
+            renderUpgrade(matrices, science.getAsJsonObject("scientific_method"), 3, 3, mouseX, mouseY);
+
+            renderUpgrade(matrices, science.getAsJsonObject("fast_travel"), 2, 1, mouseX, mouseY);
+            connectUpgrades(2, 1, 3, 3);
+            renderUpgrade(matrices, science.getAsJsonObject("quicker_studies"), 1, 5, mouseX, mouseY);
+            connectUpgrades(1, 5, 3, 3);
+            renderUpgrade(matrices, science.getAsJsonObject("chemical_reactions"), 2, 5, mouseX, mouseY);
+            connectUpgrades(2, 5, 3, 3);
+            renderUpgrade(matrices, science.getAsJsonObject("cheaper_methods"), 3, 5, mouseX, mouseY);
+            connectUpgrades(3, 3, 3, 5);
+            renderUpgrade(matrices, science.getAsJsonObject("to_infinity_and_beyond"), 4, 5, mouseX, mouseY);
+            connectUpgrades(3, 3, 4, 5);
+
+            renderUpgrade(matrices, science.getAsJsonObject("increased_melon_values"), 3, 1, mouseX, mouseY);
+            connectUpgrades(3, 1, 3, 3);
+            renderUpgrade(matrices, science.getAsJsonObject("automated_funding"), 4, 1, mouseX, mouseY);
+            connectUpgrades(3, 3, 4, 1);
+            renderUpgrade(matrices, science.getAsJsonObject("fast_footed"), 5, 1, mouseX, mouseY);
+            connectUpgrades(3, 3, 5, 1);
+            renderUpgrade(matrices, science.getAsJsonObject("golden_boosters"), 6, 1, mouseX, mouseY);
+            connectUpgrades(3, 3, 6, 1);
+            renderUpgrade(matrices, science.getAsJsonObject("faster_selling"), 7, 1, mouseX, mouseY);
+            connectUpgrades(3, 3, 7, 1);
+            renderUpgrade(matrices, science.getAsJsonObject("income_boosters"), 7, 2, mouseX, mouseY);
+            connectUpgrades(3, 3, 7, 2);
+
+            renderUpgrade(matrices, science.getAsJsonObject("calculator_core"), 7, 3, mouseX, mouseY);
+            connectUpgrades(3, 3, 7, 3);
+            renderUpgrade(matrices, science.getAsJsonObject("genome_sequencing"), 7, 4, mouseX, mouseY);
+            connectUpgrades(3, 3, 7, 4);
+            renderUpgrade(matrices, science.getAsJsonObject("farm_rush"), 7, 5, mouseX, mouseY);
+            connectUpgrades(3, 3, 7, 5);
+            renderUpgrade(matrices, science.getAsJsonObject("science_team"), 7, 6, mouseX, mouseY);
+            connectUpgrades(3, 3, 7, 6);
         } else if (section.equals("underground")) {
             JsonObject underground = PathManager.paths.get("underground");
 

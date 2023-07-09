@@ -47,6 +47,7 @@ public class PathManager {
         loadPath("religion", "religion");
         loadPath("urban", "urban");
         loadPath("true_urban", "true_urban");
+        loadPath("science", "science");
         loadPath("underground", "underground");
         loadPath("raid", "raid");
         loadPath("depths", "depths");
