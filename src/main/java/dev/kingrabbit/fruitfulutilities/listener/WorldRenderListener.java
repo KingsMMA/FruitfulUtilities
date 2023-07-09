@@ -23,7 +23,6 @@ public class WorldRenderListener implements WorldRenderEvents.End {
         if (MinecraftClient.getInstance().player == null) return;
         if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
 
-        Vec3d playerPos = MinecraftClient.getInstance().player.getPos();
         for (JsonObject upgrade : PathManager.allTracked()) {
 
             String[] location = upgrade.get("location").getAsString().split(",");
