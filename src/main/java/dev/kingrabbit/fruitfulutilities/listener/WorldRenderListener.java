@@ -36,10 +36,12 @@ public class WorldRenderListener implements WorldRenderEvents.End {
             double distance = playerPos.distanceTo(upgradePos);
             int alpha = (int) Math.min(Math.max(Math.pow(2, 0.5 * distance) * 5, 50), 255);
 
+            Vec3d offset = upgradePos.subtract(MinecraftClient.getInstance().gameRenderer.getCamera().getPos());
+
             MatrixStack matrices = context.matrixStack();
             if (distance >= 5) {
                 matrices.push();
-                matrices.translate(x - playerPos.x, y - playerPos.y - 0.7, z - playerPos.z);
+                matrices.translate(offset.x, offset.y, offset.z);
                 RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, alpha / 255f);
                 BeaconBlockEntityRenderer.renderBeam(
                         matrices,
