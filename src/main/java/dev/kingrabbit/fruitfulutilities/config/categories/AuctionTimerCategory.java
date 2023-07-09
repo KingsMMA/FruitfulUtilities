@@ -11,4 +11,11 @@ public class AuctionTimerCategory extends ConfigCategory {
     @ConfigBoolean(id = "enabled", display = "Enable Timer", description = "Enables the Auction Timer, appearing on your HUD.")
     public boolean enabled = true;
 
+    @ConfigBoolean(id = "alert", display = "Always Send Alert", description = "Always send an alert when auctions start, even if disabled on Melon King.")
+    public boolean alert = true;
+
+
+    @ConfigBoolean(id = "warning", display = "Always Send Warning", description = "Always send a warning when auctions start, even if disabled on Melon King.")
+    public boolean warning = true;
+
 }
