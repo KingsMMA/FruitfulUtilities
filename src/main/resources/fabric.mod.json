@@ -8,7 +8,9 @@
     "KingsDev"
   ],
   "contact": {
-    "website": "https://kingrabbit.dev/"
+    "homepage": "https://kingsmma.github.io/FruitfulUtilities/",
+    "sources": "https://github.com/KingsMMA/FruitfulUtilities",
+    "issues": "https://github.com/KingsMMA/FruitfulUtilities/issues"
   },
   "license": "MIT",
   "icon": "assets/fruitfulutilities/icon.png",
