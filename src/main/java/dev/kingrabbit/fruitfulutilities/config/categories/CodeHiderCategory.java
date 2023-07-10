@@ -3,11 +3,13 @@ package dev.kingrabbit.fruitfulutilities.config.categories;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.config.CategoryInfo;
 import dev.kingrabbit.fruitfulutilities.config.ConfigCategory;
+import dev.kingrabbit.fruitfulutilities.config.IncompatibleMod;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings("CanBeFinal")
+@IncompatibleMod(modId = "sodium", description = "Code Hider's Hide Non-Plot Blocks may encounter issues when running with Sodium, including but not limited to the use of F3 + A being needed to reload the state of Hide Non-Plot Blocks.")
 @CategoryInfo(id = "code_hider", display = "Code Hider")
 public class CodeHiderCategory extends ConfigCategory {
 
