@@ -8,7 +8,7 @@ import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 @CategoryInfo(id = "scoreboard", display = "Fancy Scoreboard")
 public class FancyScoreboardCategory extends ConfigCategory {
 
-    @ConfigBoolean(id = "fancy", display = "Currency Commas", description = "Adds commas to currencies in the scoreboard, improving readability.")
+    @ConfigBoolean(id = "fancy", display = "Balance Commas", description = "Adds commas to balances in the scoreboard, improving readability.")
     public boolean fancy = true;
 
 
