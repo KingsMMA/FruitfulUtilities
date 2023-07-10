@@ -265,9 +265,20 @@ public class ConfigScreen extends Screen {
                 }
 
                 if (categoryInfo.id().equals(selected_section)) {
-                    Field[] fields = configCategory.getClass().getFields();
+                    Class<? extends ConfigCategory> selectedCategoryClass = configCategory.getClass();
+                    Field[] fields = selectedCategoryClass.getFields();
                     int propertyY = height / 2 - 150 + 65;
+                    int x1 = width / 2 - 200 + 130 + 2;
                     int x2 = width / 2 + 200 - 11;
+                    if (selectedCategoryClass.isAnnotationPresent(IncompatibleMod.class)) {
+                        IncompatibleMod incompatibleMod = selectedCategoryClass.getAnnotation(IncompatibleMod.class);
+
+                        if (FabricLoader.getInstance().isModLoaded(incompatibleMod.modId())) {
+                            List<OrderedText> lines = textRenderer.wrapLines(StringVisitable.plain(incompatibleMod.description()), (int) ((x2 - x1 - 20) / 0.8f));
+                            propertyY += 2 + ((textRenderer.fontHeight + 2) * 0.8f) * (lines.size() + 1);
+                        }
+                    }
+
                     for (Field field : fields) {
                         if (field.isAnnotationPresent(ConfigBoolean.class)) {
                             if (x2 - 64 <= mouseX && mouseX <= x2 - 16 &&
