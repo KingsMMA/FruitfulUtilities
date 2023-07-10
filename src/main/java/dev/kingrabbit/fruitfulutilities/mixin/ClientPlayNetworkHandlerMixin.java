@@ -64,6 +64,11 @@ public abstract class ClientPlayNetworkHandlerMixin {
             }
         }
 
+        if (message.equals("» A set of auctions is starting!"))
+            TickListener.auctionAlertReceived = true;
+        else if (message.equals("» A set of auctions is starting in 60 seconds!"))
+            TickListener.auctionWarningReceived = true;
+
         if (message.matches("^> The (king|queen|monarch|city) has purchased the (.*) (major upgrade|upgrade|renovation)( for [0-9]{1,16} .*)?\\.$")) {
             Matcher matcher = UPGRADE_PURCHASED_PATTERN.matcher(message);
             while (matcher.find()) {

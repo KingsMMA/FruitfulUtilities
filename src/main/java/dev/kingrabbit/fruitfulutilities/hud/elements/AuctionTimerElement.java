@@ -25,8 +25,14 @@ public class AuctionTimerElement extends HudElement {
     public List<Object> render(float tickDelta) {
         if (!FruitfulUtilities.getInstance().configManager.getCategory(AuctionTimerCategory.class).enabled) return Collections.emptyList();
 
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        int[] timeUntilAuctions = getTimeUntilAuctions();
+        int minutesRemaining = timeUntilAuctions[0], secondsRemaining = timeUntilAuctions[1];
 
+        return Collections.singletonList("§6Auction Timer: §e" + (minutesRemaining < 10 ? "0" : "") + minutesRemaining + ":" + (secondsRemaining < 10 ? "0" : "") + secondsRemaining);
+    }
+
+    public static int[] getTimeUntilAuctions() {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         int currentMinute = calendar.get(Calendar.MINUTE);
         int currentSecond = calendar.get(Calendar.SECOND);
 
@@ -37,7 +43,7 @@ public class AuctionTimerElement extends HudElement {
             secondsRemaining = 0;
         }
 
-        return Collections.singletonList("§6Auction Timer: §e" + (minutesRemaining < 10 ? "0" : "") + minutesRemaining + ":" + (secondsRemaining < 10 ? "0" : "") + secondsRemaining);
+        return new int[]{minutesRemaining, secondsRemaining};
     }
 
 }

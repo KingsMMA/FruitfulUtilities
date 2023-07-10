@@ -4,12 +4,15 @@ import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.Keybinds;
 import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.config.ConfigScreen;
+import dev.kingrabbit.fruitfulutilities.config.categories.AuctionTimerCategory;
 import dev.kingrabbit.fruitfulutilities.config.categories.SearchingTrackerCategory;
+import dev.kingrabbit.fruitfulutilities.hud.elements.AuctionTimerElement;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathScreen;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +26,10 @@ public class TickListener implements ClientTickEvents.EndTick {
     public static int tick = 0;
     public static int searchingUntil = 0;
     public static int testUndergroundAt = -1;
+
+    public static boolean auctionWarningReceived = false;
+    public static boolean auctionAlertReceived = false;
+    public static int sendAuctionAlertAt = -1;
 
     @Override
     public void onEndTick(MinecraftClient client) {
@@ -60,6 +67,33 @@ public class TickListener implements ClientTickEvents.EndTick {
                         PathManager.purchasedIds.add("upgrade_town_second_wall");
                     }
                 }
+            }
+        }
+
+        if (client.player != null) {
+            AuctionTimerCategory auctionTimerCategory = configManager.getCategory(AuctionTimerCategory.class);
+
+            if (tick >= sendAuctionAlertAt && sendAuctionAlertAt != -1) {
+                if (auctionTimerCategory.alert && !auctionAlertReceived) {
+                    auctionAlertReceived = true;
+                    client.player.sendMessage(Text.of("§8» §7A set of auctions is starting!"));
+                    client.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0f, 1.0f);
+                }
+                sendAuctionAlertAt = -1;
+            }
+
+            int[] timeUntilAuctions = AuctionTimerElement.getTimeUntilAuctions();
+            int minutesRemaining = timeUntilAuctions[0], secondsRemaining = timeUntilAuctions[1] + 1;
+            if (minutesRemaining == 0 && secondsRemaining <= 59) {
+                if (auctionTimerCategory.warning && !auctionWarningReceived) {
+                    auctionWarningReceived = true;
+                    client.player.sendMessage(Text.of("§8» §7A set of auctions is starting in 60 seconds!"));
+                    client.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0f, 1.0f);
+                }
+                sendAuctionAlertAt = tick + secondsRemaining * 20;
+            } else if (auctionWarningReceived || auctionAlertReceived) {
+                auctionWarningReceived = false;
+                auctionAlertReceived = false;
             }
         }
 
