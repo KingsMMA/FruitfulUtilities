@@ -15,7 +15,7 @@ public class AuctionTimerCategory extends ConfigCategory {
     public boolean alert = true;
 
 
-    @ConfigBoolean(id = "warning", display = "Always Send Warning", description = "Always send a warning when auctions start, even if disabled on Melon King.")
+    @ConfigBoolean(id = "warning", display = "Always Send Warning", description = "Always send a warning 60 seconds before auctions start, even if disabled on Melon King.")
     public boolean warning = true;
 
 }
