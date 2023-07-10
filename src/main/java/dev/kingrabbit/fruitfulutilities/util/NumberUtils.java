@@ -9,4 +9,8 @@ public class NumberUtils {
         return NumberFormat.getInstance(Locale.US).format(num);
     }
 
+    public static String toFancyNumber(float num) {
+        return NumberFormat.getInstance(Locale.US).format(num);
+    }
+
 }
