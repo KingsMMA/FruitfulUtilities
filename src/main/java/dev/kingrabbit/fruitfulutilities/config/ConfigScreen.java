@@ -7,6 +7,7 @@ import dev.kingrabbit.fruitfulutilities.config.properties.ConfigButton;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigDropdown;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import dev.kingrabbit.fruitfulutilities.util.SoundUtils;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -108,17 +109,38 @@ public class ConfigScreen extends Screen {
         DrawableHelper.fill(matrices, width / 2 - 200 + 130 + 2, height / 2 - 150 + 60 + 2, width / 2 + 200 - 10, height / 2 + 150 - 10, SECTION_BACKGROUND);
 
         ConfigCategory selectedCategory = FruitfulUtilities.getInstance().configManager.categoryIds.get(selected_section);
-        Field[] fields = selectedCategory.getClass().getFields();
+        Class<? extends ConfigCategory> selectedCategoryClass = selectedCategory.getClass();
+
+        Field[] fields = selectedCategoryClass.getFields();
         int propertyY = height / 2 - 150 + 65;
         int x1 = width / 2 - 200 + 130 + 2;
         int x2 = width / 2 + 200 - 11;
+
+        if (selectedCategoryClass.isAnnotationPresent(IncompatibleMod.class)) {
+            IncompatibleMod incompatibleMod = selectedCategoryClass.getAnnotation(IncompatibleMod.class);
+
+            if (FabricLoader.getInstance().isModLoaded(incompatibleMod.modId())) {
+                List<OrderedText> lines = textRenderer.wrapLines(StringVisitable.plain(incompatibleMod.description()), (int) ((x2 - x1 - 20) / 0.8f));
+                propertyY += 2;
+                matrices.push();
+                matrices.scale(0.8f, 0.8f, 0.8f);
+                int centerX = (int) ((x1 + (x2 - x1) / 2f) / 0.8);
+                for (OrderedText line : lines) {
+                    DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, line, centerX, (int) (propertyY / 0.8f), 0xEF1515);
+                    propertyY += (textRenderer.fontHeight + 2) * 0.8f;
+                }
+                propertyY += (textRenderer.fontHeight + 2) * 0.8f;
+                matrices.pop();
+            }
+        }
+
         for (Field field : fields) {
             boolean isConfigBoolean = field.isAnnotationPresent(ConfigBoolean.class);
             boolean isConfigDropdown = field.isAnnotationPresent(ConfigDropdown.class);
             boolean isConfigButton = field.isAnnotationPresent(ConfigButton.class);
 
             if ((isConfigBoolean && isConfigDropdown) || (isConfigBoolean && isConfigButton) || (isConfigDropdown && isConfigButton))
-                throw new UnsupportedOperationException("Found field with non-one value of attributes: " + field.getName() + " (" + selectedCategory.getClass().getName() + ")");
+                throw new UnsupportedOperationException("Found field with non-one value of attributes: " + field.getName() + " (" + selectedCategoryClass.getName() + ")");
 
             ConfigBoolean configBoolean;
             ConfigDropdown configDropdown = null;
@@ -166,7 +188,7 @@ public class ConfigScreen extends Screen {
                     RenderSystem.setShaderTexture(0, (boolean) field.get(selectedCategory) ? SWITCH_ENABLED : SWITCH_DISABLED);
                 } catch (IllegalAccessException exception) {
                     RenderSystem.setShaderTexture(0, SWITCH_UNKNOWN);
-                    FruitfulUtilities.LOGGER.error("An error occurred accessing the value of " + field.getName() + " in " + selectedCategory.getClass().getName(), exception);
+                    FruitfulUtilities.LOGGER.error("An error occurred accessing the value of " + field.getName() + " in " + selectedCategoryClass.getName(), exception);
                 }
                 DrawableHelper.drawTexture(matrices, (int) ((x2 - 64) / 1.5f), (int) ((propertyY + 10) / 1.5f), 0, 0, 0, 32, 16, 32, 16);
                 matrices.pop();
@@ -243,9 +265,20 @@ public class ConfigScreen extends Screen {
                 }
 
                 if (categoryInfo.id().equals(selected_section)) {
-                    Field[] fields = configCategory.getClass().getFields();
+                    Class<? extends ConfigCategory> selectedCategoryClass = configCategory.getClass();
+                    Field[] fields = selectedCategoryClass.getFields();
                     int propertyY = height / 2 - 150 + 65;
+                    int x1 = width / 2 - 200 + 130 + 2;
                     int x2 = width / 2 + 200 - 11;
+                    if (selectedCategoryClass.isAnnotationPresent(IncompatibleMod.class)) {
+                        IncompatibleMod incompatibleMod = selectedCategoryClass.getAnnotation(IncompatibleMod.class);
+
+                        if (FabricLoader.getInstance().isModLoaded(incompatibleMod.modId())) {
+                            List<OrderedText> lines = textRenderer.wrapLines(StringVisitable.plain(incompatibleMod.description()), (int) ((x2 - x1 - 20) / 0.8f));
+                            propertyY += 2 + ((textRenderer.fontHeight + 2) * 0.8f) * (lines.size() + 1);
+                        }
+                    }
+
                     for (Field field : fields) {
                         if (field.isAnnotationPresent(ConfigBoolean.class)) {
                             if (x2 - 64 <= mouseX && mouseX <= x2 - 16 &&

@@ -1,10 +1,8 @@
 package dev.kingrabbit.fruitfulutilities.mixin;
 
-import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.config.categories.CodeHiderCategory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.chunk.ChunkRendererRegion;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,15 +15,7 @@ public class ChunkRendererRegionMixin {
 
     @Inject(method = "getBlockState", at = @At("HEAD"), cancellable = true)
     public void getBlockState(BlockPos pos, CallbackInfoReturnable<BlockState> cir) {
-        if (MinecraftClient.getInstance().player == null) return;
-        if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
-        if (FruitfulUtilities.inPlot(pos) || !FruitfulUtilities.inPlot(MinecraftClient.getInstance().player.getBlockPos())) return;
-
-        CodeHiderCategory category = FruitfulUtilities.getInstance().configManager.getCategory(CodeHiderCategory.class);
-        if (!category.enabled || !category.hideAll) return;
-
-        cir.setReturnValue(Blocks.VOID_AIR.getDefaultState());
-
+        if (CodeHiderCategory.shouldHideBlock(pos)) cir.setReturnValue(Blocks.VOID_AIR.getDefaultState());;
     }
 
 }

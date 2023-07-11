@@ -9,7 +9,8 @@
     "ChunkRendererRegionMixin",
     "ClientPlayNetworkHandlerMixin",
     "InGameHudMixin",
-    "PlayerInventoryMixin"
+    "PlayerInventoryMixin",
+    "compatibility.sodium.BlockOcclusionCacheMixin"
   ],
   "injectors": {
     "defaultRequire": 1
