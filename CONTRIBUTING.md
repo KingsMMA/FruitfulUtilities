@@ -53,7 +53,7 @@ After making any changes, build the project by clicking `Build > Build Project` 
 
 ### Hotswapping Mixins
 Mixins can't be hotswapped in a default FabricMC environment.  
-For more information, see [here](https://fabricmc.net/wiki/tutorial:mixin_hotswaps).
+To update your Run Configurations for hotswapping mixins, see [here](https://fabricmc.net/wiki/tutorial:mixin_hotswaps).
 
 ### Limitations
 While hotswaps are a great utility for easily testing changes, there are certain limitations.  
