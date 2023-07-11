@@ -9,7 +9,7 @@ import dev.kingrabbit.fruitfulutilities.util.ColorOverlay;
 import dev.kingrabbit.fruitfulutilities.util.NumberUtils;
 import dev.kingrabbit.fruitfulutilities.util.Region;
 import dev.kingrabbit.fruitfulutilities.util.SoundUtils;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -85,7 +85,7 @@ public class PathScreen extends Screen {
 
     @SuppressWarnings({"IfCanBeSwitch", "SpellCheckingInspection"})
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         clearChildren();
         drawnElements.clear();
         tooltip = null;
@@ -95,7 +95,9 @@ public class PathScreen extends Screen {
             yOffset(-64);
         }
 
-        renderBackground(matrices);
+        renderBackground(context);
+
+        MatrixStack matrices = context.getMatrices();
 
         // Path Viewer
         matrices.push();
@@ -104,54 +106,54 @@ public class PathScreen extends Screen {
         
         if (section.equals("beginnings")) {
             JsonObject beginnings = PathManager.paths.get("beginnings");
-            renderUpgrade(matrices, beginnings.getAsJsonObject("faster_melon_spawn_rate"), 1, 1, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("hearth"), 2, 1, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("stronger_front_door"), 3, 1, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("better_jailors"), 4, 1, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("lock_and_key"), 5, 1, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("item_removal_procedures"), 6, 1, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("faster_melon_spawn_rate"), 1, 1, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("hearth"), 2, 1, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("stronger_front_door"), 3, 1, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("better_jailors"), 4, 1, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("lock_and_key"), 5, 1, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("item_removal_procedures"), 6, 1, mouseX, mouseY);
 
-            renderUpgrade(matrices, beginnings.getAsJsonObject("economic_room"), 1, 3, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("faster_coin_generation"), 2, 2, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("better_sell_deals"), 2, 3, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("increased_guard_limit"), 2, 4, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("economic_room"), 1, 3, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("faster_coin_generation"), 2, 2, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("better_sell_deals"), 2, 3, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("increased_guard_limit"), 2, 4, mouseX, mouseY);
             connectUpgrades(1, 3, 2, 2);
             connectUpgrades(1, 3, 2, 3);
             connectUpgrades(1, 3, 2, 4);
 
-            renderUpgrade(matrices, beginnings.getAsJsonObject("private_merchant"), 3, 2, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("personal_greenhouse"), 4, 2, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("private_merchant"), 3, 2, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("personal_greenhouse"), 4, 2, mouseX, mouseY);
             connectUpgrades(3, 2, 4, 2);
 
-            renderUpgrade(matrices, beginnings.getAsJsonObject("castle_ladder"), 3, 3, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("castle_roof"), 4, 3, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("castle_ladder"), 3, 3, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("castle_roof"), 4, 3, mouseX, mouseY);
 
-            renderUpgrade(matrices, beginnings.getAsJsonObject("castle_backyard"), 1, 5, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("castle_basement"), 2, 5, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("urban_start"), 3, 5, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("castle_backyard"), 1, 5, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("castle_basement"), 2, 5, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("urban_start"), 3, 5, mouseX, mouseY);
             connectUpgrades(1, 5, 2, 5);
             connectUpgrades(2, 5, 3, 5);
 
-            renderUpgrade(matrices, beginnings.getAsJsonObject("religion_start"), 3, 4, mouseX, mouseY);
-            renderUpgrade(matrices, beginnings.getAsJsonObject("underground_start"), 4, 4, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("religion_start"), 3, 4, mouseX, mouseY);
+            renderUpgrade(context, beginnings.getAsJsonObject("underground_start"), 4, 4, mouseX, mouseY);
         } else if (section.equals("religion")){
             JsonObject religion = PathManager.paths.get("religion");
-            renderUpgrade(matrices, religion.getAsJsonObject("special_delivery"), 1, 1, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("for_your_convenience"), 2, 1, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("saving_grace"), 3, 1, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("devotion"), 4, 1, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("bountiful_harvest"), 5, 1, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("plentiful_prizes"), 6, 1, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("forgiving_gods"), 7, 1, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("special_delivery"), 1, 1, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("for_your_convenience"), 2, 1, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("saving_grace"), 3, 1, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("devotion"), 4, 1, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("bountiful_harvest"), 5, 1, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("plentiful_prizes"), 6, 1, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("forgiving_gods"), 7, 1, mouseX, mouseY);
 
-            renderUpgrade(matrices, religion.getAsJsonObject("harness_the_spirits"), 2, 4, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("faster_cooking"), 2, 2, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("faster_selling"), 1, 2, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("rise_from_ashes"), 1, 3, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("unconfined_existence"), 4, 3, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("better_farmers"), 1, 5, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("strict_trade_laws"), 1, 6, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("better_return_rates"), 2, 6, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("harness_the_spirits"), 2, 4, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("faster_cooking"), 2, 2, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("faster_selling"), 1, 2, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("rise_from_ashes"), 1, 3, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("unconfined_existence"), 4, 3, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("better_farmers"), 1, 5, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("strict_trade_laws"), 1, 6, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("better_return_rates"), 2, 6, mouseX, mouseY);
             connectUpgrades(2, 2, 2, 4);
             connectUpgrades(1, 2, 2, 4);
             connectUpgrades(1, 3, 2, 4);
@@ -160,12 +162,12 @@ public class PathScreen extends Screen {
             connectUpgrades(1, 6, 2, 4);
             connectUpgrades(2, 4, 2, 6);
 
-            renderUpgrade(matrices, religion.getAsJsonObject("packed_presents"), 3, 2, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("generous_gifts"), 3, 3, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("gold_rush"), 3, 4, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("the_graceful_one"), 5, 2, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("servitude"), 5, 4, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("another_dimension"), 5, 3, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("packed_presents"), 3, 2, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("generous_gifts"), 3, 3, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("gold_rush"), 3, 4, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("the_graceful_one"), 5, 2, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("servitude"), 5, 4, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("another_dimension"), 5, 3, mouseX, mouseY);
             connectUpgrades(3, 2, 4, 3);
             connectUpgrades(3, 3, 4, 3);
             connectUpgrades(3, 4, 4, 3);
@@ -173,13 +175,13 @@ public class PathScreen extends Screen {
             connectUpgrades(4, 3, 5, 3);
             connectUpgrades(4, 3, 5, 4);
 
-            renderUpgrade(matrices, religion.getAsJsonObject("hive_minded_harbingers"), 6, 2, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("complete_clarity"), 7, 2, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("submission"), 7, 3, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("the_greater_good"), 7, 4, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("holy_protection"), 7, 5, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("divine_intervention"), 7, 6, mouseX, mouseY);
-            renderUpgrade(matrices, religion.getAsJsonObject("by_the_power"), 6, 6, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("hive_minded_harbingers"), 6, 2, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("complete_clarity"), 7, 2, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("submission"), 7, 3, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("the_greater_good"), 7, 4, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("holy_protection"), 7, 5, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("divine_intervention"), 7, 6, mouseX, mouseY);
+            renderUpgrade(context, religion.getAsJsonObject("by_the_power"), 6, 6, mouseX, mouseY);
             connectUpgrades(5, 3, 6, 2);
             connectUpgrades(5, 3, 7, 2);
             connectUpgrades(5, 3, 7, 3);
@@ -190,45 +192,45 @@ public class PathScreen extends Screen {
 
         } else if (section.equals("urban")) {
             JsonObject urban = PathManager.paths.get("urban");
-            renderUpgrade(matrices, urban.getAsJsonObject("melon_fertilizer"), 1, 1, mouseX, mouseY);
-            renderUpgrade(matrices, urban.getAsJsonObject("significantly_melonier_melons"), 2, 1, mouseX, mouseY);
-            renderUpgrade(matrices, urban.getAsJsonObject("faster_cooking"), 3, 1, mouseX, mouseY);
-            renderUpgrade(matrices, urban.getAsJsonObject("melon_teleporter"), 4, 1, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("melon_fertilizer"), 1, 1, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("significantly_melonier_melons"), 2, 1, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("faster_cooking"), 3, 1, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("melon_teleporter"), 4, 1, mouseX, mouseY);
 
-            renderUpgrade(matrices, urban.getAsJsonObject("intensive_research"), 1, 3, mouseX, mouseY);
-            renderUpgrade(matrices, urban.getAsJsonObject("melon_harvesting_technology"), 2, 2, mouseX, mouseY);
-            renderUpgrade(matrices, urban.getAsJsonObject("better_return_rates"), 2, 3, mouseX, mouseY);
-            renderUpgrade(matrices, urban.getAsJsonObject("extreme_economy"), 2, 4, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("intensive_research"), 1, 3, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("melon_harvesting_technology"), 2, 2, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("better_return_rates"), 2, 3, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("extreme_economy"), 2, 4, mouseX, mouseY);
             connectUpgrades(1, 3, 2, 2);
             connectUpgrades(1, 3, 2, 3);
             connectUpgrades(1, 3, 2, 4);
 
-            renderUpgrade(matrices, urban.getAsJsonObject("science_start"), 3, 2, mouseX, mouseY);
-            renderUpgrade(matrices, urban.getAsJsonObject("democracy_start"), 3, 3, mouseX, mouseY);
-            renderUpgrade(matrices, urban.getAsJsonObject("true_urban_start"), 3, 4, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("science_start"), 3, 2, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("democracy_start"), 3, 3, mouseX, mouseY);
+            renderUpgrade(context, urban.getAsJsonObject("true_urban_start"), 3, 4, mouseX, mouseY);
         } else if (section.equals("true_urban")) {
             JsonObject trueUrban = PathManager.paths.get("true_urban");
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("a_dollar_a_dime"), 1, 1, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("doubled_city_funding"), 2, 1, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("guaranteed_returns"), 3, 1, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("better_farmers"), 4, 1, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("incredibly_fast_growth"), 1, 2, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("blast_protection"), 2, 2, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("overclock_teleporter"), 3, 2, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("strict_trade_laws"), 4, 2, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("a_dollar_a_dime"), 1, 1, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("doubled_city_funding"), 2, 1, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("guaranteed_returns"), 3, 1, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("better_farmers"), 4, 1, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("incredibly_fast_growth"), 1, 2, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("blast_protection"), 2, 2, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("overclock_teleporter"), 3, 2, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("strict_trade_laws"), 4, 2, mouseX, mouseY);
 
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("bigger_bunker"), 1, 4, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("load_cannons"), 2, 3, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("floating_islands"), 2, 5, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("bigger_bunker"), 1, 4, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("load_cannons"), 2, 3, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("floating_islands"), 2, 5, mouseX, mouseY);
             connectUpgrades(1, 4, 2, 3);
             connectUpgrades(1, 4, 2, 5);
 
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("faster_selling"), 3, 3, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("morale_boost"), 3, 4, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("farming_island"), 3, 5, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("lower_shipping_taxes"), 3, 6, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("even_better_harvesting"), 3, 7, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("island_skylights"), 2, 7, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("faster_selling"), 3, 3, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("morale_boost"), 3, 4, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("farming_island"), 3, 5, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("lower_shipping_taxes"), 3, 6, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("even_better_harvesting"), 3, 7, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("island_skylights"), 2, 7, mouseX, mouseY);
             connectUpgrades(2, 5, 3, 3);
             connectUpgrades(2, 5, 3, 4);
             connectUpgrades(2, 5, 3, 5);
@@ -236,20 +238,20 @@ public class PathScreen extends Screen {
             connectUpgrades(2, 5, 3, 7);
             connectUpgrades(2, 5, 2, 7);
 
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("quality_control"), 4, 4, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("better_filters"), 4, 3, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("quality_control"), 4, 4, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("better_filters"), 4, 3, mouseX, mouseY);
             connectUpgrades(4, 3, 4, 4);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("defender_island"), 4, 5, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("deluxe_sky_farm"), 4, 6, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("defender_island"), 4, 5, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("deluxe_sky_farm"), 4, 6, mouseX, mouseY);
             connectUpgrades(3, 5, 4, 4);
             connectUpgrades(3, 5, 4, 5);
             connectUpgrades(3, 5, 4, 6);
 
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("public_executions"), 5, 3, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("iron_skin"), 5, 4, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("the_grand_finale"), 5, 5, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("projectile_protection"), 5, 6, mouseX, mouseY);
-            renderUpgrade(matrices, trueUrban.getAsJsonObject("pricey_gunpowder"), 5, 7, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("public_executions"), 5, 3, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("iron_skin"), 5, 4, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("the_grand_finale"), 5, 5, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("projectile_protection"), 5, 6, mouseX, mouseY);
+            renderUpgrade(context, trueUrban.getAsJsonObject("pricey_gunpowder"), 5, 7, mouseX, mouseY);
             connectUpgrades(4, 5, 5, 3);
             connectUpgrades(4, 5, 5, 4);
             connectUpgrades(4, 5, 5, 5);
@@ -258,169 +260,169 @@ public class PathScreen extends Screen {
         } else if (section.equals("underground")) {
             JsonObject underground = PathManager.paths.get("underground");
 
-            renderUpgrade(matrices, underground.getAsJsonObject("revoke_weapon_bans"), 1, 1, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("revoke_weapon_bans"), 1, 1, mouseX, mouseY);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_bm"), 2, 1, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("quicker_trading"), 3, 1, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("upgrade_town_bm"), 2, 1, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("quicker_trading"), 3, 1, mouseX, mouseY);
             connectUpgrades(2, 1, 3, 1);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("lucky_day"), 1, 2, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("farming_rally"), 2, 2, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("faster_cooking"), 3, 2, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("lucky_day"), 1, 2, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("farming_rally"), 2, 2, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("faster_cooking"), 3, 2, mouseX, mouseY);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_armory"), 2, 3, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("advanced_weaponry"), 1, 3, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("public_executions"), 1, 4, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("increased_blast_resistance"), 1, 5, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("upgrade_town_armory"), 2, 3, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("advanced_weaponry"), 1, 3, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("public_executions"), 1, 4, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("increased_blast_resistance"), 1, 5, mouseX, mouseY);
             connectUpgrades(1, 3, 2, 3);
             connectUpgrades(1, 4, 2, 3);
             connectUpgrades(1, 5, 2, 3);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("better_bankers"), 2, 4, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("better_bankers"), 2, 4, mouseX, mouseY);
             connectUpgrades(2, 3, 2, 4);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("faster_selling"), 3, 3, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("rapid_reload"), 3, 4, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("better_return_rates"), 3, 5, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("faster_selling"), 3, 3, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("rapid_reload"), 3, 4, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("better_return_rates"), 3, 5, mouseX, mouseY);
             connectUpgrades(2, 3, 3, 3);
             connectUpgrades(2, 3, 3, 4);
             connectUpgrades(2, 3, 3, 5);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_center"), 4, 3, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("quicker_sprouting"), 4, 1, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("fertile_soil"), 5, 1, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("upgrade_town_center"), 4, 3, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("quicker_sprouting"), 4, 1, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("fertile_soil"), 5, 1, mouseX, mouseY);
             connectUpgrades(4, 1, 4, 3);
             connectUpgrades(4, 3, 5, 1);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("golden_extractors"), 6, 1, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("market_manipulation"), 6, 2, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("projectile_proofing"), 6, 3, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("light_based_growth_spurts"), 6, 4, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("golden_extractors"), 6, 1, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("market_manipulation"), 6, 2, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("projectile_proofing"), 6, 3, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("light_based_growth_spurts"), 6, 4, mouseX, mouseY);
             connectUpgrades(4, 3, 6, 1);
             connectUpgrades(4, 3, 6, 2);
             connectUpgrades(4, 3, 6, 3);
             connectUpgrades(4, 3, 6, 4);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_depths"), 4, 6, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("richer_metals"), 3, 7, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("grenade_tech_breakthrough"), 4, 7, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("doubled_city_funding"), 5, 7, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("depths_start"), 3, 6, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("upgrade_town_depths"), 4, 6, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("richer_metals"), 3, 7, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("grenade_tech_breakthrough"), 4, 7, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("doubled_city_funding"), 5, 7, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("depths_start"), 3, 6, mouseX, mouseY);
             connectUpgrades(4, 3, 4, 6);
             connectUpgrades(3, 7, 4, 6);
             connectUpgrades(4, 6, 4, 7);
             connectUpgrades(4, 6, 5, 7);
             connectUpgrades(3, 6, 4, 6);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_farm"), 7, 7, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("what_shines_bright"), 6, 7, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("guaranteed_returns"), 8, 7, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("upgrade_town_farm"), 7, 7, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("what_shines_bright"), 6, 7, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("guaranteed_returns"), 8, 7, mouseX, mouseY);
             connectUpgrades(4, 3, 7, 7);
             connectUpgrades(6, 7, 7, 7);
             connectUpgrades(7, 7, 8, 7);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("farming_reservations"), 6, 8, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("extra_fertilizer"), 7, 8, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("melon_generators"), 8, 8, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("farming_reservations"), 6, 8, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("extra_fertilizer"), 7, 8, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("melon_generators"), 8, 8, mouseX, mouseY);
             connectUpgrades(6, 8, 7, 7);
             connectUpgrades(7, 7, 7, 8);
             connectUpgrades(7, 7, 8, 8);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_second_wall"), 6, 5, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_teleporter"), 7, 4, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("currency_exchange"), 7, 6, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("upgrade_town_second_wall"), 6, 5, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("upgrade_town_teleporter"), 7, 4, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("currency_exchange"), 7, 6, mouseX, mouseY);
             connectUpgrades(4, 3, 6, 5);
             connectUpgrades(6, 5, 7, 4);
             connectUpgrades(6, 5, 7, 6);
 
-            renderUpgrade(matrices, underground.getAsJsonObject("upgrade_town_raid"), 7, 5, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("cutting_through"), 8, 4, mouseX, mouseY);
-            renderUpgrade(matrices, underground.getAsJsonObject("raid_start"), 8, 6, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("upgrade_town_raid"), 7, 5, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("cutting_through"), 8, 4, mouseX, mouseY);
+            renderUpgrade(context, underground.getAsJsonObject("raid_start"), 8, 6, mouseX, mouseY);
             connectUpgrades(6, 5, 7, 5);
             connectUpgrades(7, 5, 8, 4);
             connectUpgrades(7, 5, 8, 6);
         } else if (section.equals("raid")) {
             JsonObject raid = PathManager.paths.get("raid");
 
-            renderUpgrade(matrices, raid.getAsJsonObject("standard_issue_forges"), 1, 1, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("basic_armory"), 2, 1, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("grenade_stockpiles"), 3, 1, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("power_through"), 4, 1, mouseX, mouseY);
+            renderUpgrade(context, raid.getAsJsonObject("standard_issue_forges"), 1, 1, mouseX, mouseY);
+            renderUpgrade(context, raid.getAsJsonObject("basic_armory"), 2, 1, mouseX, mouseY);
+            renderUpgrade(context, raid.getAsJsonObject("grenade_stockpiles"), 3, 1, mouseX, mouseY);
+            renderUpgrade(context, raid.getAsJsonObject("power_through"), 4, 1, mouseX, mouseY);
 
-            renderUpgrade(matrices, raid.getAsJsonObject("thorough_defense"), 1, 2, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("stronger_blades"), 2, 2, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("gemstone_blades"), 3, 2, mouseX, mouseY);
+            renderUpgrade(context, raid.getAsJsonObject("thorough_defense"), 1, 2, mouseX, mouseY);
+            renderUpgrade(context, raid.getAsJsonObject("stronger_blades"), 2, 2, mouseX, mouseY);
+            renderUpgrade(context, raid.getAsJsonObject("gemstone_blades"), 3, 2, mouseX, mouseY);
 
-            renderUpgrade(matrices, raid.getAsJsonObject("diamond_forges"), 1, 3, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("the_perfect_weapons"), 2, 3, mouseX, mouseY);
-            renderUpgrade(matrices, raid.getAsJsonObject("impenetrable_defenses"), 3, 3, mouseX, mouseY);
+            renderUpgrade(context, raid.getAsJsonObject("diamond_forges"), 1, 3, mouseX, mouseY);
+            renderUpgrade(context, raid.getAsJsonObject("the_perfect_weapons"), 2, 3, mouseX, mouseY);
+            renderUpgrade(context, raid.getAsJsonObject("impenetrable_defenses"), 3, 3, mouseX, mouseY);
         } else if (section.equals("depths")) {
             JsonObject depths = PathManager.paths.get("depths");
 
-            renderUpgrade(matrices, depths.getAsJsonObject("warrant_funding"), 2, 1, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("farmland_acquisition"), 3, 1, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("even_quicker_trading"), 4, 1, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("luckier_day"), 2, 2, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("value_duplication"), 3, 2, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("double_duplication"), 4, 2, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("warrant_funding"), 2, 1, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("farmland_acquisition"), 3, 1, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("even_quicker_trading"), 4, 1, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("luckier_day"), 2, 2, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("value_duplication"), 3, 2, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("double_duplication"), 4, 2, mouseX, mouseY);
             connectUpgrades(3, 2, 4, 2);
-            renderUpgrade(matrices, depths.getAsJsonObject("better_negotiations"), 2, 3, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("triple_city_funding"), 3, 3, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("dual_polishing_measures"), 4, 3, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("better_negotiations"), 2, 3, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("triple_city_funding"), 3, 3, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("dual_polishing_measures"), 4, 3, mouseX, mouseY);
 
-            renderUpgrade(matrices, depths.getAsJsonObject("upgrade_town_east"), 6, 2, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("blacklight_photosynthesis"), 7, 1, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("farmland_expansion"), 8, 1, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("greed_is_good"), 9, 1, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("exponential_scaling"), 7, 2, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("quadruple_city_funding"), 8, 2, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("expert_economists"), 9, 2, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("underground_trade_routes"), 7, 3, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("extrinsic_value"), 8, 3, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("upgrade_town_east"), 6, 2, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("blacklight_photosynthesis"), 7, 1, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("farmland_expansion"), 8, 1, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("greed_is_good"), 9, 1, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("exponential_scaling"), 7, 2, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("quadruple_city_funding"), 8, 2, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("expert_economists"), 9, 2, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("underground_trade_routes"), 7, 3, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("extrinsic_value"), 8, 3, mouseX, mouseY);
 
-            renderUpgrade(matrices, depths.getAsJsonObject("upgrade_town_north"), 1, 6, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("melon_to_melon_ratio"), 2, 5, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("insider_knowledge"), 3, 5, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("value_incrementation"), 4, 5, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("the_house_always_wins"), 2, 6, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("quintuple_city_funding"), 3, 6, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("multiply_demand"), 4, 6, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("quantum_fluctuations"), 2, 7, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("farming_permits"), 3, 7, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("upgrade_town_north"), 1, 6, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("melon_to_melon_ratio"), 2, 5, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("insider_knowledge"), 3, 5, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("value_incrementation"), 4, 5, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("the_house_always_wins"), 2, 6, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("quintuple_city_funding"), 3, 6, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("multiply_demand"), 4, 6, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("quantum_fluctuations"), 2, 7, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("farming_permits"), 3, 7, mouseX, mouseY);
 
-            renderUpgrade(matrices, depths.getAsJsonObject("upgrade_town_south"), 6, 6, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("tri_polishing_process"), 7, 5, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("sextuple_city_funding"), 8, 5, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("repeated_multiplication"), 7, 6, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("farmland_reclamation"), 8, 6, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("the_foundry"), 7, 7, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("perfect_profits"), 8, 7, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("we_need_to_go_deeper"), 10, 4, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("final_funding"), 10, 5, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("upgrade_town_south"), 6, 6, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("tri_polishing_process"), 7, 5, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("sextuple_city_funding"), 8, 5, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("repeated_multiplication"), 7, 6, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("farmland_reclamation"), 8, 6, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("the_foundry"), 7, 7, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("perfect_profits"), 8, 7, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("we_need_to_go_deeper"), 10, 4, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("final_funding"), 10, 5, mouseX, mouseY);
             connectUpgrades(10, 4, 10, 5);
 
-            renderUpgrade(matrices, depths.getAsJsonObject("better_farmers"), 11, 3, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("a_little_richer"), 12, 3, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("septuple_city_funding"), 13, 3, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("fullest_farmland"), 11, 4, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("octuple_city_funding"), 12, 4, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("true_value"), 13, 4, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("ultimate_exponential"), 11, 5, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("flawless_extraction"), 12, 5, mouseX, mouseY);
-            renderUpgrade(matrices, depths.getAsJsonObject("one_billion_gold"), 13, 5, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("better_farmers"), 11, 3, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("a_little_richer"), 12, 3, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("septuple_city_funding"), 13, 3, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("fullest_farmland"), 11, 4, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("octuple_city_funding"), 12, 4, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("true_value"), 13, 4, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("ultimate_exponential"), 11, 5, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("flawless_extraction"), 12, 5, mouseX, mouseY);
+            renderUpgrade(context, depths.getAsJsonObject("one_billion_gold"), 13, 5, mouseX, mouseY);
         }
 
         matrices.pop();
 
         // UI
-        DrawableHelper.fill(matrices, 0, 0, width / 5, height, PRIMARY);
-        DrawableHelper.fill(matrices, width / 5, 0, width / 5 + 6, height, SECONDARY);
+        context.fill(0, 0, width / 5, height, PRIMARY);
+        context.fill(width / 5, 0, width / 5 + 6, height, SECONDARY);
 
-        DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, "Path Viewer", width / 10, 20, HEADER_COLOR);
+        context.drawCenteredTextWithShadow(textRenderer, "Path Viewer", width / 10, 20, HEADER_COLOR);
         int y = 40;
         if (!selectedElement.containsKey(section)) {
             for (OrderedText line : textRenderer.wrapLines(StringVisitable.plain("Click on an upgrade to view information about it."), width / 5 - 20)) {
-                DrawableHelper.drawTextWithShadow(matrices, textRenderer, line, 10, y, 0xFFFFFF);
+                context.drawTextWithShadow(textRenderer, line, 10, y, 0xFFFFFF);
                 y += textRenderer.fontHeight + 2;
             }
         } else {
@@ -433,7 +435,7 @@ public class PathScreen extends Screen {
                             "§6Price: §f" + NumberUtils.toFancyNumber(price) + " " + Currency.valueOf(_selectedElement.get("currency").getAsString().toUpperCase()).format(price) + "\n" +
                             "§6Location: §f" + _selectedElement.get("location").getAsString().replaceAll(",", ", ")
             ), width / 5 - 20)) {
-                DrawableHelper.drawTextWithShadow(matrices, textRenderer, line, 10, y, 0xFFFFFF);
+                context.drawTextWithShadow(textRenderer, line, 10, y, 0xFFFFFF);
                 y += textRenderer.fontHeight + 2;
             }
 
@@ -459,8 +461,8 @@ public class PathScreen extends Screen {
 
             addSelectableChild(track);
             addSelectableChild(unlock);
-            track.render(matrices, mouseX, mouseY, delta);
-            unlock.render(matrices, mouseX, mouseY, delta);
+            track.render(context, mouseX, mouseY, delta);
+            unlock.render(context, mouseX, mouseY, delta);
 
             y += 60;
             if (!sameLine) y += 30;
@@ -468,14 +470,14 @@ public class PathScreen extends Screen {
 
         y += 20;
 
-        DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, "Tracked Upgrades", width / 10, y, HEADER_COLOR);
+        context.drawCenteredTextWithShadow(textRenderer, "Tracked Upgrades", width / 10, y, HEADER_COLOR);
         y += 20;
 
         List<JsonObject> allTracked = PathManager.allTracked();
 
         if (allTracked.isEmpty()) {
             for (OrderedText line : textRenderer.wrapLines(StringVisitable.plain("Track an upgrade to view its waypoint and track your progress towards it."), width / 5 - 20)) {
-                DrawableHelper.drawTextWithShadow(matrices, textRenderer, line, 10, y, 0xFFFFFF);
+                context.drawTextWithShadow(textRenderer, line, 10, y, 0xFFFFFF);
                 y += textRenderer.fontHeight + 2;
             }
         } else {
@@ -492,7 +494,7 @@ public class PathScreen extends Screen {
                 }
             }
             for (OrderedText line : textRenderer.wrapLines(StringVisitable.plain(information.toString()), width / 5 - 20)) {
-                DrawableHelper.drawTextWithShadow(matrices, textRenderer, line, 10, y, 0xFFFFFF);
+                context.drawTextWithShadow(textRenderer, line, 10, y, 0xFFFFFF);
                 y += textRenderer.fontHeight + 2;
             }
 
@@ -502,7 +504,7 @@ public class PathScreen extends Screen {
             xOffset(width / 5f - 64 + 32 * 1.5f);
             yOffset(-64);
             zoom(1);
-        }).dimensions(width - 103, height - 100, 98, 20).tooltip(Tooltip.of(Text.of("Reset the window's current offset and zoom. (R)"))).build()).render(matrices, mouseX, mouseY, delta);
+        }).dimensions(width - 103, height - 100, 98, 20).tooltip(Tooltip.of(Text.of("Reset the window's current offset and zoom. (R)"))).build()).render(context, mouseX, mouseY, delta);
 
         addSelectableChild(ButtonWidget.builder(Text.of("Track All"), button -> {
             for (JsonElement _pathUpgrade : PathManager.paths.get(section).asMap().values()) {
@@ -511,15 +513,15 @@ public class PathScreen extends Screen {
                     PathManager.tracking.add(pathUpgrade);
                 }
             }
-        }).dimensions(width - 103, height - 75, 98, 20).tooltip(Tooltip.of(Text.of("Track all upgrades in the selected path."))).build()).render(matrices, mouseX, mouseY, delta);
+        }).dimensions(width - 103, height - 75, 98, 20).tooltip(Tooltip.of(Text.of("Track all upgrades in the selected path."))).build()).render(context, mouseX, mouseY, delta);
 
         addSelectableChild(ButtonWidget.builder(Text.of("Untrack All"),
                 button -> PathManager.tracking.removeIf(jsonObject -> PathManager.paths.get(section).asMap().containsValue(jsonObject))
-        ).dimensions(width - 103, height - 50, 98, 20).tooltip(Tooltip.of(Text.of("Untrack all upgrades in the selected path."))).build()).render(matrices, mouseX, mouseY, delta);
+        ).dimensions(width - 103, height - 50, 98, 20).tooltip(Tooltip.of(Text.of("Untrack all upgrades in the selected path."))).build()).render(context, mouseX, mouseY, delta);
 
         addSelectableChild(ButtonWidget.builder(Text.of("Clear Cache"),
                 button -> PathManager.clearCache()
-        ).dimensions(width - 103, height - 25, 98, 20).tooltip(Tooltip.of(Text.of("Reculates the state and cost of upgrades."))).build()).render(matrices, mouseX, mouseY, delta);
+        ).dimensions(width - 103, height - 25, 98, 20).tooltip(Tooltip.of(Text.of("Reculates the state and cost of upgrades."))).build()).render(context, mouseX, mouseY, delta);
 
         // Item tabs
         matrices.push();
@@ -529,7 +531,7 @@ public class PathScreen extends Screen {
         for (String _section : section_order) {
             if (sections.containsKey(_section)) {
                 ItemGroup icon = section_icons.get(_section);
-                renderTabIcon(matrices, icon, section.equals(_section), tabX, tabY);
+                renderTabIcon(context, icon, section.equals(_section), tabX, tabY);
                 if (tabX <= mouseX / 1.5f && mouseX / 1.5f <= tabX + 32 &&
                         tabY <= mouseY / 1.5f && mouseY / 1.5f <= tabY + 26) {
                     tooltip = Collections.singletonList(icon.getDisplayName().asOrderedText());
@@ -541,18 +543,17 @@ public class PathScreen extends Screen {
 
         // Tooltip
         if (tooltip != null) {
-            renderOrderedTooltip(matrices, tooltip, mouseX, mouseY);
+            context.drawOrderedTooltip(textRenderer, tooltip, mouseX, mouseY);
         }
     }
 
-    public void renderTabIcon(MatrixStack matrices, ItemGroup group, boolean selected, int tabX, int tabY) {
-        RenderSystem.setShaderTexture(0, TAB_TEXTURE);
-        DrawableHelper.drawTexture(matrices, tabX, tabY, 0, selected ? 26 : 0, 32, 26, 32, 52);
+    public void renderTabIcon(DrawContext context, ItemGroup group, boolean selected, int tabX, int tabY) {
+        MatrixStack matrices = context.getMatrices();
+        context.drawTexture(TAB_TEXTURE, tabX, tabY, 0, selected ? 26 : 0, 32, 26, 32, 52);
         matrices.push();
         matrices.translate(0.0f, 0.0f, 100.0f);
         ItemStack itemStack = group.getIcon();
-        this.itemRenderer.renderInGuiWithOverrides(matrices, itemStack, tabX += 8, tabY += 5);
-        this.itemRenderer.renderGuiItemOverlay(matrices, this.textRenderer, itemStack, tabX, tabY);
+        context.drawItem(itemStack, tabX + 8, tabY + 5);
         matrices.pop();
     }
 
@@ -617,7 +618,7 @@ public class PathScreen extends Screen {
         GlStateManager._depthMask(true);
     }
 
-    public void renderUpgrade(MatrixStack matrices, JsonObject upgrade, float x, float y, int mouseX, int mouseY) {
+    public void renderUpgrade(DrawContext context, JsonObject upgrade, float x, float y, int mouseX, int mouseY) {
         if (upgrade == null) {
             String errorMessage = "Not rendering upgrade at " + x + ", " + y + " on path " + section + " as it is null.";
             if (!sentErrors.contains(errorMessage)) {
@@ -626,6 +627,8 @@ public class PathScreen extends Screen {
             }
             return;
         }
+
+        MatrixStack matrices = context.getMatrices();
 
         float _xOffset = xOffset();
         float _yOffset = yOffset();
@@ -651,12 +654,9 @@ public class PathScreen extends Screen {
         if (selected) color = ColorOverlay.overlayColors(color, new Color(255, 255, 150), 0.35f);
         if (hovered) color = ColorOverlay.overlayColors(color, new Color(150, 150, 150), 0.35f);
 
-        RenderSystem.setShaderTexture(0, major ? MAJOR_PATH_ICON : PATH_ICON);
-        RenderSystem.setShaderColor(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
-
-        DrawableHelper.drawTexture(matrices, (int) (_xOffset + x), (int) (_yOffset + y), 0, 0, 0, 32, 32, 32, 32);
-
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        context.setShaderColor(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+        context.drawTexture(major ? MAJOR_PATH_ICON : PATH_ICON, (int) (_xOffset + x), (int) (_yOffset + y), 0, 0, 0, 32, 32, 32, 32);
+        context.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         if (hovered) {
             if (mouseX < width / 5 + 6) return;
