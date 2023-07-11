@@ -30,7 +30,7 @@ else if (section.equals("<path_id>")) {
 ### If you added a new upgrade
 <b>1.</b> Render the upgrade in the appropriate branch of [`PathScreen#init()`](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathScreen.java#L107).  
 ```java
-renderUpgrade(matrices, <path_id>.getAsJsonObject("<upgrade_id>"), <gridX>, <gridY>, mouseX, mouseY);
+renderUpgrade(context, <path_id>.getAsJsonObject("<upgrade_id>"), <gridX>, <gridY>, mouseX, mouseY);
 ```
 <b>2.</b> If required, connect it to any relevant upgrades as such:
 ```java
