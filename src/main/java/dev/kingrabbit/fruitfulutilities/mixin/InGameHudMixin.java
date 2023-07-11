@@ -5,6 +5,7 @@ import dev.kingrabbit.fruitfulutilities.config.ConfigManager;
 import dev.kingrabbit.fruitfulutilities.config.categories.FancyScoreboardCategory;
 import dev.kingrabbit.fruitfulutilities.util.NumberUtils;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -18,7 +19,7 @@ import java.util.List;
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
 
-    @ModifyArg(method = "renderScoreboardSidebar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/font/TextRenderer;draw(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/text/Text;FFI)I"))
+    @ModifyArg(method = "renderScoreboardSidebar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawText(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/Text;IIIZ)I", ordinal = 0))
     public Text fancyScoreboardNumbers(Text text) {
         String textString = text.getString();
         if (!(textString.startsWith("Coins: ") || textString.startsWith("Bank Gold: "))) return text;
@@ -44,10 +45,10 @@ public class InGameHudMixin {
         return configManager.enabled() && configManager.getCategory(FancyScoreboardCategory.class).numbers ? "" : text;
     }
 
-    @Redirect(method = "renderScoreboardSidebar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/font/TextRenderer;draw(Lnet/minecraft/client/util/math/MatrixStack;Ljava/lang/String;FFI)I"))
-    public int removeScoreboardNumbers(TextRenderer instance, MatrixStack matrices, String text, float x, float y, int color) {
+    @Redirect(method = "renderScoreboardSidebar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawText(Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;IIIZ)I"))
+    public int removeScoreboardNumbers(DrawContext instance, TextRenderer textRenderer, String text, int x, int y, int color, boolean shadow) {
         ConfigManager configManager = FruitfulUtilities.getInstance().configManager;
-        return configManager.enabled() && configManager.getCategory(FancyScoreboardCategory.class).numbers ? 0 : instance.draw(matrices, text, x, y, color);
+        return configManager.enabled() && configManager.getCategory(FancyScoreboardCategory.class).numbers ? 0 : instance.drawText(textRenderer, text, x, y, color, shadow);
     }
 
 }
