@@ -16,10 +16,10 @@ All contributions are greatly appreciated.
 <b>6.</b> Follow the steps in the [previous section](https://github.com/KingsMMA/FruitfulUtilities/blob/master/CONTRIBUTING.md#contributing-to-the-mod) to begin contributing the changes to the mod.  
 
 ### If you added a new path
-<b>1.</b> Load the path in [`PathManager#loadPaths()`](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathManager.java#L33).  
-<b>2.</b> Save its parent paths in [`PathManager#`](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathManager.java#L24).  
-<b>3.</b> Create the icon in [`PathScreen#init()`](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathScreen.java#L59).  
-<b>4.</b> Add a branch to the if statement beginning [here](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathScreen.java#L94) in `PathScreen#init()`.  
+<b>1.</b> Load the path in [`PathManager#loadPaths()`](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathManager.java#L44).  
+<b>2.</b> Save its parent paths in [`PathManager#`](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathManager.java#L31).  
+<b>3.</b> Create the icon in [`PathScreen#init()`](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathScreen.java#L63).  
+<b>4.</b> Add a branch to the if statement beginning [here](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathScreen.java#L107) in `PathScreen#init()`.  
 ```java
 else if (section.equals("<path_id>")) {
     JsonObject <path_id> = PathManager.paths.get("<path_id>");
@@ -28,7 +28,7 @@ else if (section.equals("<path_id>")) {
 <b>5.</b> Next, add the upgrades as described below:
 
 ### If you added a new upgrade
-<b>1.</b> Render the upgrade in the appropriate branch of [`PathScreen#init()`](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathScreen.java#L94).  
+<b>1.</b> Render the upgrade in the appropriate branch of [`PathScreen#init()`](https://github.com/KingsMMA/FruitfulUtilities/blob/master/src/main/java/dev/kingrabbit/fruitfulutilities/pathviewer/PathScreen.java#L107).  
 ```java
 renderUpgrade(matrices, <path_id>.getAsJsonObject("<upgrade_id>"), <gridX>, <gridY>, mouseX, mouseY);
 ```
