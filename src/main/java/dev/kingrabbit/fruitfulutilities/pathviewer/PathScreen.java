@@ -628,8 +628,6 @@ public class PathScreen extends Screen {
             return;
         }
 
-        MatrixStack matrices = context.getMatrices();
-
         float _xOffset = xOffset();
         float _yOffset = yOffset();
         float _zoom = zoom();

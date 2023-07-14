@@ -29,8 +29,7 @@ public class CodeHiderCategory extends ConfigCategory {
             return false;
 
         CodeHiderCategory category = FruitfulUtilities.getInstance().configManager.getCategory(CodeHiderCategory.class);
-        if (!category.enabled || !category.hideAll) return false;
-        return true;
+        return category.enabled && category.hideAll;
     }
 
 }

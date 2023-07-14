@@ -15,7 +15,7 @@ public class ChunkRendererRegionMixin {
 
     @Inject(method = "getBlockState", at = @At("HEAD"), cancellable = true)
     public void getBlockState(BlockPos pos, CallbackInfoReturnable<BlockState> cir) {
-        if (CodeHiderCategory.shouldHideBlock(pos)) cir.setReturnValue(Blocks.VOID_AIR.getDefaultState());;
+        if (CodeHiderCategory.shouldHideBlock(pos)) cir.setReturnValue(Blocks.VOID_AIR.getDefaultState());
     }
 
 }

@@ -20,6 +20,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@SuppressWarnings("DuplicatedCode")
 public class ConfigScreen extends Screen {
 
     public static final Identifier SWITCH_UNKNOWN = new Identifier("fruitfulutilities", "textures/gui/switch_unknown.png");

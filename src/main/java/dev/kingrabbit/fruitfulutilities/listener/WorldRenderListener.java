@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 
 public class WorldRenderListener implements WorldRenderEvents.End {
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void onEnd(WorldRenderContext context) {
         if (MinecraftClient.getInstance().player == null) return;

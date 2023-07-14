@@ -1,5 +1,6 @@
 package dev.kingrabbit.fruitfulutilities.pathviewer;
 
+@SuppressWarnings("unused")
 public enum Currency {
 
     // General
