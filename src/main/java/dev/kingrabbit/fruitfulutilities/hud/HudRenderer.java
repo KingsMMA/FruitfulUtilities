@@ -4,8 +4,7 @@ import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 
@@ -18,7 +17,7 @@ public class HudRenderer implements HudRenderCallback {
     public static final Color BACKGROUND_COLOR = new Color(100, 100, 100, 150);
 
     @Override
-    public void onHudRender(MatrixStack matrices, float tickDelta) {
+    public void onHudRender(DrawContext context, float tickDelta) {
         if (!FruitfulUtilities.getInstance().configManager.enabled()) return;
 
         LinkedHashMap<HudElement, ElementInfo> elements = FruitfulUtilities.getInstance().hudManager.elementList;
@@ -43,7 +42,7 @@ public class HudRenderer implements HudRenderCallback {
                     int lineWidth = line instanceof String ? textRenderer.getWidth((String) line) : (line instanceof OrderedText ? textRenderer.getWidth((OrderedText) line) : textRenderer.getWidth((Text) line));
                     if (lineWidth > maxWidth) maxWidth = lineWidth;
                 }
-                DrawableHelper.fill(matrices, x, y, x + 4 + maxWidth, y + 2 + (textRenderer.fontHeight + 2) * totalLines, BACKGROUND_COLOR.getRGB());
+                context.fill(x, y, x + 4 + maxWidth, y + 2 + (textRenderer.fontHeight + 2) * totalLines, BACKGROUND_COLOR.getRGB());
                 int opacity = 100;
                 for (Object line : lines) {
                     if (line instanceof String stringLine) {
@@ -55,9 +54,11 @@ public class HudRenderer implements HudRenderCallback {
                             }
                             continue;
                         }
-                        DrawableHelper.drawTextWithShadow(matrices, textRenderer, stringLine, x + 2, y + 2, new Color(255, 255, 255, (int) (opacity * 2.55)).getRGB());
-                    } else if (line instanceof OrderedText) DrawableHelper.drawTextWithShadow(matrices, textRenderer, (OrderedText) line, x + 2, y + 2, new Color(255, 255, 255, (int) (opacity * 2.55)).getRGB());
-                    else if (line instanceof Text) DrawableHelper.drawTextWithShadow(matrices, textRenderer, (Text) line, x + 2, y + 2, new Color(255, 255, 255, (int) (opacity * 2.55)).getRGB());
+                        context.drawTextWithShadow(textRenderer, stringLine, x + 2, y + 2, new Color(255, 255, 255, (int) (opacity * 2.55)).getRGB());
+                    } else if (line instanceof OrderedText)
+                        context.drawTextWithShadow(textRenderer, (OrderedText) line, x + 2, y + 2, new Color(255, 255, 255, (int) (opacity * 2.55)).getRGB());
+                    else if (line instanceof Text)
+                        context.drawTextWithShadow(textRenderer, (Text) line, x + 2, y + 2, new Color(255, 255, 255, (int) (opacity * 2.55)).getRGB());
                     y += 2 + textRenderer.fontHeight;
                     opacity = 100;
                 }

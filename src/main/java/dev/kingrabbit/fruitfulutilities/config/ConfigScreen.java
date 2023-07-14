@@ -1,6 +1,5 @@
 package dev.kingrabbit.fruitfulutilities.config;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import dev.kingrabbit.fruitfulutilities.FruitfulUtilities;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigBoolean;
 import dev.kingrabbit.fruitfulutilities.config.properties.ConfigButton;
@@ -8,7 +7,7 @@ import dev.kingrabbit.fruitfulutilities.config.properties.ConfigDropdown;
 import dev.kingrabbit.fruitfulutilities.pathviewer.PathManager;
 import dev.kingrabbit.fruitfulutilities.util.SoundUtils;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
@@ -62,27 +61,28 @@ public class ConfigScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         if (client == null) return;
 
-        renderBackground(matrices);
+        renderBackground(context);
 
         // Background
-        DrawableHelper.fill(matrices, width / 2 - 200 - 4, height / 2 - 150 + 4, width / 2 + 200 - 4, height / 2 + 150 + 4, WINDOW_BACKGROUND_SHADOW);
-        DrawableHelper.fill(matrices, width / 2 - 200, height / 2 - 150, width / 2 + 200, height / 2 + 150, WINDOW_BACKGROUND);
+        context.fill(width / 2 - 200 - 4, height / 2 - 150 + 4, width / 2 + 200 - 4, height / 2 + 150 + 4, WINDOW_BACKGROUND_SHADOW);
+        context.fill(width / 2 - 200, height / 2 - 150, width / 2 + 200, height / 2 + 150, WINDOW_BACKGROUND);
 
         // Header Bevel
-        DrawableHelper.fill(matrices, width / 2 - 200 + 10, height / 2 - 150 + 10, width / 2 + 200 - 10, height / 2 - 150 + 50, HEADER_BACKGROUND_SHADOW);
-        DrawableHelper.fill(matrices, width / 2 - 200 + 10 + 2, height / 2 - 150 + 10 + 2, width / 2 + 200 - 10, height / 2 - 150 + 50, HEADER_BACKGROUND);
+        context.fill(width / 2 - 200 + 10, height / 2 - 150 + 10, width / 2 + 200 - 10, height / 2 - 150 + 50, HEADER_BACKGROUND_SHADOW);
+        context.fill(width / 2 - 200 + 10 + 2, height / 2 - 150 + 10 + 2, width / 2 + 200 - 10, height / 2 - 150 + 50, HEADER_BACKGROUND);
 
+        MatrixStack matrices = context.getMatrices();
         matrices.push();
         matrices.scale(2f, 2f, 2f);
-        DrawableHelper.drawCenteredTextWithShadow(matrices, client.textRenderer, "FruitfulUtilities", (width / 2) / 2, (height / 2 - 150 + 24) / 2, 0xFFFFFF);
+        context.drawCenteredTextWithShadow(client.textRenderer, "FruitfulUtilities", (width / 2) / 2, (height / 2 - 150 + 24) / 2, 0xFFFFFF);
         matrices.pop();
 
         // Categories Bevel
-        DrawableHelper.fill(matrices, width / 2 - 200 + 10, height / 2 - 150 + 60, width / 2 - 200 + 120, height / 2 + 150 - 10, SECTION_BACKGROUND_SHADOW);
-        DrawableHelper.fill(matrices, width / 2 - 200 + 10 + 2, height / 2 - 150 + 60 + 2, width / 2 - 200 + 120, height / 2 + 150 - 10, SECTION_BACKGROUND);
+        context.fill(width / 2 - 200 + 10, height / 2 - 150 + 60, width / 2 - 200 + 120, height / 2 + 150 - 10, SECTION_BACKGROUND_SHADOW);
+        context.fill(width / 2 - 200 + 10 + 2, height / 2 - 150 + 60 + 2, width / 2 - 200 + 120, height / 2 + 150 - 10, SECTION_BACKGROUND);
 
         int x = width / 2 - 200 + 14;
         AtomicInteger y = new AtomicInteger(height / 2 - 150 + 60 + 2);
@@ -93,20 +93,20 @@ public class ConfigScreen extends Screen {
             int x2 = x + 106;
             int y2 = y.get() - 1;
             if (selected_section.equals(categoryInfo.id())) {
-                DrawableHelper.fill(matrices, x1, currentY, x2, y2, new Color(40, 40, 80).getRGB());
+                context.fill(x1, currentY, x2, y2, new Color(40, 40, 80).getRGB());
             }
             if (x1 <= mouseX && mouseX <= x2 &&
                     currentY <= mouseY && mouseY <= y2) {
-                DrawableHelper.fill(matrices, x1, currentY, x2, y2, HOVER_OVERLAY);
+                context.fill(x1, currentY, x2, y2, HOVER_OVERLAY);
             }
 
-            DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, categoryInfo.display(), x + 1, currentY + 3, 0xFFFFFF);
-            DrawableHelper.drawHorizontalLine(matrices, x1, x + 105, y2, SECTION_BACKGROUND_SHADOW);
+            context.drawTextWithShadow(client.textRenderer, categoryInfo.display(), x + 1, currentY + 3, 0xFFFFFF);
+            context.drawHorizontalLine(x1, x + 105, y2, SECTION_BACKGROUND_SHADOW);
         });
 
         // Section Bevel
-        DrawableHelper.fill(matrices, width / 2 - 200 + 130, height / 2 - 150 + 60, width / 2 + 200 - 10, height / 2 + 150 - 10, SECTION_BACKGROUND_SHADOW);
-        DrawableHelper.fill(matrices, width / 2 - 200 + 130 + 2, height / 2 - 150 + 60 + 2, width / 2 + 200 - 10, height / 2 + 150 - 10, SECTION_BACKGROUND);
+        context.fill(width / 2 - 200 + 130, height / 2 - 150 + 60, width / 2 + 200 - 10, height / 2 + 150 - 10, SECTION_BACKGROUND_SHADOW);
+        context.fill(width / 2 - 200 + 130 + 2, height / 2 - 150 + 60 + 2, width / 2 + 200 - 10, height / 2 + 150 - 10, SECTION_BACKGROUND);
 
         ConfigCategory selectedCategory = FruitfulUtilities.getInstance().configManager.categoryIds.get(selected_section);
         Class<? extends ConfigCategory> selectedCategoryClass = selectedCategory.getClass();
@@ -126,7 +126,7 @@ public class ConfigScreen extends Screen {
                 matrices.scale(0.8f, 0.8f, 0.8f);
                 int centerX = (int) ((x1 + (x2 - x1) / 2f) / 0.8);
                 for (OrderedText line : lines) {
-                    DrawableHelper.drawCenteredTextWithShadow(matrices, textRenderer, line, centerX, (int) (propertyY / 0.8f), 0xEF1515);
+                    context.drawCenteredTextWithShadow(textRenderer, line, centerX, (int) (propertyY / 0.8f), 0xEF1515);
                     propertyY += (textRenderer.fontHeight + 2) * 0.8f;
                 }
                 propertyY += (textRenderer.fontHeight + 2) * 0.8f;
@@ -166,17 +166,17 @@ public class ConfigScreen extends Screen {
                     description = configButton.description();
                 }
 
-                DrawableHelper.fill(matrices, x1 + 5, propertyY, x2 - 5, propertyY + 50, SECTION_BACKGROUND_SHADOW);
-                DrawableHelper.fill(matrices, x1 + 5, propertyY, x2 - 5 - 2, propertyY + 50 - 2, OPTION_FOREGROUND);
+                context.fill(x1 + 5, propertyY, x2 - 5, propertyY + 50, SECTION_BACKGROUND_SHADOW);
+                context.fill(x1 + 5, propertyY, x2 - 5 - 2, propertyY + 50 - 2, OPTION_FOREGROUND);
 
-                DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, display, x1 + 8, propertyY + 3, 0xFFFFFF);
+                context.drawTextWithShadow(client.textRenderer, display, x1 + 8, propertyY + 3, 0xFFFFFF);
 
                 matrices.push();
                 matrices.scale(0.8f, 0.8f, 0.8f);
                 List<OrderedText> descriptionLines = textRenderer.wrapLines(StringVisitable.plain(description), 220);
                 int offset = -9;
                 for (OrderedText line : descriptionLines) {
-                    DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, line, (int) ((x1 + 8) / 0.8f), (int) ((propertyY + 14 + (offset += 9)) / 0.8f), DESCRIPTION_TEXT_COLOR);
+                    context.drawTextWithShadow(client.textRenderer, line, (int) ((x1 + 8) / 0.8f), (int) ((propertyY + 14 + (offset += 9)) / 0.8f), DESCRIPTION_TEXT_COLOR);
                 }
                 matrices.pop();
             }
@@ -184,40 +184,42 @@ public class ConfigScreen extends Screen {
             if (isConfigBoolean) {
                 matrices.push();
                 matrices.scale(1.5f, 1.5f, 1.5f);
+
+                Identifier textureId;
                 try {
-                    RenderSystem.setShaderTexture(0, (boolean) field.get(selectedCategory) ? SWITCH_ENABLED : SWITCH_DISABLED);
+                    textureId = (boolean) field.get(selectedCategory) ? SWITCH_ENABLED : SWITCH_DISABLED;
                 } catch (IllegalAccessException exception) {
-                    RenderSystem.setShaderTexture(0, SWITCH_UNKNOWN);
+                    textureId = SWITCH_UNKNOWN;
                     FruitfulUtilities.LOGGER.error("An error occurred accessing the value of " + field.getName() + " in " + selectedCategoryClass.getName(), exception);
                 }
-                DrawableHelper.drawTexture(matrices, (int) ((x2 - 64) / 1.5f), (int) ((propertyY + 10) / 1.5f), 0, 0, 0, 32, 16, 32, 16);
+                context.drawTexture(textureId, (int) ((x2 - 64) / 1.5f), (int) ((propertyY + 10) / 1.5f), 0, 0, 0, 32, 16, 32, 16);
                 matrices.pop();
             } else if (isConfigDropdown) {
-                DrawableHelper.fill(matrices, x2 - 64, propertyY + 13, x2 - 16, propertyY + 31, SECTION_BACKGROUND_SHADOW);
-                DrawableHelper.fill(matrices, x2 - 62, propertyY + 15, x2 - 16, propertyY + 31, SECTION_BACKGROUND);
+                context.fill(x2 - 64, propertyY + 13, x2 - 16, propertyY + 31, SECTION_BACKGROUND_SHADOW);
+                context.fill(x2 - 62, propertyY + 15, x2 - 16, propertyY + 31, SECTION_BACKGROUND);
 
                 try {
                     String selectedOption = configDropdown.options()[(int) field.get(selectedCategory)];
 
-                    DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, selectedOption, x2 - 59, propertyY + 18, 0xFFFFFF);
+                    context.drawTextWithShadow(client.textRenderer, selectedOption, x2 - 59, propertyY + 18, 0xFFFFFF);
                     if (selected_element.equals(configDropdown.id())) {
-                        DrawableHelper.fill(matrices, x2 - 64, propertyY + 31, x2 - 16, propertyY + 31 + (configDropdown.options().length * 16) + 1, SECTION_BACKGROUND_SHADOW);
-                        DrawableHelper.fill(matrices, x2 - 62, propertyY + 31, x2 - 16, propertyY + 31 + (configDropdown.options().length * 16) + 1, SECTION_BACKGROUND);
+                        context.fill(x2 - 64, propertyY + 31, x2 - 16, propertyY + 31 + (configDropdown.options().length * 16) + 1, SECTION_BACKGROUND_SHADOW);
+                        context.fill(x2 - 62, propertyY + 31, x2 - 16, propertyY + 31 + (configDropdown.options().length * 16) + 1, SECTION_BACKGROUND);
 
                         int propertyOptionsY = propertyY + 31;
-                        DrawableHelper.drawHorizontalLine(matrices, x2 - 64, x2 - 17, propertyOptionsY - 1, SECTION_BACKGROUND_SHADOW);
-                        DrawableHelper.drawHorizontalLine(matrices, x2 - 64, x2 - 17, propertyOptionsY, SECTION_BACKGROUND_SHADOW);
+                        context.drawHorizontalLine(x2 - 64, x2 - 17, propertyOptionsY - 1, SECTION_BACKGROUND_SHADOW);
+                        context.drawHorizontalLine(x2 - 64, x2 - 17, propertyOptionsY, SECTION_BACKGROUND_SHADOW);
                         for (String option : configDropdown.options()) {
-                            DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, option, x2 - 59, propertyOptionsY + 4, DESCRIPTION_TEXT_COLOR);
+                            context.drawTextWithShadow(client.textRenderer, option, x2 - 59, propertyOptionsY + 4, DESCRIPTION_TEXT_COLOR);
 
                             if (x2 - 62 <= mouseX && mouseX <= x2 - 16 &&
                                     propertyOptionsY + 1 <= mouseY && mouseY <= propertyOptionsY + 15) {
-                                DrawableHelper.fill(matrices, x2 - 62, propertyOptionsY + 1, x2 - 16, propertyOptionsY + 15, HOVER_OVERLAY);
+                                context.fill(x2 - 62, propertyOptionsY + 1, x2 - 16, propertyOptionsY + 15, HOVER_OVERLAY);
                             }
 
                             propertyOptionsY += 16;
-                            DrawableHelper.drawHorizontalLine(matrices, x2 - 62, x2 - 17, propertyOptionsY - 1, DROP_OPTION_SEPARATOR);
-                            DrawableHelper.drawHorizontalLine(matrices, x2 - 62, x2 - 17, propertyOptionsY, DROP_OPTION_SEPARATOR);
+                            context.drawHorizontalLine(x2 - 62, x2 - 17, propertyOptionsY - 1, DROP_OPTION_SEPARATOR);
+                            context.drawHorizontalLine(x2 - 62, x2 - 17, propertyOptionsY, DROP_OPTION_SEPARATOR);
                         }
                     }
                 } catch (IllegalAccessException e) {
@@ -226,18 +228,17 @@ public class ConfigScreen extends Screen {
             } else if (isConfigButton) {
                 matrices.push();
                 matrices.scale(2.5f, 2.5f, 2.5f);
-                RenderSystem.setShaderTexture(0, BUTTON);
-                DrawableHelper.drawTexture(matrices, (int) ((x2 - 92) / 2.5f), (int) ((propertyY + 5) / 2.5f), 0, 0, 0, 32, 16, 32, 16);
+                context.drawTexture(BUTTON, (int) ((x2 - 92) / 2.5f), (int) ((propertyY + 5) / 2.5f), 0, 0, 0, 32, 16, 32, 16);
                 matrices.pop();
                 matrices.push();
                 matrices.scale(1.5f, 1.5f, 1.5f);
-                textRenderer.drawWithShadow(matrices, configButton.buttonText(), ((x2 - 92 + 32 - textRenderer.getWidth(configButton.buttonText()) / 2f) / 1.5f), ((propertyY + 16) / 1.5f), 0xFFFFFF);
+                context.drawTextWithShadow(textRenderer, configButton.buttonText(), (int) ((x2 - 92 + 32 - textRenderer.getWidth(configButton.buttonText()) / 2f) / 1.5f), (int) ((propertyY + 16) / 1.5f), 0xFFFFFF);
                 matrices.pop();
             }
             propertyY += 55;
         }
 
-        super.render(matrices, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
     }
 
     @Override
